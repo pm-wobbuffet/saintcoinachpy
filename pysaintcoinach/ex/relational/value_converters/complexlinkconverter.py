@@ -3,13 +3,12 @@ from typing import List, cast
 from collections import OrderedDict
 import json
 
-from pysaintcoinach.ex.relational.definition.exdschema import SchemaField
-
 from ...sheet import IRow
 from ...datasheet import IDataRow
 from ..sheet import IRelationalRow, IRelationalSheet
 from ..valueconverter import IValueConverter
 from ..definition import SheetDefinition
+from ..definition.exdschema import SchemaField
 
 
 class IRowProducer(object):
