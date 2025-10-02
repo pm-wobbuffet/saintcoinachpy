@@ -5,3 +5,5 @@ pyvirt
 pyvirt-kern
 tmp
 *.pyc
+.env
+2025.*

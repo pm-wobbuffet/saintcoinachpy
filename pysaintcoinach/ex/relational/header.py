@@ -3,12 +3,14 @@ from typing import List, Iterable
 from ..header import Header
 from .column import RelationalColumn
 from ... import ex
+
 # import ex.relational
 # import ex.relational.definition
 
+
 class RelationalHeader(Header):
     @property
-    def collection(self) -> 'ex.relational.RelationalExCollection':
+    def collection(self) -> "ex.relational.RelationalExCollection":
         return super(RelationalHeader, self).collection
 
     @property
@@ -30,7 +32,10 @@ class RelationalHeader(Header):
         _def.default_column = None if value is None else value.name
 
     @property
-    def sheet_definition(self) -> 'ex.relational.definition.SheetDefinition':
+    def sheet_definition(self) -> "ex.relational.definition.SheetDefinition":
+        _def = self.collection.definition.get_sheet(self.name)
+        if not _def.is_processed:
+            _def.post_process(self.columns)
         return self.collection.definition.get_sheet(self.name)
 
     def __init__(self, collection, name, file):
@@ -40,7 +45,9 @@ class RelationalHeader(Header):
     def get_column(self, index: int) -> RelationalColumn:
         return self.__columns[index]
 
-    def get_or_create_sheet_definition(self) -> 'ex.relational.definition.SheetDefinition':
+    def get_or_create_sheet_definition(
+        self,
+    ) -> "ex.relational.definition.SheetDefinition":
         return self.collection.definition.get_or_create_sheet(self.name)
 
     def create_column(self, index: int, data: bytes, offset: int) -> RelationalColumn:

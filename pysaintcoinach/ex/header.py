@@ -9,19 +9,20 @@ from .. import ex
 
 class Header(object):
 
-    LANGUAGE_MAP = {0: Language.none,
-                    1: Language.japanese,
-                    2: Language.english,
-                    3: Language.german,
-                    4: Language.french,
-                    5: Language.chinese_simplified,
-                    6: Language.chinese_traditional,
-                    7: Language.korean,
-                    8: Language.traditional_chinese
-                    }
+    LANGUAGE_MAP = {
+        0: Language.none,
+        1: Language.japanese,
+        2: Language.english,
+        3: Language.german,
+        4: Language.french,
+        5: Language.chinese_simplified,
+        6: Language.chinese_traditional,
+        7: Language.korean,
+        8: Language.traditional_chinese,
+    }
 
     @property
-    def collection(self) -> 'ex.ExCollection':
+    def collection(self) -> "ex.ExCollection":
         return self.__collection
 
     @property
@@ -60,7 +61,7 @@ class Header(object):
     def fixed_size_data_length(self) -> int:
         return self.__fixed_size_data_length
 
-    def __init__(self, collection: 'ex.ExCollection', name: str, file: File):
+    def __init__(self, collection: "ex.ExCollection", name: str, file: File):
         self.__available_languages = []
         self.__columns = []
         self.__data_file_ranges = []
@@ -91,8 +92,10 @@ class Header(object):
         if unpack_from("<L", buffer, 0)[0] != MAGIC:
             raise ValueError("File not a EX header")
 
-        self.__fixed_size_data_length, = unpack_from(">H", buffer, FIXED_SIZE_DATA_LENGTH_OFFSET)
-        self.__variant, = unpack_from(">H", buffer, VARIANT_OFFSET)
+        (self.__fixed_size_data_length,) = unpack_from(
+            ">H", buffer, FIXED_SIZE_DATA_LENGTH_OFFSET
+        )
+        (self.__variant,) = unpack_from(">H", buffer, VARIANT_OFFSET)
         if self.variant not in [1, 2]:
             raise NotImplementedError("Variant %u not supported" % self.variant)
 
@@ -102,14 +105,26 @@ class Header(object):
         self.__read_suffixes(buffer, current_position)
 
     def __read_columns(self, buffer: bytes, position):
+        def __sort_key(k: Column):
+            offsetbits = k.offset * 8
+            posbits = k.type - 0x19
+            offsetbits = offsetbits + posbits if posbits > 0 else offsetbits
+
+            return offsetbits
+
         COUNT_OFFSET = 0x08
         LENGTH = 0x04
 
-        count, = unpack_from(">H", buffer, COUNT_OFFSET)
+        (count,) = unpack_from(">H", buffer, COUNT_OFFSET)
         self.__columns = []
         for i in range(count):
             self.__columns += [self.create_column(i, buffer, position)]
             position += LENGTH
+
+        sortedColumns = sorted(self.__columns, key=__sort_key)
+        for i in range(len(sortedColumns)):
+            offset_based_index = sortedColumns[i].index
+            self.__columns[offset_based_index].offset_index = i
 
         return position
 
@@ -117,7 +132,7 @@ class Header(object):
         COUNT_OFFSET = 0x0A
         LENGTH = 0x08
 
-        count, = unpack_from(">H", buffer, COUNT_OFFSET)
+        (count,) = unpack_from(">H", buffer, COUNT_OFFSET)
         self.__data_file_ranges = []
         for i in range(count):
             _min, _len = unpack_from(">ll", buffer, position)
@@ -130,7 +145,7 @@ class Header(object):
         COUNT_OFFSET = 0x0C
         LENGTH = 0x02
 
-        count, = unpack_from(">H", buffer, COUNT_OFFSET)
+        (count,) = unpack_from(">H", buffer, COUNT_OFFSET)
         self.__available_languages = []
         for i in range(count):
             lang = self.LANGUAGE_MAP[buffer[position]]

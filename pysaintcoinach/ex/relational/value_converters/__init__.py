@@ -2,6 +2,8 @@ from typing import List, Dict
 import json
 from collections import OrderedDict
 
+from pysaintcoinach.ex.relational.definition.exdschema import SchemaField
+
 from ...datasheet import IDataRow
 from ..sheet import IRelationalRow
 from ..valueconverter import IValueConverter
@@ -21,7 +23,7 @@ class ColorConverter(IValueConverter):
 
     @property
     def target_type_name(self):
-        return 'Color'
+        return "Color"
 
     @property
     def target_type(self):
@@ -31,20 +33,18 @@ class ColorConverter(IValueConverter):
         self.__includes_alpha = False
 
     def __repr__(self):
-        return "%s(IncludesAlpha=%r)" % (
-            self.__class__.__name__,
-            self.includes_alpha)
+        return "%s(IncludesAlpha=%r)" % (self.__class__.__name__, self.includes_alpha)
 
     def convert(self, row: IDataRow, raw_value: object):
         argb = raw_value  # type: int
         if not self.includes_alpha:
-            argb = (argb | 0xFF000000)
+            argb = argb | 0xFF000000
 
         return argb
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'color'
+        obj["type"] = "color"
         return obj
 
     @staticmethod
@@ -58,7 +58,7 @@ class ColorConverter(IValueConverter):
 class GenericReferenceConverter(IValueConverter):
     @property
     def target_type_name(self):
-        return 'Row'
+        return "Row"
 
     @property
     def target_type(self):
@@ -74,7 +74,7 @@ class GenericReferenceConverter(IValueConverter):
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'generic'
+        obj["type"] = "generic"
         return obj
 
     @staticmethod
@@ -88,7 +88,7 @@ class GenericReferenceConverter(IValueConverter):
 class IconConverter(IValueConverter):
     @property
     def target_type_name(self):
-        return 'Image'
+        return "Image"
 
     @property
     def target_type(self):
@@ -99,17 +99,19 @@ class IconConverter(IValueConverter):
 
     def convert(self, row: IDataRow, raw_value: object):
         from .... import imaging
+
         nr = int(raw_value)
         if nr <= 0 or nr > 999999:
             return None
 
         sheet = row.sheet
-        return imaging.IconHelper.get_icon(sheet.collection.pack_collection,
-                                           nr, sheet.language)
+        return imaging.IconHelper.get_icon(
+            sheet.collection.pack_collection, nr, sheet.language
+        )
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'icon'
+        obj["type"] = "icon"
         return obj
 
     @staticmethod
@@ -122,21 +124,23 @@ class IconConverter(IValueConverter):
 
 class MultiReferenceConverter(IValueConverter):
     @property
-    def targets(self) -> List[str]: return self.__targets
+    def targets(self) -> List[str]:
+        return self.__targets
 
     @targets.setter
-    def targets(self, value): self.__targets = value
+    def targets(self, value):
+        self.__targets = value
 
     @property
-    def target_type_name(self): return 'Row'
+    def target_type_name(self):
+        return "Row"
 
     @property
-    def target_type(self): return type(IRelationalRow)
+    def target_type(self):
+        return type(IRelationalRow)
 
     def __repr__(self):
-        return "%s(Targets=%r)" % (
-            self.__class__.__name__,
-            self.targets)
+        return "%s(Targets=%r)" % (self.__class__.__name__, self.targets)
 
     def convert(self, row: IDataRow, raw_value: object):
         key = int(raw_value)
@@ -153,14 +157,20 @@ class MultiReferenceConverter(IValueConverter):
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'multiref'
-        obj['targets'] = self.targets or []
+        obj["type"] = "multiref"
+        obj["targets"] = self.targets or []
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         converter = MultiReferenceConverter()
-        converter.targets = [str(t) for t in obj.get('targets', [])]
+        converter.targets = [str(t) for t in obj.get("targets", [])]
+        return converter
+
+    @staticmethod
+    def from_yaml(obj: SchemaField):
+        converter = MultiReferenceConverter()
+        converter.targets = [str(t) for t in obj.targets]
         return converter
 
     def resolve_references(self, sheet_def: SheetDefinition):
@@ -169,17 +179,19 @@ class MultiReferenceConverter(IValueConverter):
 
 class QuadConverter(IValueConverter):
     @property
-    def target_type_name(self): return 'Quad'
+    def target_type_name(self):
+        return "Quad"
 
     @property
-    def target_type(self): return type(int)
+    def target_type(self):
+        return type(int)
 
     def convert(self, row: IDataRow, raw_value: object):
         return int(raw_value)
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'quad'
+        obj["type"] = "quad"
         return obj
 
     @staticmethod
@@ -192,21 +204,23 @@ class QuadConverter(IValueConverter):
 
 class SheetLinkConverter(IValueConverter):
     @property
-    def target_sheet(self) -> str: return self.__target_sheet
+    def target_sheet(self) -> str:
+        return self.__target_sheet
 
     @target_sheet.setter
-    def target_sheet(self, value): self.__target_sheet = value
+    def target_sheet(self, value):
+        self.__target_sheet = value
 
     @property
-    def target_type_name(self): return self.target_sheet
+    def target_type_name(self):
+        return self.target_sheet
 
     @property
-    def target_type(self): return type(IRelationalRow)
+    def target_type(self):
+        return type(IRelationalRow)
 
     def __repr__(self):
-        return "%s(TargetSheet=%r)" % (
-            self.__class__.__name__,
-            self.target_sheet)
+        return "%s(TargetSheet=%r)" % (self.__class__.__name__, self.target_sheet)
 
     def convert(self, row: IDataRow, raw_value: object):
         coll = row.sheet.collection
@@ -220,14 +234,20 @@ class SheetLinkConverter(IValueConverter):
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'link'
-        obj['target'] = self.target_sheet
+        obj["type"] = "link"
+        obj["target"] = self.target_sheet
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         converter = SheetLinkConverter()
-        converter.target_sheet = obj.get('target', None)
+        converter.target_sheet = obj.get("target", None)
+        return converter
+
+    @staticmethod
+    def from_yaml(obj: SchemaField):
+        converter = SheetLinkConverter()
+        converter.target_sheet = obj.targets[0]
         return converter
 
     def resolve_references(self, sheet_def: SheetDefinition):
@@ -241,7 +261,7 @@ class TomestoneOrItemReferenceConverter(IValueConverter):
 
     @property
     def target_type_name(self):
-        return 'Item'
+        return "Item"
 
     @property
     def target_type(self):
@@ -252,31 +272,33 @@ class TomestoneOrItemReferenceConverter(IValueConverter):
 
     def convert(self, row: IDataRow, raw_value: object):
         if self.__tomestone_key_by_reward_index is None:
-            self.__tomestone_key_by_reward_index =\
-                self._build_tomestone_reward_index(row.sheet.collection)
+            self.__tomestone_key_by_reward_index = self._build_tomestone_reward_index(
+                row.sheet.collection
+            )
 
         key = int(raw_value)
         if key in self.__tomestone_key_by_reward_index:
             return self.__tomestone_key_by_reward_index[key]
 
-        items = row.sheet.collection.get_sheet('Item')
+        items = row.sheet.collection.get_sheet("Item")
         return items[key] if key in items else raw_value
 
     def _build_tomestone_reward_index(
-            self, coll: ExCollection) -> Dict[int, 'xiv.IXivRow']:
+        self, coll: ExCollection
+    ) -> Dict[int, "xiv.IXivRow"]:
         index = {}  # type: 'Dict[int, xiv.IXivRow]'
 
-        sheet = coll.get_sheet('TomestonesItem')
+        sheet = coll.get_sheet("TomestonesItem")
         for row in sheet:
             reward_index = int(row.get_raw(2))  # For compatibility only
             if reward_index > 0:
-                index[reward_index] = row['Item']
+                index[reward_index] = row["Item"]
 
         return index
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'tomestone'
+        obj["type"] = "tomestone"
         return obj
 
     @staticmethod

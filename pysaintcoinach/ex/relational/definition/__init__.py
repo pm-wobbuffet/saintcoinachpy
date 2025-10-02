@@ -7,6 +7,8 @@ import operator
 import itertools
 import json
 
+from pysaintcoinach.ex.relational.definition.exdschema import SchemaField, SchemaSheet
+
 
 class IDataDefinition(object):
     @abstractmethod
@@ -14,7 +16,7 @@ class IDataDefinition(object):
         pass
 
     @abstractmethod
-    def convert(self, row: 'IDataRow', value: object, index: int) -> object:
+    def convert(self, row: "IDataRow", value: object, index: int) -> object:
         pass
 
     @abstractmethod
@@ -30,7 +32,7 @@ class IDataDefinition(object):
         pass
 
     @abstractmethod
-    def __copy__(self) -> 'IDataDefinition':
+    def __copy__(self) -> "IDataDefinition":
         pass
 
     @abstractmethod
@@ -38,7 +40,7 @@ class IDataDefinition(object):
         pass
 
     @abstractmethod
-    def resolve_references(self, sheet_def: 'SheetDefinition'):
+    def resolve_references(self, sheet_def: "SheetDefinition"):
         pass
 
 
@@ -62,20 +64,31 @@ class PositionedDataDefinition(object):
     def index(self, value):
         self.__index = value
 
-    def __init__(self, index=0, inner_definition=None):
+    @property
+    def offset_index(self):
+        return self.__index
+
+    @offset_index.setter
+    def offset_index(self, value):
+        self.__offset_index = value
+
+    def __init__(self, index=0, offset_index=0, inner_definition=None):
         self.__index = index
+        self.__offset_index = offset_index
         self.__inner_definition = inner_definition
 
     def __repr__(self):
-        return "%s(Index=%r, InnerDefinition=%r)" % (
+        return "%s(Index=%r, OffsetIndex=%r, InnerDefinition=%r)" % (
             self.__class__.__name__,
             self.index,
-            self.inner_definition)
+            self.offset_index,
+            self.inner_definition,
+        )
 
     def __copy__(self):
         clone = PositionedDataDefinition(
-            index=self.index,
-            inner_definition=copy(self.inner_definition))
+            index=self.index, inner_definition=copy(self.inner_definition)
+        )
         return clone
 
     def convert(self, row, value, index):
@@ -109,18 +122,26 @@ class PositionedDataDefinition(object):
     def to_json(self) -> OrderedDict:
         obj = self.inner_definition.to_json()
         if self.index > 0:
-            obj['index'] = self.index
-            obj.move_to_end('index', False)
+            obj["index"] = self.index
+            obj.move_to_end("index", False)
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         retv = PositionedDataDefinition()
-        retv.index = int(obj.get('index', 0))
+        retv.index = int(obj.get("index", 0))
         retv.inner_definition = DataDefinitionSerializer.from_json(obj)
         return retv
 
-    def resolve_references(self, sheet_def: 'SheetDefinition'):
+    @staticmethod
+    def from_yaml(idx: int, obj: SchemaField):
+        retv = PositionedDataDefinition()
+        retv.index = idx
+        retv.offset_index = obj.index
+        retv.inner_definition = DataDefinitionSerializer.from_yaml(obj)
+        return retv
+
+    def resolve_references(self, sheet_def: "SheetDefinition"):
         self.inner_definition.resolve_references(sheet_def)
 
 
@@ -147,11 +168,9 @@ class GroupDataDefinition(IDataDefinition):
         self.__members = []  # type: List[IDataDefinition]
 
     def __repr__(self):
-        return "%s(Members=%r)" % (
-            self.__class__.__name__,
-            self.members)
+        return "%s(Members=%r)" % (self.__class__.__name__, self.members)
 
-    def convert(self, row: 'IDataRow', value: object, index: int):
+    def convert(self, row: "IDataRow", value: object, index: int):
         if index < 0 or index >= len(self):
             raise ValueError("'index' out of range")
 
@@ -213,17 +232,19 @@ class GroupDataDefinition(IDataDefinition):
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'group'
-        obj['members'] = [m.to_json() for m in self.members]
+        obj["type"] = "group"
+        obj["members"] = [m.to_json() for m in self.members]
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         retv = GroupDataDefinition()
-        retv.members = [DataDefinitionSerializer.from_json(m) for m in obj.get('members', [])]
+        retv.members = [
+            DataDefinitionSerializer.from_json(m) for m in obj.get("members", [])
+        ]
         return retv
 
-    def resolve_references(self, sheet_def: 'SheetDefinition'):
+    def resolve_references(self, sheet_def: "SheetDefinition"):
         for member in self.members:
             member.resolve_references(sheet_def)
 
@@ -266,14 +287,15 @@ class RepeatDataDefinition(IDataDefinition):
             self.__class__.__name__,
             self.naming_offset,
             self.repeat_count,
-            self.repeated_definition)
+            self.repeated_definition,
+        )
 
     def __copy__(self):
-        return RepeatDataDefinition(self.naming_offset,
-                                    self.repeat_count,
-                                    copy(self.repeated_definition))
+        return RepeatDataDefinition(
+            self.naming_offset, self.repeat_count, copy(self.repeated_definition)
+        )
 
-    def convert(self, row: 'IDataRow', value: object, index: int):
+    def convert(self, row: "IDataRow", value: object, index: int):
         if index < 0 or index >= len(self):
             raise ValueError("'index' out of range")
 
@@ -305,19 +327,21 @@ class RepeatDataDefinition(IDataDefinition):
 
     def to_json(self):
         obj = OrderedDict()
-        obj['type'] = 'repeat'
-        obj['count'] = self.repeat_count
-        obj['definition'] = self.repeated_definition.to_json()
+        obj["type"] = "repeat"
+        obj["count"] = self.repeat_count
+        obj["definition"] = self.repeated_definition.to_json()
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         retv = RepeatDataDefinition()
-        retv.repeat_count = int(obj.get('count', 0))
-        retv.repeated_definition = DataDefinitionSerializer.from_json(obj.get('definition', {}))
+        retv.repeat_count = int(obj.get("count", 0))
+        retv.repeated_definition = DataDefinitionSerializer.from_json(
+            obj.get("definition", {})
+        )
         return retv
 
-    def resolve_references(self, sheet_def: 'SheetDefinition'):
+    def resolve_references(self, sheet_def: "SheetDefinition"):
         self.repeated_definition.resolve_references(sheet_def)
 
 
@@ -331,7 +355,7 @@ class SingleDataDefinition(IDataDefinition):
         self.__name = value
 
     @property
-    def converter(self) -> 'IValueConverter':
+    def converter(self) -> "IValueConverter":
         return self.__converter
 
     @converter.setter
@@ -349,52 +373,88 @@ class SingleDataDefinition(IDataDefinition):
         return "%s(Name=%r, Converter=%r)" % (
             self.__class__.__name__,
             self.name,
-            self.converter)
+            self.converter,
+        )
 
     def to_json(self):
         obj = OrderedDict()
-        obj['name'] = self.name
+        obj["name"] = self.name
         if self.converter is not None:
-            obj['converter'] = self.converter.to_json()
+            obj["converter"] = self.converter.to_json()
         return obj
 
     @staticmethod
     def from_json(obj: dict):
-        from ..value_converters import ColorConverter, IconConverter, MultiReferenceConverter, \
-            SheetLinkConverter, GenericReferenceConverter, TomestoneOrItemReferenceConverter, ComplexLinkConverter
-        converter_obj = obj.get('converter', None)  # type: dict
+        from ..value_converters import (
+            ColorConverter,
+            IconConverter,
+            MultiReferenceConverter,
+            SheetLinkConverter,
+            GenericReferenceConverter,
+            TomestoneOrItemReferenceConverter,
+            ComplexLinkConverter,
+        )
+
+        converter_obj = obj.get("converter", None)  # type: dict
         converter = None
         if converter_obj is not None:
-            _type = converter_obj.get('type', None)
-            if _type == 'color':
+            _type = converter_obj.get("type", None)
+            if _type == "color":
                 converter = ColorConverter.from_json(converter_obj)
-            elif _type == 'generic':
+            elif _type == "generic":
                 converter = GenericReferenceConverter.from_json(converter_obj)
-            elif _type == 'icon':
+            elif _type == "icon":
                 converter = IconConverter.from_json(converter_obj)
-            elif _type == 'multiref':
+            elif _type == "multiref":
                 converter = MultiReferenceConverter.from_json(converter_obj)
-            elif _type == 'link':
+            elif _type == "link":
                 converter = SheetLinkConverter.from_json(converter_obj)
-            elif _type == 'tomestone':
+            elif _type == "tomestone":
                 converter = TomestoneOrItemReferenceConverter.from_json(converter_obj)
-            elif _type == 'complexlink':
+            elif _type == "complexlink":
                 converter = ComplexLinkConverter.from_json(converter_obj)
             else:
                 raise ValueError("Invalid converter type.")
 
-        return SingleDataDefinition(
-            name=obj.get('name', None),
-            converter=converter)
+        return SingleDataDefinition(name=obj.get("name", None), converter=converter)
 
-    def resolve_references(self, sheet_def: 'SheetDefinition'):
+    @staticmethod
+    def from_yaml(obj: SchemaField):
+        from ..value_converters import (
+            ColorConverter,
+            IconConverter,
+            MultiReferenceConverter,
+            SheetLinkConverter,
+            ComplexLinkConverter,
+        )
+
+        converter = None
+        if obj.type == "icon":
+            converter = IconConverter()
+            pass
+        elif obj.type == "modelId":
+            pass
+        elif obj.type == "color":
+            converter = ColorConverter()
+        elif obj.type == "link":
+            if obj.condition is None:
+                if len(obj.targets) == 1:
+                    converter = SheetLinkConverter.from_yaml(obj)
+                else:
+                    converter = MultiReferenceConverter.from_yaml(obj)
+            else:
+                converter = ComplexLinkConverter.from_yaml(obj)
+
+        return SingleDataDefinition(name=obj.name, converter=converter)
+
+    def resolve_references(self, sheet_def: "SheetDefinition"):
         if self.converter is not None:
             self.converter.resolve_references(sheet_def)
 
     def __copy__(self):
         return SingleDataDefinition(self.name, self.convert)
 
-    def convert(self, row: 'IDataRow', value: object, index: int):
+    def convert(self, row: "IDataRow", value: object, index: int):
         if index != 0:
             raise ValueError("'index' out of range")
 
@@ -422,15 +482,21 @@ class SingleDataDefinition(IDataDefinition):
 class DataDefinitionSerializer(object):
     @staticmethod
     def from_json(obj: dict) -> IDataDefinition:
-        _type = obj.get('type', None)
+        _type = obj.get("type", None)
         if _type is None:
             return SingleDataDefinition.from_json(obj)
-        elif _type == 'group':
+        elif _type == "group":
             return GroupDataDefinition.from_json(obj)
-        elif _type == 'repeat':
+        elif _type == "repeat":
             return RepeatDataDefinition.from_json(obj)
         else:
             raise ValueError("Invalid definition type.")
+
+    @staticmethod
+    def from_yaml(obj: SchemaField, from_repeat: bool = False) -> IDataDefinition:
+        if obj.type in ["scalar", "icon", "modelId", "color", "link"]:
+            return SingleDataDefinition.from_yaml(obj)
+        raise ValueError("Invalid object definition type submitted.", obj.type)
 
 
 class SheetDefinition(object):
@@ -441,6 +507,10 @@ class SheetDefinition(object):
     @data_definitions.setter
     def data_definitions(self, value):
         self.__data_definitions = value
+
+    @property
+    def is_processed(self) -> bool:
+        return self.__is_processed
 
     @property
     def name(self):
@@ -466,11 +536,13 @@ class SheetDefinition(object):
     def is_generic_reference_target(self, value):
         self.__is_generic_reference_target = value
 
-    def __init__(self,
-                 data_definitions=None,
-                 name=None,
-                 default_column=None,
-                 is_generic_reference_target=False):
+    def __init__(
+        self,
+        data_definitions=None,
+        name=None,
+        default_column=None,
+        is_generic_reference_target=False,
+    ):
         self.__column_definition_map = {}  # type: Dict[int, PositionedDataDefinition]
         self.__column_name_to_index_map = {}  # type: Dict[str, int]
         self.__column_index_to_name_map = {}  # type: Dict[int, str]
@@ -478,6 +550,7 @@ class SheetDefinition(object):
         self.__column_value_types = {}  # type: Dict[int, type]
         self.__default_column_index = None
         self.__is_compiled = False
+        self.__is_processed = False
 
         self.__name = name
         self.__default_column = default_column
@@ -485,30 +558,55 @@ class SheetDefinition(object):
         self.__data_definitions = data_definitions or []
 
     def __repr__(self):
-        return "%s(DataDefinitions=%r, Name=%r, DefaultColumn=%r, IsGenericReferenceTarget=%r)" % (
-            self.__class__.__name__,
-            self.data_definitions,
-            self.name,
-            self.default_column,
-            self.is_generic_reference_target)
+        return (
+            "%s(DataDefinitions=%r, Name=%r, DefaultColumn=%r, IsGenericReferenceTarget=%r)"
+            % (
+                self.__class__.__name__,
+                self.data_definitions,
+                self.name,
+                self.default_column,
+                self.is_generic_reference_target,
+            )
+        )
 
     def to_json(self) -> OrderedDict:
         obj = OrderedDict()
-        obj['sheet'] = self.name
+        obj["sheet"] = self.name
         if self.default_column is not None:
-            obj['defaultColumn'] = self.default_column
+            obj["defaultColumn"] = self.default_column
         if self.is_generic_reference_target:
-            obj['isGenericReferenceTarget'] = True
-        obj['definitions'] = [dd.to_json() for dd in self.data_definitions]
+            obj["isGenericReferenceTarget"] = True
+        obj["definitions"] = [dd.to_json() for dd in self.data_definitions]
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         sheet_def = SheetDefinition(
-            name=obj.get('sheet', None),
-            default_column=obj.get('defaultColumn', None),
-            is_generic_reference_target=obj.get('isGenericReferenceTarget', False),
-            data_definitions=[PositionedDataDefinition.from_json(j) for j in obj.get('definitions', [])])
+            name=obj.get("sheet", None),
+            default_column=obj.get("defaultColumn", None),
+            is_generic_reference_target=obj.get("isGenericReferenceTarget", False),
+            data_definitions=[
+                PositionedDataDefinition.from_json(j)
+                for j in obj.get("definitions", [])
+            ],
+        )
+
+        for data_def in sheet_def.data_definitions:
+            data_def.resolve_references(sheet_def)
+
+        return sheet_def
+
+    @staticmethod
+    def from_yaml(obj: SchemaSheet):
+        sheet_def = SheetDefinition(
+            name=obj.name,
+            default_column=obj.display_field,
+            is_generic_reference_target=False,
+            data_definitions=[
+                PositionedDataDefinition.from_yaml(i, j)
+                for i, j in enumerate(obj.fields)
+            ],
+        )
 
         for data_def in sheet_def.data_definitions:
             data_def.resolve_references(sheet_def)
@@ -521,7 +619,7 @@ class SheetDefinition(object):
         self.__column_index_to_name_map = {}
         self.__column_value_type_names = {}
         self.__column_value_types = {}
-        self.data_definitions.sort(key=operator.attrgetter('index'))
+        self.data_definitions.sort(key=operator.attrgetter("index"))
         for _def in self.data_definitions:
             for i in range(len(_def)):
                 offset = _def.index + i
@@ -530,23 +628,46 @@ class SheetDefinition(object):
                 name = _def.get_name(offset)
                 self.__column_name_to_index_map[name] = offset
                 self.__column_index_to_name_map[offset] = name
-                self.__column_value_type_names[offset] = _def.get_value_type_name(offset)
+                self.__column_value_type_names[offset] = _def.get_value_type_name(
+                    offset
+                )
                 self.__column_value_types[offset] = _def.get_value_type(offset)
 
-        self.__default_column_index = self.__column_name_to_index_map.get(self.default_column)
+        self.__default_column_index = self.__column_name_to_index_map.get(
+            self.default_column
+        )
         self.__is_compiled = True
+
+    def post_process(self, columns) -> None:
+        if self.is_processed:
+            return
+        offset_to_colindex_mapping = {
+            column.offset_index: column.index for column in columns
+        }
+        for _def in self.data_definitions:
+            col_based_index = offset_to_colindex_mapping[_def.offset_index]
+            _def.index = col_based_index
+        self.compile()
+
+        self.__is_processed = True
 
     def get_definition(self, index) -> PositionedDataDefinition:
         if self.__is_compiled:
             return self.__column_definition_map.get(index, None)
 
-        res = filter(lambda d: d.index <= index < (d.index + len(d)), self.data_definitions)
+        res = filter(
+            lambda d: d.index <= index < (d.index + len(d)), self.data_definitions
+        )
         return next(res, None)
 
     def get_default_column_index(self):
         if self.__is_compiled:
             return self.__default_column_index
-        return None if len((self.default_column or '').strip()) == 0 else self.find_column(self.default_column)
+        return (
+            None
+            if len((self.default_column or "").strip()) == 0
+            else self.find_column(self.default_column)
+        )
 
     def find_column(self, column_name):
         if self.__is_compiled:
@@ -614,13 +735,14 @@ class RelationDefinition(object):
         self.__is_compiled = False
         self.__sheet_definitions = []  # type: List[SheetDefinition]
         self.__sheet_map = {}  # type: Dict[str, SheetDefinition]
-        self.__version = kwargs.get('version', None)  # type: str
+        self.__version = kwargs.get("version", None)  # type: str
 
     def __repr__(self):
         return "%s(SheetDefinitions=%r, Version=%r)" % (
             self.__class__.__name__,
             self.sheet_definitions,
-            self.version)
+            self.version,
+        )
 
     def compile(self):
         self.__sheet_map = dict([(d.name, d) for d in self.__sheet_definitions])
@@ -645,62 +767,70 @@ class RelationDefinition(object):
 
     def to_json(self) -> OrderedDict:
         obj = OrderedDict()
-        obj['version'] = self.version
-        obj['sheets'] = [s.to_json() for s in sorted(self.sheet_definitions, key=lambda s: s.name)]
+        obj["version"] = self.version
+        obj["sheets"] = [
+            s.to_json() for s in sorted(self.sheet_definitions, key=lambda s: s.name)
+        ]
         return obj
 
     @staticmethod
     def from_json(obj: dict):
         retv = RelationDefinition()
-        retv.version = obj.get('version', None)
-        retv.sheet_definitions = [SheetDefinition.from_json(j) for j in obj.get('sheets', [])]
+        retv.version = obj.get("version", None)
+        retv.sheet_definitions = [
+            SheetDefinition.from_json(j) for j in obj.get("sheets", [])
+        ]
         return retv
 
     @staticmethod
     def from_json_fp(fp):
-        #return json.loads(s, object_pairs_hook=SheetDefinition.from_json)
+        # return json.loads(s, object_pairs_hook=SheetDefinition.from_json)
         obj = json.load(fp)
         return RelationDefinition.from_json(obj)
 
 
 class ViewColumnDefinition(object):
     @property
-    def column_name(self) -> str: return self._column_name
+    def column_name(self) -> str:
+        return self._column_name
 
     @property
-    def converter(self) -> 'IValueConverter': return self._converter
+    def converter(self) -> "IValueConverter":
+        return self._converter
 
     def __init__(self, **kwargs):
-        self._column_name = kwargs.get('column_name', None)
-        self._converter = kwargs.get('converter', None)
+        self._column_name = kwargs.get("column_name", None)
+        self._converter = kwargs.get("converter", None)
 
     @staticmethod
     def from_json(obj: dict):
-        converter_obj = obj.get('converter')
+        converter_obj = obj.get("converter")
         converter = None
         if converter_obj is not None:
-            type = converter_obj['type']
-            if type == 'quad':
+            type = converter_obj["type"]
+            if type == "quad":
                 converter = QuadConverter.from_json(converter_obj)
             else:
                 raise ValueError("Invalid converter type")
-        return ViewColumnDefinition(column_name=obj['name'],
-                                    converter=converter)
+        return ViewColumnDefinition(column_name=obj["name"], converter=converter)
 
 
 class ViewDefinition(object):
     @property
-    def sheet_name(self) -> str: return self._sheet_name
+    def sheet_name(self) -> str:
+        return self._sheet_name
 
     @property
     def column_definitions(self) -> List[ViewColumnDefinition]:
         return self._column_definitions
 
     def __init__(self, **kwargs):
-        self._sheet_name = kwargs.get('sheet_name', None)
-        self._column_definitions = kwargs.get('column_definitions', None)
+        self._sheet_name = kwargs.get("sheet_name", None)
+        self._column_definitions = kwargs.get("column_definitions", None)
 
     @staticmethod
     def from_json(obj: dict):
-        return ViewDefinition(sheet_name=str(obj['sheet']),
-                              column_definitions=ViewColumnDefinition.from_json(obj['columns']))
+        return ViewDefinition(
+            sheet_name=str(obj["sheet"]),
+            column_definitions=ViewColumnDefinition.from_json(obj["columns"]),
+        )
