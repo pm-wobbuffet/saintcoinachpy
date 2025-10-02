@@ -12,15 +12,16 @@ class WeatherRate(XivRow):
     WEATHER_CHANGE_INTERVAL = timedelta(hours=8)
 
     @property
-    def possible_weathers(self) -> 'Iterable[Weather]':
+    def possible_weathers(self) -> "Iterable[Weather]":
         return self._possible_weathers
 
     @property
-    def weather_rates(self) -> 'Iterable[Tuple[int, Weather]]':
+    def weather_rates(self) -> "Iterable[Tuple[int, Weather]]":
         return self._weather_rates
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         from .weather import Weather
+
         super(WeatherRate, self).__init__(sheet, source_row)
 
         count = 8
@@ -28,20 +29,23 @@ class WeatherRate(XivRow):
         wr = []  # type: List[Tuple[int, Weather]]
         min = 0
         for i in range(count):
-            weather = cast(Weather, self[('Weather', i)])
+            weather = cast(Weather, self[("Weather", i)])
             if weather.key == 0:
                 continue
-            rate = self.as_int32('Rate', i)
+            rate = self.as_int32("Rate", i)
 
             w += [weather]
             wr += [(min + rate, weather)]
 
             min += rate
-
         self._possible_weathers = list(set(w))
         self._weather_rates = wr
+        # As of sometime in EW, some WeatherRate rows do not have rates that add up to 100
+        # store the sum so we can get a proper weather calculation later
+        # Empyreum, a few other places with rates like this
+        self._weather_rate_sum = min
 
-    def forecast(self, time: EorzeaDateTime) -> 'Weather':
+    def forecast(self, time: EorzeaDateTime) -> "Weather":
         def calc_target(time):
             # Generate a number between [0..99] based on time.
             # Convert the Eorzea date/time into Unix Time.
@@ -59,10 +63,12 @@ class WeatherRate(XivRow):
             step1 = ((calc_base << 11) & 0xFFFFFFFF) ^ calc_base
             step2 = (step1 >> 8) ^ step1
 
-            return (step2 % 100) & 0xFFFFFFFF
+            return (step2 % self._weather_rate_sum) & 0xFFFFFFFF
 
         target = calc_target(time)
-        forecasted_weather = next(dropwhile(lambda x: target >= x[0], self._weather_rates), None)
+        forecasted_weather = next(
+            dropwhile(lambda x: target >= x[0], self._weather_rates), None
+        )
         if forecasted_weather is not None:
             return forecasted_weather[1]
         else:

@@ -34,7 +34,7 @@ class RelationalHeader(Header):
     @property
     def sheet_definition(self) -> "ex.relational.definition.SheetDefinition":
         _def = self.collection.definition.get_sheet(self.name)
-        if not _def.is_processed:
+        if _def is not None and not _def.is_processed:
             _def.post_process(self.columns)
         return self.collection.definition.get_sheet(self.name)
 
