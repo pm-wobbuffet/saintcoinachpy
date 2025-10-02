@@ -4,8 +4,6 @@ import os
 import logging
 import yaml
 
-from pysaintcoinach.ex.relational.definition.exdschema import SchemaSheet
-
 try:
     _SCRIPT_PATH = os.path.abspath(__path__)
 except:
@@ -15,6 +13,7 @@ _SAINTCOINACH_HOME = Path(_SCRIPT_PATH, "..", "SaintCoinach", "SaintCoinach")
 _EXDSCHEMA_HOME = Path(_SCRIPT_PATH, "..", "EXDSchema")
 
 from .ex import Language
+from .ex.relational.definition.exdschema import SchemaSheet
 from .ex.relational.definition import RelationDefinition, SheetDefinition
 from .xiv import XivCollection
 from .pack import PackCollection

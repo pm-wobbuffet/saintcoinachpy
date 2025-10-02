@@ -7,7 +7,7 @@ import operator
 import itertools
 import json
 
-from pysaintcoinach.ex.relational.definition.exdschema import SchemaField, SchemaSheet
+from .exdschema import SchemaField, SchemaSheet
 
 
 class IDataDefinition(object):
