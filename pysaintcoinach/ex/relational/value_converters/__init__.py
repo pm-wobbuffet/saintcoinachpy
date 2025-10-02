@@ -2,14 +2,13 @@ from typing import List, Dict
 import json
 from collections import OrderedDict
 
-from pysaintcoinach.ex.relational.definition.exdschema import SchemaField
-
 from ...datasheet import IDataRow
 from ..sheet import IRelationalRow
 from ..valueconverter import IValueConverter
 from ..excollection import ExCollection
 from .complexlinkconverter import ComplexLinkConverter
 from ..definition import SheetDefinition
+from ..definition.exdschema import SchemaField
 
 
 class ColorConverter(IValueConverter):
