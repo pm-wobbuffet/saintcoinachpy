@@ -69,11 +69,17 @@ class ColumnProjection(IProjectable):
 class LinkCondition(object):
     def __init__(self, **kwargs):
         self.key_column_name = kwargs.get("key_column_name", None)  # type: str
-        self.key_column_index = kwargs.get("key_column_index", 0)  # type: int
+        self.key_column_index = kwargs.get("key_column_index", -1)  # type: int
+        self.key_column_offset_index = -1
         self.value = kwargs.get("value", None)  # type: object
         self.__value_type_changed = False
 
     def match(self, row: IDataRow) -> bool:
+        # Translate column index to offset-based index
+        if self.key_column_index == -1:
+            for c in row.sheet.header.columns:
+                if c.offset_index == self.key_column_offset_index:
+                    self.key_column_index = c.index
         row_value = row[self.key_column_index]
         if not self.__value_type_changed and row_value is not None:
             self.value = cast(type(row_value), self.value)
@@ -255,5 +261,5 @@ class ComplexLinkConverter(IValueConverter):
                         "Can't find conditional key column '%s' in sheet '%s'"
                         % (link.when.key_column_name, sheet_def.name)
                     )
-
-                link.when.key_column_index = key_definition.index
+                link.when.key_column_offset_index = key_definition.offset_index
+                # link.when.key_column_index = key_definition.index
