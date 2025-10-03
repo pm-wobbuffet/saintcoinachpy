@@ -9,38 +9,41 @@ from typing import cast
 class ClassJob(XivRow):
     ICON_OFFSET = 62000
     FRAMED_ICON_OFFSET = 62100
-    ICON_FORMAT = 'ui/icon/{0:3u}000/{1:6u}.tex'
+    ICON_FORMAT = "ui/icon/{0:3u}000/{1:6u}.tex"
 
     @property
     def name(self) -> text.XivString:
-        return self.as_string('Name')
+        return self.as_string("Name")
 
     @property
     def abbreviation(self) -> text.XivString:
-        return self.as_string('Abbreviation')
+        return self.as_string("Abbreviation")
 
     @property
-    def class_job_category(self) -> 'ClassJobCategory':
+    def class_job_category(self) -> "ClassJobCategory":
         from .class_job_category import ClassJobCategory
+
         return self.as_T(ClassJobCategory)
 
     @property
-    def parent_class_job(self) -> 'ClassJob':
-        return self.as_T(ClassJob, 'ClassJob{Parent}')
+    def parent_class_job(self) -> "ClassJob":
+        return self.as_T(ClassJob, "ClassJobParent")
 
     @property
-    def starting_weapon(self) -> 'Item':
+    def starting_weapon(self) -> "Item":
         from .item import Item
-        return self.as_T(Item, 'Item{StartingWeapon}')
+
+        return self.as_T(Item, "ItemStartingWeapon")
 
     @property
-    def soul_crystal(self) -> 'Item':
+    def soul_crystal(self) -> "Item":
         from .item import Item
-        return self.as_T(Item, 'Item{SoulCrystal}')
+
+        return self.as_T(Item, "ItemSoulCrystal")
 
     @property
     def starting_level(self) -> int:
-        return self.get_raw('StartingLevel') & 0xFF
+        return self.get_raw("StartingLevel") & 0xFF
 
     @property
     def icon(self) -> ImageFile:

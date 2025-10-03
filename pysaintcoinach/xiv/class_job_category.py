@@ -9,10 +9,10 @@ class ClassJobCategory(XivRow):
 
     @property
     def name(self) -> text.XivString:
-        return self.as_string('Name')
+        return self.as_string("Name")
 
     @property
-    def class_jobs(self) -> 'Iterable[ClassJob]':
+    def class_jobs(self) -> "Iterable[ClassJob]":
         if self.__class_jobs is None:
             self.__class_jobs = self.__build_class_jobs()
         return self.__class_jobs
@@ -25,7 +25,7 @@ class ClassJobCategory(XivRow):
         COLUMN_OFFSET = 1
 
         cjs = []
-        cj_sheet = self.sheet.collection.get_sheet('ClassJob')
+        cj_sheet = self.sheet.collection.get_sheet("ClassJob")
         for cj in cj_sheet:
             is_valid = self[COLUMN_OFFSET + cj.key]
             if is_valid:
