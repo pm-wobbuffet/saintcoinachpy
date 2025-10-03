@@ -8,24 +8,17 @@ class FishParameter(XivRow):
 
     @property
     def text(self) -> text.XivString:
-        return self.as_string('Text')
+        return self.as_string("Text")
 
     @property
-    def item(self) -> 'Item':
+    def item(self) -> "Item":
         from .item import Item
-        return self.as_T(Item, 'Item')
+
+        return self.as_T(Item, "Item")
 
     @property
     def is_in_log(self) -> bool:
-        return self.as_boolean('IsInLog')
-
-    @property
-    def time_restricted(self) -> bool:
-        return self.as_boolean('TimeRestricted')
-
-    @property
-    def weather_restricted(self) -> bool:
-        return self.as_boolean('WeatherRestricted')
+        return self.as_boolean("IsInLog")
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(FishParameter, self).__init__(sheet, source_row)

@@ -9,22 +9,22 @@ class FccShop(XivRow, IShop):
 
     @property
     def name(self) -> str:
-        return str(self.as_string('Name'))
+        return str(self.as_string("Name"))
 
     @property
-    def enpcs(self) -> 'Iterable[ENpc]':
+    def enpcs(self) -> "Iterable[ENpc]":
         if self.__enpcs is None:
             self.__enpcs = self.__build_enpcs()
         return self.__enpcs
 
     @property
-    def shop_listings(self) -> 'Iterable[IShopListing]':
+    def shop_listings(self) -> "Iterable[IShopListing]":
         if self.__shop_listings is None:
             self.__shop_listings = self.__build_shop_listings()
         return self.__shop_listings
 
     @property
-    def items(self) -> 'Iterable[Item]':
+    def items(self) -> "Iterable[Item]":
         if self.__items is None:
             self.__items = self.__build_items()
         return self.__items
@@ -49,12 +49,12 @@ class FccShop(XivRow, IShop):
         cost_item = self.sheet.collection.get_sheet(Item)[COST_ITEM]
         listings = []  # type: List[IShopListing]
         for i in range(self.ITEM_COUNT):
-            item = self.as_T(Item, 'Item', i)
+            item = self.as_T(Item, "Item", i)
             if item is None or item.key == 0:
                 continue
 
-            cost = self.as_int32('Cost', i)
-            required_rank = self.as_T(FCRank, 'FCRank{Required}', i)
+            cost = self.as_int32("Cost", i)
+            required_rank = self.as_T(FCRank, "FCRankRequired", i)
 
             listings.append(FccShop.Listing(self, item, cost_item, cost, required_rank))
         return listings
@@ -64,35 +64,41 @@ class FccShop(XivRow, IShop):
 
         items = []  # type: List[Item]
         for i in range(self.ITEM_COUNT):
-            item = self.as_T(Item, 'Item', i)
+            item = self.as_T(Item, "Item", i)
             if item is not None and item.key != 0:
                 items.append(item)
         return items
 
     class Listing(IShopListing):
 
-        def __init__(self,
-                     shop: 'FccShop',
-                     reward_item: 'Item',
-                     cost_item: 'Item',
-                     cost_count: int,
-                     required_fc_rank: 'FCRank'):
+        def __init__(
+            self,
+            shop: "FccShop",
+            reward_item: "Item",
+            cost_item: "Item",
+            cost_count: int,
+            required_fc_rank: "FCRank",
+        ):
             from .shop_listing_item import ShopListingItem
 
             self._shop = shop  # type: IShop
-            self._cost = ShopListingItem(self, cost_item, cost_count, False, 0)  # type: IShopListingItem
-            self._reward = ShopListingItem(self, reward_item, 1, False, 0)  # type: IShopListingItem
+            self._cost = ShopListingItem(
+                self, cost_item, cost_count, False, 0
+            )  # type: IShopListingItem
+            self._reward = ShopListingItem(
+                self, reward_item, 1, False, 0
+            )  # type: IShopListingItem
 
         @property
-        def costs(self) -> 'Iterable[IShopListingItem]':
+        def costs(self) -> "Iterable[IShopListingItem]":
             yield self._cost
 
         @property
-        def rewards(self) -> 'Iterable[IShopListingItem]':
+        def rewards(self) -> "Iterable[IShopListingItem]":
             yield self._reward
 
         @property
-        def shops(self) -> 'Iterable[IShop]':
+        def shops(self) -> "Iterable[IShop]":
             yield self._shop
 
     def __str__(self):
