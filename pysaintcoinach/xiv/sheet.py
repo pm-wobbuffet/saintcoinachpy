@@ -1,5 +1,16 @@
 from abc import abstractmethod
-from typing import Union, Type, TypeVar, List, Tuple, Dict, Iterable, Iterator, Any, cast
+from typing import (
+    Union,
+    Type,
+    TypeVar,
+    List,
+    Tuple,
+    Dict,
+    Iterable,
+    Iterator,
+    Any,
+    cast,
+)
 import sys
 
 from ..ex.relational.sheet import IRelationalRow, IRelationalSheet
@@ -12,42 +23,50 @@ from ..util import ConcurrentDictionary
 class IXivRow(IRelationalRow):
     @property
     @abstractmethod
-    def source_row(self) -> IRelationalRow: pass
+    def source_row(self) -> IRelationalRow:
+        pass
 
     @property
     @abstractmethod
-    def sheet(self) -> 'IXivSheet': pass
+    def sheet(self) -> "IXivSheet":
+        pass
 
 
 class IXivSubRow(IXivRow):
     @property
     @abstractmethod
-    def parent_row(self) -> 'IRow': pass
+    def parent_row(self) -> "IRow":
+        pass
 
     @property
     @abstractmethod
-    def parent_key(self) -> int: pass
+    def parent_key(self) -> int:
+        pass
 
 
-T = TypeVar('T', bound=IXivRow)
-T_cls = TypeVar('T_cls')
+T = TypeVar("T", bound=IXivRow)
+T_cls = TypeVar("T_cls")
 
 
 class IXivSheet(IRelationalSheet[T]):
     @property
     @abstractmethod
-    def collection(self) -> 'xiv.XivCollection': pass
+    def collection(self) -> "xiv.XivCollection":
+        pass
 
     @abstractmethod
-    def __getitem__(self, row: int) -> T: pass
+    def __getitem__(self, row: int) -> T:
+        pass
 
 
 class XivRow(IXivRow):
     @property
-    def source_row(self): return self.__source_row
+    def source_row(self):
+        return self.__source_row
 
     @property
-    def sheet(self) -> IXivSheet: return self.__sheet
+    def sheet(self) -> IXivSheet:
+        return self.__sheet
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         self.__sheet = sheet
@@ -60,9 +79,12 @@ class XivRow(IXivRow):
         return str(self)
 
     @property
-    def default_value(self): return self.__source_row.default_value
+    def default_value(self):
+        return self.__source_row.default_value
 
-    def __getitem__(self, item: Union[int, str, Tuple[str, int], Tuple[str, int, int]]) -> Any:
+    def __getitem__(
+        self, item: Union[int, str, Tuple[str, int], Tuple[str, int, int]]
+    ) -> Any:
         if isinstance(item, tuple):
             return self.__source_row[self.build_column_name(item[0], *item[1:])]
         return self.__source_row[item]
@@ -75,11 +97,12 @@ class XivRow(IXivRow):
         return self.__source_row.get_raw(column_name)
 
     @property
-    def key(self) -> int: return self.__source_row.key
+    def key(self) -> int:
+        return self.__source_row.key
 
     @staticmethod
     def build_column_name(column: str, *indices: int) -> str:
-        return column + ''.join(['[%u]' % i for i in indices])
+        return column + "".join(["[%u]" % i for i in indices])
 
     def as_image(self, column: str, *indices: int) -> imaging.ImageFile:
         if len(indices) > 0:
@@ -132,7 +155,9 @@ class XivRow(IXivRow):
         input = int(self[column]).to_bytes(4, sys.byteorder, signed=False)
         return [v & 0xFF for v in input]
 
-    def as_T(self, t_cls: Type[T_cls], column: str = None, *indices: int) -> T_cls:
+    def as_T(
+        self, t_cls: Type[T_cls], column: str | None = None, *indices: int
+    ) -> T_cls:
         if column is None:
             column = t_cls.__name__
         if len(indices) > 0:
@@ -145,22 +170,23 @@ class XivRow(IXivRow):
 
 
 class XivSheet(IXivSheet[T]):
-    def __init__(self,
-                 t_cls: Type[T],
-                 collection: 'xiv.XivCollection',
-                 source: IRelationalSheet):
+    def __init__(
+        self, t_cls: Type[T], collection: "xiv.XivCollection", source: IRelationalSheet
+    ):
         self.__t_cls = t_cls
         self.__rows = ConcurrentDictionary()  # type: ConcurrentDictionary[int, T]
         self.__collection = collection
         self.__source = source
 
     @property
-    def collection(self) -> 'xiv.XivCollection':
+    def collection(self) -> "xiv.XivCollection":
         return self.__collection
 
     def __iter__(self) -> Iterator[T]:
         for src_row in self.__source:
-            yield self.__rows.get_or_add(src_row.key, lambda k: self._create_row(src_row))
+            yield self.__rows.get_or_add(
+                src_row.key, lambda k: self._create_row(src_row)
+            )
 
     def _create_row(self, source_row: IRelationalRow) -> T:
         return cast(T, self.__t_cls(self, source_row))
@@ -173,6 +199,7 @@ class XivSheet(IXivSheet[T]):
                 return self._create_row(self.__source[key])
 
             return self.__rows.get_or_add(key, _add_value)
+
         if isinstance(item, tuple):
             return get_row(item[0])[item[1]]
         else:
@@ -182,17 +209,22 @@ class XivSheet(IXivSheet[T]):
         return self.__source.indexed_lookup(index, key)
 
     @property
-    def name(self): return self.__source.name
+    def name(self):
+        return self.__source.name
 
     @property
-    def header(self): return self.__source.header
+    def header(self):
+        return self.__source.header
 
-    def __len__(self): return len(self.__source)
+    def __len__(self):
+        return len(self.__source)
 
-    def __contains__(self, item): return item in self.__source
+    def __contains__(self, item):
+        return item in self.__source
 
     @property
-    def keys(self): return self.__source.keys
+    def keys(self):
+        return self.__source.keys
 
 
 class XivSubRow(XivRow, IXivSubRow):
@@ -201,23 +233,25 @@ class XivSubRow(XivRow, IXivSubRow):
         self._source_sub_row = source_row  # type: SubRow
 
     @property
-    def full_key(self): return self._source_sub_row.full_key
+    def full_key(self):
+        return self._source_sub_row.full_key
 
     @property
-    def parent_row(self): return self._source_sub_row.parent_row
+    def parent_row(self):
+        return self._source_sub_row.parent_row
 
     @property
-    def parent_key(self): return self._source_sub_row.parent_row.key
+    def parent_key(self):
+        return self._source_sub_row.parent_row.key
 
 
-T = TypeVar('T', bound=IXivSubRow)
+T = TypeVar("T", bound=IXivSubRow)
 
 
 class XivSheet2(XivSheet[T]):
-    def __init__(self,
-                 t_cls: Type[T],
-                 collection: 'xiv.XivCollection',
-                 source: IRelationalSheet):
+    def __init__(
+        self, t_cls: Type[T], collection: "xiv.XivCollection", source: IRelationalSheet
+    ):
         self.__t_cls = t_cls
         self.__sub_rows = {}  # type: Dict[Tuple[int, int], T]
         self.__source = source
@@ -235,7 +269,8 @@ class XivSheet2(XivSheet[T]):
 
     def __len__(self):
         import operator
-        return sum(map(operator.attrgetter('sub_row_count'), self.__source))
+
+        return sum(map(operator.attrgetter("sub_row_count"), self.__source))
 
     def _create_sub_row(self, source_row: IRelationalRow) -> T:
         return self.__t_cls(self, source_row)

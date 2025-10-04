@@ -8,21 +8,27 @@ Special thanks to @[xivapi](https://github.com/xivapi) and all contributors to t
 
 ## Functionality
 
+### EXDSchema support
+
+-   Moved from the old SaintCoinach, json based schema definitions to the @[EXDSchema](https://github.com/xivdev/EXDSchema) format
+-   Retained the functionality mentioned below
+
 ### Fully implemented and maintained
 
-* Extraction of files from the game's SqPack files based on their friendly name (or by identifiers, if preferred).
-* Conversion of the game's textures to `PIL`-based objects, using `Pillow`.
-* Parsing and reading from the game's data files (`*.exh` and `*.exd`).
-* Decoding of OGG files stored in the game's pack files.
+-   Extraction of files from the game's SqPack files based on their friendly name (or by identifiers, if preferred).
+-   Conversion of the game's textures to `PIL`-based objects, using `Pillow`.
+-   Parsing and reading from the game's data files (`*.exh` and `*.exd`).
+-   Decoding of OGG files stored in the game's pack files.
 
 ### Partially implemented
 
-* OO-representation of select game data.
-* Decoding of the string format used by the game.
+-   OO-representation of select game data.
+-   Decoding of the string format used by the game.
 
 ### Not implemented or ported
 
-* Self-updating feature. This port relies on the original Saint Coinach library for mappings.
+-   Self-updating feature. This port relies on the EXDSchema library for mappings.
+-   Handling of the "relations" fields within EXDSchema to group certain items (i.e. ReceiveItem and ItemCost from SpecialShop.yml)
 
 ## Cloning this Repo
 
@@ -114,15 +120,15 @@ Aside from this readme, there's not much in the way of function documentation. A
 
 ## xivshell Module
 
-The `xivshell` module is a Python port of `SaintCoinach.Cmd`.  It is a very basic console application that can be used to extract various assets. The following commands are currently supported:
+The `xivshell` module is a Python port of `SaintCoinach.Cmd`. It is a very basic console application that can be used to extract various assets. The following commands are currently supported:
 
-* `lang`: Displays or changes the language used for data files. Valid arguments are: `ja` (Japanese), `en` (English), `de` (German), or `fr` (French). If no argument is supplied, the currently used language is shown.
-* `raw`: Exports a file from the game assets without any conversions. The argument should be the friendly name of the file.
-* `image`: Exports a file from the game assets as a PNG-image. The argument should be the friendly name of the image file.
-* `ui`: Exports one or multiple UI icons as PNG-images. The argument can either be the number of a single UI icon, or the first and last number for a range of icons separated by a space. Valid numbers are in the interval \[0, 999999\].
-* `exd`: Exports all or a specified number of game data sheets as CSV-files. Arguments can either be empty to export all files, or a list of sheet names separated by whitespace.
-* `rawexd`: Exports all or a specified number of game data sheets as CSV-files without post-processing applied. Arguments can either be empty to export all files, or a list of sheet names separated by whitespace.
-* `bgm`: Exports all sound files referenced in the BGM sheet as OGG-files.
+-   `lang`: Displays or changes the language used for data files. Valid arguments are: `ja` (Japanese), `en` (English), `de` (German), or `fr` (French). If no argument is supplied, the currently used language is shown.
+-   `raw`: Exports a file from the game assets without any conversions. The argument should be the friendly name of the file.
+-   `image`: Exports a file from the game assets as a PNG-image. The argument should be the friendly name of the image file.
+-   `ui`: Exports one or multiple UI icons as PNG-images. The argument can either be the number of a single UI icon, or the first and last number for a range of icons separated by a space. Valid numbers are in the interval \[0, 999999\].
+-   `exd`: Exports all or a specified number of game data sheets as CSV-files. Arguments can either be empty to export all files, or a list of sheet names separated by whitespace.
+-   `rawexd`: Exports all or a specified number of game data sheets as CSV-files without post-processing applied. Arguments can either be empty to export all files, or a list of sheet names separated by whitespace.
+-   `bgm`: Exports all sound files referenced in the BGM sheet as OGG-files.
 
 ## Contributing to the code base
 

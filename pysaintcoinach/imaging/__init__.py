@@ -29,21 +29,28 @@ class ImageFormat(Enum):
 
     Dxt1 = 0x3420
     Dxt3 = 0x3430
+    Dxt4 = 0x6210
     Dxt5 = 0x3431
+    Dxt6H = 0x6330
+    Dxt7 = 0x6432
 
 
 class ImageHeader(object):
     @property
-    def width(self) -> int: return self.__width
+    def width(self) -> int:
+        return self.__width
 
     @property
-    def height(self) -> int: return self.__height
+    def height(self) -> int:
+        return self.__height
 
     @property
-    def imgformat(self) -> ImageFormat: return self.__imgformat
+    def imgformat(self) -> ImageFormat:
+        return self.__imgformat
 
     @property
-    def end_of_header(self) -> int: return self.__end_of_header
+    def end_of_header(self) -> int:
+        return self.__end_of_header
 
     def __init__(self, stream: io.RawIOBase):
         LENGTH = 0x50
@@ -55,11 +62,11 @@ class ImageHeader(object):
         if len(self._buffer) != LENGTH:
             raise EOFError
 
-        self.__width, = struct.unpack_from('<h', self._buffer, WIDTH_OFFSET)
-        self.__height, = struct.unpack_from('<h', self._buffer, HEIGHT_OFFSET)
-        self.__imgformat = ImageFormat(struct.unpack_from('<h',
-                                                          self._buffer,
-                                                          FORMAT_OFFSET)[0])
+        (self.__width,) = struct.unpack_from("<h", self._buffer, WIDTH_OFFSET)
+        (self.__height,) = struct.unpack_from("<h", self._buffer, HEIGHT_OFFSET)
+        self.__imgformat = ImageFormat(
+            struct.unpack_from("<h", self._buffer, FORMAT_OFFSET)[0]
+        )
         self.__end_of_header = stream.tell()
 
     def get_buffer(self) -> bytes:
@@ -68,20 +75,22 @@ class ImageHeader(object):
 
 class ImageFile(File):
     @property
-    def image_header(self) -> ImageHeader: return self.__image_header
+    def image_header(self) -> ImageHeader:
+        return self.__image_header
 
     @property
-    def width(self) -> int: return self.image_header.width
+    def width(self) -> int:
+        return self.image_header.width
 
     @property
-    def height(self) -> int: return self.image_header.height
+    def height(self) -> int:
+        return self.image_header.height
 
     @property
-    def imgformat(self) -> ImageFormat: return self.image_header.imgformat
+    def imgformat(self) -> ImageFormat:
+        return self.image_header.imgformat
 
-    def __init__(self,
-                 pack: Pack,
-                 common_header: FileCommonHeader):
+    def __init__(self, pack: Pack, common_header: FileCommonHeader):
         super(ImageFile, self).__init__(pack, common_header)
         self.__buffer_cache = None  # type: bytes
         self.__image_cache = None  # type: object
@@ -113,7 +122,7 @@ class ImageFile(File):
         source_stream = self._get_source_stream()
         offsets = self._get_block_offsets()
 
-        data = b''
+        data = b""
         with io.BytesIO() as data_stream:
             for offset in offsets:
                 source_stream.seek(self.image_header.end_of_header + offset)
@@ -126,15 +135,13 @@ class ImageFile(File):
         ENTRY_LENGTH = 0x14
         BLOCK_INFO_OFFSET = 0x18
 
-        count, = struct.unpack_from('<h',
-                                    self.common_header._buffer,
-                                    COUNT_OFFSET)
+        (count,) = struct.unpack_from("<h", self.common_header._buffer, COUNT_OFFSET)
         current_offset = 0
         offsets = []  # type: List[int]
 
         i = BLOCK_INFO_OFFSET + count * ENTRY_LENGTH
         while i + 2 <= len(self.common_header._buffer):
-            _len, = struct.unpack_from('<H', self.common_header._buffer, i)
+            (_len,) = struct.unpack_from("<H", self.common_header._buffer, i)
             if _len == 0:
                 break
             offsets += [current_offset]
@@ -152,7 +159,7 @@ class _ImageConverter(object):
     def __new__(cls, *args):
         super().__new__(cls, *args)
         cls.Preprocessors = {
-            #ImageFormat.A16R16G16B16Float: cls.process_A16R16G16B16Float,
+            # ImageFormat.A16R16G16B16Float: cls.process_A16R16G16B16Float,
             ImageFormat.A1R5G5B5: cls.process_A1R5G5B5,
             ImageFormat.A4R4G4B4: cls.process_A4R4G4B4,
             ImageFormat.A8R8G8B8_1: cls.process_A8R8G8B8,
@@ -190,24 +197,28 @@ class _ImageConverter(object):
     @classmethod
     def process_A1R5G5B5(cls, src: bytes, width: int, height: int):
         dst = bytearray()
-        for v, in struct.iter_unpack('H', src):
+        for (v,) in struct.iter_unpack("H", src):
             a = v & 0x8000
             r = v & 0x7C00
             g = v & 0x03E0
             b = v & 0x001F
 
-            rgb = ((r << 9) | (g << 6) | (b << 3))
-            argb_value = (a * 0x1FE00 | rgb | ((rgb >> 5) & 0x070707))
+            rgb = (r << 9) | (g << 6) | (b << 3)
+            argb_value = a * 0x1FE00 | rgb | ((rgb >> 5) & 0x070707)
             # dst += bytes([(argb_value      ) & 0xFF,
             #               (argb_value >>  8) & 0xFF,
             #               (argb_value >> 16) & 0xFF,
             #               (argb_value >> 24) & 0xFF])
-            dst += bytes([(argb_value >> 16) & 0xFF,  # R
-                          (argb_value >>  8) & 0xFF,  # G
-                          (argb_value      ) & 0xFF,  # B
-                          (argb_value >> 24) & 0xFF]) # A
+            dst += bytes(
+                [
+                    (argb_value >> 16) & 0xFF,  # R
+                    (argb_value >> 8) & 0xFF,  # G
+                    (argb_value) & 0xFF,  # B
+                    (argb_value >> 24) & 0xFF,
+                ]
+            )  # A
 
-        image = Image.frombytes('RGBA', (width, height), bytes(dst))
+        image = Image.frombytes("RGBA", (width, height), bytes(dst))
         return image
 
         # dst += struct.pack('<4sLLLL56xLL4xLLLLLL16x',
@@ -218,17 +229,21 @@ class _ImageConverter(object):
     @classmethod
     def process_A4R4G4B4(cls, src: bytes, width: int, height: int):
         dst = bytearray()
-        for v, in struct.iter_unpack('H', src):
+        for (v,) in struct.iter_unpack("H", src):
             # dst += bytes([((v      ) & 0x0F) << 4,
             #               ((v >>  4) & 0x0F) << 4,
             #               ((v >>  8) & 0x0F) << 4,
             #               ((v >> 12) & 0x0F) << 4])
-            dst += bytes([((v >>  8) & 0x0F) << 4,
-                          ((v >>  4) & 0x0F) << 4,
-                          ((v      ) & 0x0F) << 4,
-                          ((v >> 12) & 0x0F) << 4])
+            dst += bytes(
+                [
+                    ((v >> 8) & 0x0F) << 4,
+                    ((v >> 4) & 0x0F) << 4,
+                    ((v) & 0x0F) << 4,
+                    ((v >> 12) & 0x0F) << 4,
+                ]
+            )
 
-        image = Image.frombytes('RGBA', (width, height), bytes(dst))
+        image = Image.frombytes("RGBA", (width, height), bytes(dst))
         return image
 
         # dst += struct.pack('<4sLLLL56xLL4xLLLLLL16x',
@@ -243,20 +258,33 @@ class _ImageConverter(object):
         #                    32, 0x41, 32, 0xFF0000, 0xFF00, 0xFF, 0xFF000000, 0x1000)
         # dst += src
         dst = bytearray()
-        for v, in struct.iter_unpack('L', src):
-            dst += bytes([((v >> 16) & 0xFF),
-                          ((v >>  8) & 0xFF),
-                          ((v      ) & 0xFF),
-                          ((v >> 24) & 0xFF)])
-        image = Image.frombytes('RGBA', (width, height), bytes(dst))
+        for (v,) in struct.iter_unpack("L", src):
+            dst += bytes(
+                [
+                    ((v >> 16) & 0xFF),
+                    ((v >> 8) & 0xFF),
+                    ((v) & 0xFF),
+                    ((v >> 24) & 0xFF),
+                ]
+            )
+        image = Image.frombytes("RGBA", (width, height), bytes(dst))
         return image
 
     @classmethod
     def process_Dxt1(cls, src: bytes, width: int, height: int):
         dst = bytearray()
-        dst += struct.pack('<4sLLLL56xLL4s20xL16x',
-                           b'DDS ', 124, 0x1007, height, width,
-                           32, 0x04, b'DXT1', 0x1000)
+        dst += struct.pack(
+            "<4sLLLL56xLL4s20xL16x",
+            b"DDS ",
+            124,
+            0x1007,
+            height,
+            width,
+            32,
+            0x04,
+            b"DXT1",
+            0x1000,
+        )
         dst += src
         image = Image.open(BytesIO(dst))
         return image
@@ -264,9 +292,18 @@ class _ImageConverter(object):
     @classmethod
     def process_Dxt3(cls, src: bytes, width: int, height: int):
         dst = bytearray()
-        dst += struct.pack('<4sLLLL56xLL4s20xL16x',
-                           b'DDS ', 124, 0x1007, height, width,
-                           32, 0x04, b'DXT3', 0x1000)
+        dst += struct.pack(
+            "<4sLLLL56xLL4s20xL16x",
+            b"DDS ",
+            124,
+            0x1007,
+            height,
+            width,
+            32,
+            0x04,
+            b"DXT3",
+            0x1000,
+        )
         dst += src
         image = Image.open(BytesIO(dst))
         return image
@@ -274,9 +311,18 @@ class _ImageConverter(object):
     @classmethod
     def process_Dxt5(cls, src: bytes, width: int, height: int):
         dst = bytearray()
-        dst += struct.pack('<4sLLLL56xLL4s20xL16x',
-                           b'DDS ', 124, 0x1007, height, width,
-                           32, 0x04, b'DXT5', 0x1000)
+        dst += struct.pack(
+            "<4sLLLL56xLL4s20xL16x",
+            b"DDS ",
+            124,
+            0x1007,
+            height,
+            width,
+            32,
+            0x04,
+            b"DXT5",
+            0x1000,
+        )
         dst += src
         image = Image.open(BytesIO(dst))
         return image
@@ -284,7 +330,7 @@ class _ImageConverter(object):
     @classmethod
     def process_R3G3B2(cls, src: bytes, width: int, height: int):
         dst = bytearray()
-        for v, in struct.iter_unpack('B', src):
+        for (v,) in struct.iter_unpack("B", src):
             r = v & 0xE0
             g = v & 0x1C
             b = v & 0x03
@@ -293,14 +339,18 @@ class _ImageConverter(object):
             #               (g | (g << 3) | (g << 6)) & 0xFF,
             #               (r | (r << 3) | (r << 6)) & 0xFF,
             #               0xFF])
-            dst += bytes([(r | (r << 3) | (r << 6)) & 0xFF,
-                          (g | (g << 3) | (g << 6)) & 0xFF,
-                          (b | (b << 2) | (b << 4) | (b << 6)) & 0xFF])
+            dst += bytes(
+                [
+                    (r | (r << 3) | (r << 6)) & 0xFF,
+                    (g | (g << 3) | (g << 6)) & 0xFF,
+                    (b | (b << 2) | (b << 4) | (b << 6)) & 0xFF,
+                ]
+            )
         # dst += struct.pack('<4sLLLL56xLL4xLLLLLL16x',
         #                    b'DDS ', 124, 0x1007, height, width,
         #                    32, 0x02, 8, 0, 0, 0, 0xFF, 0x1000)
         # dst += src
-        image = Image.frombytes('RGB', (width, height), bytes(dst))
+        image = Image.frombytes("RGB", (width, height), bytes(dst))
         return image
 
 

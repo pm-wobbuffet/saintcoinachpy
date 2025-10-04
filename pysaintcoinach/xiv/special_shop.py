@@ -8,30 +8,31 @@ from typing import Iterable
 class SpecialShopListing(IShopListing):
 
     @property
-    def special_shop(self) -> 'SpecialShop':
+    def special_shop(self) -> "SpecialShop":
         return self.__special_shop
 
     # @property
     # def quest(self):
     #     return self.__quest
 
-    def __init__(self, shop: 'SpecialShop', index: int):
+    def __init__(self, shop: "SpecialShop", index: int):
         from .item import Item
         from .shop_listing_item import ShopListingItem
+
         self.__special_shop = shop
 
         REWARD_COUNT = 2
         rewards = []
         for i in range(REWARD_COUNT):
-            item = shop.as_T(Item, 'Item{Receive}', index, i)
+            item = shop.as_T(Item, "Item", index, i)
             if item.key == 0:
                 continue
 
-            count = shop.as_int32('Count{Receive}', index, i)
+            count = shop.as_int32("ReceiveCount", index, i)
             if count == 0:
                 continue
 
-            hq = shop.as_boolean('HQ{Receive}', index, i)
+            hq = shop.as_boolean("ReceiveHq", index, i)
 
             rewards.append(ShopListingItem(self, item, count, hq, 0))
         self.__rewards = rewards
@@ -40,30 +41,30 @@ class SpecialShopListing(IShopListing):
         COST_COUNT = 3
         costs = []
         for i in range(COST_COUNT):
-            item = shop.as_T(Item, 'Item{Cost}', index, i)
+            item = shop.as_T(Item, "ItemCost", index, i)
             if item.key == 0:
                 continue
 
-            count = shop.as_int32('Count{Cost}', index, i)
+            count = shop.as_int32("CurrencyCost", index, i)
             if count == 0:
                 continue
 
-            hq = shop.as_boolean('HQ{Cost}', index, i)
-            collectability_rating = shop.as_int16('CollectabilityRating{Cost}', index, i)
+            hq = shop.as_boolean("HqCost", index, i)
+            collectability_rating = shop.as_int16("CollectabilityCost", index, i)
 
             costs.append(ShopListingItem(self, item, count, hq, collectability_rating))
         self.__costs = costs
 
     @property
-    def rewards(self) -> 'Iterable[IShopListingItem]':
+    def rewards(self) -> "Iterable[IShopListingItem]":
         return self.__rewards
 
     @property
-    def costs(self) -> 'Iterable[IShopListingItem]':
+    def costs(self) -> "Iterable[IShopListingItem]":
         return self.__costs
 
     @property
-    def shops(self) -> 'Iterable[IShop]':
+    def shops(self) -> "Iterable[IShop]":
         yield self.special_shop
 
 
@@ -71,7 +72,7 @@ class SpecialShopListing(IShopListing):
 class SpecialShop(XivRow, IShop, IItemSource):
 
     @property
-    def _items(self) -> 'Iterable[SpecialShopListing]':
+    def _items(self) -> "Iterable[SpecialShopListing]":
         if self.__shop_items is None:
             self.__shop_items = self.__build_shop_items()
         return self.__shop_items
@@ -84,16 +85,16 @@ class SpecialShop(XivRow, IShop, IItemSource):
 
     @property
     def name(self) -> str:
-        return str(self.as_string('Name'))
+        return str(self.as_string("Name"))
 
     @property
-    def enpcs(self) -> 'Iterable[ENpc]':
+    def enpcs(self) -> "Iterable[ENpc]":
         if self.__enpcs is None:
             self.__enpcs = self.__build_enpcs()
         return self.__enpcs
 
     @property
-    def shop_listings(self) -> 'Iterable[IShopListing]':
+    def shop_listings(self) -> "Iterable[IShopListing]":
         return self._items
 
     def __str__(self):
@@ -114,8 +115,11 @@ class SpecialShop(XivRow, IShop, IItemSource):
         return items
 
     @property
-    def items(self) -> 'Iterable[Item]':
+    def items(self) -> "Iterable[Item]":
         from itertools import chain
+
         if self.__item_source_items is None:
-            self.__item_source_items = [r.item for r in chain.from_iterable([i.rewards for i in self._items])]
+            self.__item_source_items = [
+                r.item for r in chain.from_iterable([i.rewards for i in self._items])
+            ]
         return self.__item_source_items
