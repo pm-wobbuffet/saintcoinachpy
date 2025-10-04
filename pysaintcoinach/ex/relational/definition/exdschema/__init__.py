@@ -2,7 +2,14 @@ from typing import List
 from copy import deepcopy
 
 
-def add_field(field_list, field: dict, parent_chain) -> None:
+def add_field(field_list: List, field: dict, parent_chain: List) -> None:
+    """Add an exdschema field to the array of parsed fields
+
+    Args:
+        field_list (List): The final returned field list
+        field (dict): The field being parsed
+        parent_chain (List): The current chain of parent fields for the given field
+    """
     if field.get("type") == "array":
         if field.get("fields", None) is None:
             # if you get an array without a field list, just repeat scalars
@@ -22,35 +29,55 @@ def add_field(field_list, field: dict, parent_chain) -> None:
 
 
 class SchemaSheet:
+    """An EXDSchema sheet in class form"""
 
     @property
-    def name(self):
+    def name(self) -> str:
+        """
+        The name of the sheet as specified in the EXDSchema
+        """
         return self.__name
 
     @property
     def display_field(self):
+        """
+        If given, the primary column used to display this sheet's rows when accessed
+        """
         return self.__display_field
 
     @display_field.setter
-    def display_field(self, value):
+    def display_field(self, value: str) -> None:
         self.__display_field = value
 
     @property
     def fields(self) -> List:
+        """The valid fields contained within this sheet"""
         return self.__fields
 
     @property
     def relations(self) -> List:
+        """
+        The list of relation objects contained within this sheet.
+        A relation is considered a grouping of items with some related purpose,
+        i.e. the ReceiveItems and ItemCost relations in SpecialShop.yml"""
         return self.__relations
 
     def process_yaml_fields(self, flist: List[dict]):
+        """
+        Take a given set of fields and process them into a field List suitable for use in the library
+
+        Args:
+            flist (List[dict]): the list of field objects from the yaml decoder
+        """
         fields = []
         for field in flist:
             add_field(fields, field, [])
-        self.__fields = fields
+
         # Now that all the array fields are expanded into scalars, assign an index
-        for i in range(len(self.__fields)):
-            self.__fields[i].index = i
+        for i, field in enumerate(fields):
+            field.index = i
+
+        self.__fields = fields
 
     def __init__(
         self,
@@ -68,8 +95,11 @@ class SchemaSheet:
 
 
 class SchemaField:
+    """An OO representation of a Field within an EXDSchema Sheet"""
+
     @property
     def index(self):
+        """The numeric index position of a field within its sheet"""
         return self.__index
 
     @index.setter
@@ -78,6 +108,7 @@ class SchemaField:
 
     @property
     def name(self):
+        """The name of this field, used in display and column headers"""
         return self.__name
 
     @name.setter
@@ -86,6 +117,8 @@ class SchemaField:
 
     @property
     def type(self):
+        """The schematic type of the field, not to be confused with an underlying data type."""
+        # TODO: Consider an enum, maybe?
         return self.__field_type
 
     @type.setter
@@ -94,6 +127,7 @@ class SchemaField:
 
     @property
     def fields(self):
+        """The list of subfields that are owned by this particular field. An Array type field may have its own child fields"""
         return self.__fields
 
     @fields.setter
@@ -102,6 +136,7 @@ class SchemaField:
 
     @property
     def condition(self) -> "Condition":
+        """The condition object that disambiguates the value in this column, if available"""
         return self.__condition
 
     @condition.setter
@@ -110,6 +145,7 @@ class SchemaField:
 
     @property
     def targets(self):
+        """The list of target sheets that this field should resolve to, in order"""
         return self.__targets
 
     @targets.setter
@@ -118,6 +154,7 @@ class SchemaField:
 
     @property
     def comment(self) -> str:
+        """A helpful, human readable commentary on the field, if provided"""
         return self.__comment
 
     def __init__(
@@ -135,17 +172,27 @@ class SchemaField:
         self.__index = 0
 
     def __repr__(self) -> str:
-        return "%s(Name=%s,FieldType=%s,Index=%s)" % (
-            self.__class__.__name__,
-            self.__name,
-            self.__field_type,
-            self.__index,
+        return (
+            f"{{self.__class__.__name__}}(Name={self.__name}, FieldType={self.__field_type}, "
+            f"Index={self.__index})"
         )
 
     @staticmethod
     def create_field(
         base_field: dict, is_array: bool, array_index: int, parent_chain: List[str]
     ):
+        """
+        Create a Field object to pass back into a field List for a given schema
+
+        Args:
+            base_field (dict): The object containing the Field's properties, as given in the YAML object
+            is_array (bool): Whether the current field is part of a parent array
+            array_index (int): The numerical array index of this item, if is_array is true
+            parent_chain (List[str]): The parent heirachy chain for this Field within the Schema
+
+        Returns:
+            Field: The OO Field representation, suitable for manipulation or sending to ARealmReversed class
+        """
         retv = SchemaField(
             "",
             0,
@@ -173,13 +220,22 @@ class SchemaField:
 
 
 class Condition:
+    """
+    A switch/case statement equivalent, used in disamiguating columns
+    which point toward different Sheets depending on a given value for some
+    other Column within the Sheet
+    For example, in Achievement.yml, the Key column links to different sheets
+    based on the numeric value of the Type column in that row of the sheeet
+    """
 
     @property
     def switch_field(self) -> str:
+        """The field to examine to determine which related Sheet to link to"""
         return self.__switch_field
 
     @property
     def case_values(self) -> dict:
+        """The case/target values for this condition"""
         return self.__case_values
 
     def __init__(self, switch_field: str, case_values: dict) -> None:
@@ -188,4 +244,5 @@ class Condition:
 
     @staticmethod
     def from_yaml(obj: dict) -> "Condition":
+        """Process a YAML object into a Condition object"""
         return Condition(obj.get("switch", ""), obj.get("cases", {}))
