@@ -49,12 +49,12 @@ class FccShop(XivRow, IShop):
         cost_item = self.sheet.collection.get_sheet(Item)[COST_ITEM]
         listings = []  # type: List[IShopListing]
         for i in range(self.ITEM_COUNT):
-            item = self.as_T(Item, "Item", i)
+            item = self.as_T(Item, f"ItemData[{i}].Item")
             if item is None or item.key == 0:
                 continue
 
-            cost = self.as_int32("Cost", i)
-            required_rank = self.as_T(FCRank, "FCRankRequired", i)
+            cost = self.as_int32(f"ItemData[{i}].Cost")
+            required_rank = self.as_T(FCRank, f"ItemData[{i}].FCRankRequired")
 
             listings.append(FccShop.Listing(self, item, cost_item, cost, required_rank))
         return listings

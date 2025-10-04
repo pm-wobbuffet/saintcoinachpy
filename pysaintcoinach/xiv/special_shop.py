@@ -24,15 +24,15 @@ class SpecialShopListing(IShopListing):
         REWARD_COUNT = 2
         rewards = []
         for i in range(REWARD_COUNT):
-            item = shop.as_T(Item, "Item", index, i)
+            item = shop.as_T(Item, f"Item[{index}].Item[{i}]")
             if item.key == 0:
                 continue
 
-            count = shop.as_int32("ReceiveCount", index, i)
+            count = shop.as_int32(f"Item[{index}].ReceiveCount[{i}]")
             if count == 0:
                 continue
 
-            hq = shop.as_boolean("ReceiveHq", index, i)
+            hq = shop.as_boolean(f"Item[{index}].ReceiveHq[{i}]")
 
             rewards.append(ShopListingItem(self, item, count, hq, 0))
         self.__rewards = rewards
@@ -41,16 +41,18 @@ class SpecialShopListing(IShopListing):
         COST_COUNT = 3
         costs = []
         for i in range(COST_COUNT):
-            item = shop.as_T(Item, "ItemCost", index, i)
+            item = shop.as_T(Item, f"Item[{index}].ItemCost[{i}]")
             if item.key == 0:
                 continue
 
-            count = shop.as_int32("CurrencyCost", index, i)
+            count = shop.as_int32(f"Item[{index}].CurrencyCost[{i}]")
             if count == 0:
                 continue
 
-            hq = shop.as_boolean("HqCost", index, i)
-            collectability_rating = shop.as_int16("CollectabilityCost", index, i)
+            hq = shop.as_boolean(f"Item[{index}].HqCost[{i}]")
+            collectability_rating = shop.as_int16(
+                f"Item[{index}].CollectabilityCost[{i}]"
+            )
 
             costs.append(ShopListingItem(self, item, count, hq, collectability_rating))
         self.__costs = costs
