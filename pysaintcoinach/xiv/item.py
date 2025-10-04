@@ -31,11 +31,11 @@ def unique_everseen(iterable, key=None):
 class ItemBase(XivRow):
     @property
     def name(self):
-        return self.get_raw('Name')
+        return self.get_raw("Name")
 
     @property
     def description(self):
-        return self.get_raw('Description')
+        return self.get_raw("Description")
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(ItemBase, self).__init__(sheet, source_row)
@@ -46,15 +46,15 @@ class Item(ItemBase):
 
     @property
     def is_collectable(self):
-        return self.as_boolean('IsCollectable')
+        return self.as_boolean("IsCollectable")
 
     @property
     def bid(self):
-        return self.get_raw('Price{Low}')
+        return self.get_raw("PriceLow")
 
     @property
     def ask(self):
-        return self.get_raw('Price{Mid}')
+        return self.get_raw("PriceMid")
 
     @property
     def recipes_as_material(self):
@@ -80,11 +80,11 @@ class Item(ItemBase):
         4: Relic (Purple)
         7: Aetherial (Pink)
         """
-        return self.as_int32('Rarity')
+        return self.as_int32("Rarity")
 
     @property
     def is_aetherial_reducible(self) -> bool:
-        return self.as_int32('AetherialReduce') > 0
+        return self.as_int32("AetherialReduce") > 0
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(Item, self).__init__(sheet, source_row)
@@ -103,12 +103,13 @@ class Item(ItemBase):
         checked_items = []
         shop_item_costs = []
         for item in flatten(
-                map(lambda shop: filterfalse(
-                        lambda _: _ in checked_items,
-                        shop.shop_listings),
-                    shops)):
-            shop_item_costs.extend(filter(
-                lambda _: _.item == self,
-                item.costs))
+            map(
+                lambda shop: filterfalse(
+                    lambda _: _ in checked_items, shop.shop_listings
+                ),
+                shops,
+            )
+        ):
+            shop_item_costs.extend(filter(lambda _: _.item == self, item.costs))
             checked_items.append(item)
         return list(unique_everseen(shop_item_costs))
