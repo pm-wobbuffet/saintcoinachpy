@@ -61,20 +61,20 @@ class Map(XivRow):
         """
         Gets the X value offset of the current map.
         """
-        return self.as_int32("Offset{X}")
+        return self.as_int32("OffsetX")
 
     @property
     def offset_y(self) -> int:
         """
         Gets the Y value offset of the current map.
         """
-        return self.as_int32("Offset{Y}")
+        return self.as_int32("OffsetY")
 
     @property
     def region_place_name(self) -> "PlaceName":
         from .placename import PlaceName
 
-        return self.as_T(PlaceName, "PlaceName{Region}")
+        return self.as_T(PlaceName, "PlaceNameRegion")
 
     @property
     def place_name(self) -> "PlaceName":
@@ -86,7 +86,7 @@ class Map(XivRow):
     def location_place_name(self) -> "PlaceName":
         from .placename import PlaceName
 
-        return self.as_T(PlaceName, "PlaceName{Sub}")
+        return self.as_T(PlaceName, "PlaceNameSub")
 
     @property
     def territory_type(self) -> "TerritoryType":
