@@ -32,7 +32,9 @@ class SpecialShopListing(IShopListing):
             if count == 0:
                 continue
 
-            hq = shop.as_boolean(f"Item[{index}].ReceiveHq[{i}]")
+            hq = shop.as_boolean(f"Item[{index}].ReceiveHq[{i}]") and item.as_boolean(
+                "CanBeHq"
+            )
 
             rewards.append(ShopListingItem(self, item, count, hq, 0))
         self.__rewards = rewards
@@ -49,7 +51,9 @@ class SpecialShopListing(IShopListing):
             if count == 0:
                 continue
 
-            hq = shop.as_boolean(f"Item[{index}].HqCost[{i}]")
+            hq = shop.as_boolean(f"Item[{index}].HqCost[{i}]") and item.as_boolean(
+                "CanBeHq"
+            )
             collectability_rating = shop.as_int16(
                 f"Item[{index}].CollectabilityCost[{i}]"
             )
