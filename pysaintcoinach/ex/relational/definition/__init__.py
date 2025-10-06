@@ -427,9 +427,15 @@ class SingleDataDefinition(IDataDefinition):
             SheetLinkConverter,
             ComplexLinkConverter,
         )
+        from ..value_converters.specialshopconverter import (
+            SpecialShopItemReferenceConverter,
+        )
 
-        converter = None
-        if obj.type == "icon":
+        converter = obj.converter
+        if converter is not None:
+            if converter == "SpecialShopItems":
+                converter = SpecialShopItemReferenceConverter()
+        elif obj.type == "icon":
             converter = IconConverter()
             pass
         elif obj.type == "modelId":

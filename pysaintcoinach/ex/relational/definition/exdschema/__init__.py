@@ -157,8 +157,17 @@ class SchemaField:
         """A helpful, human readable commentary on the field, if provided"""
         return self.__comment
 
+    @property
+    def converter(self) -> str:
+        """The specified override converter for a field, if provided"""
+        return self.__converter
+
+    @converter.setter
+    def converter(self, value):
+        self.__converter = value
+
     def __init__(
-        self, name, count, field_type, comment, fields, condition, targets
+        self, name, count, field_type, comment, fields, condition, targets, converter
     ) -> None:
         self.__name = name
         self.__count = count
@@ -170,11 +179,12 @@ class SchemaField:
         )
         self.__targets = targets
         self.__index = 0
+        self.__converter = converter
 
     def __repr__(self) -> str:
         return (
             f"{{self.__class__.__name__}}(Name={self.__name}, FieldType={self.__field_type}, "
-            f"Index={self.__index})"
+            f"Index={self.__index}, Converter={self.__converter})"
         )
 
     @staticmethod
@@ -205,6 +215,7 @@ class SchemaField:
             base_field.get("fields", []),
             base_field.get("condition"),
             base_field.get("targets"),
+            base_field.get("converter"),
         )
         name = base_field.get("name", None)
         if is_array:

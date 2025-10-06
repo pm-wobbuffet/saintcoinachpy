@@ -76,6 +76,7 @@ class ARealmReversed(object):
             _yml = sheet_file_name.read_text()
             try:
                 obj = yaml.safe_load(_yml)
+                obj = self.__process_overrides(obj)
                 sheet = SchemaSheet(
                     obj.get("name", ""),
                     obj.get("displayField", ""),
@@ -86,27 +87,40 @@ class ARealmReversed(object):
                 _def.sheet_definitions.append(sheet_def)
             except yaml.YAMLError as exc:
                 logging.error("Failed to decode %s: %s", sheet_file_name, str(exc))
-        # version_path = _SAINTCOINACH_HOME.joinpath("Definitions", "game.ver")
-        # if not version_path.exists():
-        #     raise RuntimeError("Definitions\\game.ver must exist.")
-
-        # version = version_path.read_text().strip()
-        # _def = RelationDefinition(version=version)
-        # for sheet_file_name in _SAINTCOINACH_HOME.joinpath("Definitions").glob(
-        #     "*.json"
-        # ):
-        #     _json = sheet_file_name.read_text(encoding="utf-8-sig")
-        #     try:
-        #         obj = json.loads(_json)
-        #         sheet_def = SheetDefinition.from_json(obj)
-        #         _def.sheet_definitions.append(sheet_def)
-
-        #         if not self._game_data.sheet_exists(sheet_def.name):
-        #             logging.warning("Defined sheet %s is missing", sheet_def.name)
-        #     except json.JSONDecodeError as exc:
-        #         logging.error("Failed to decode %s: %s", sheet_file_name, str(exc))
 
         return _def
+
+    def __process_overrides(self, obj):
+        from pprint import pp
+
+        sheet_name = obj.get("name", "")
+        override_file_name = Path(
+            _SCRIPT_PATH, "..", "schema_overrides", f"{sheet_name}.yml"
+        )
+        replacements = {}
+        if override_file_name.exists():
+            over_yml = yaml.safe_load(override_file_name.read_text())
+            for field in over_yml.get("replacements", []):
+                replacements[field.get("source")] = field
+
+            obj["fields"] = self.__do_replacements(obj.get("fields", []), replacements)
+
+        return obj
+
+    def __do_replacements(self, fields, replacements, parent=""):
+        for i, field in enumerate(fields):
+            n = field.get("name", "")
+            if n in replacements or f"{parent}*" in replacements:
+                rep_data = replacements[n or f"{parent}*"]
+                if "add_keys" in rep_data:
+                    for prop in rep_data["add_keys"]:
+                        field.update(prop)
+
+            if field.get("fields") is not None:
+                self.__do_replacements(
+                    field.get("fields"), replacements, field.get("name", "")
+                )
+        return fields
 
 
 # This is an example of how to use this library.

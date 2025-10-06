@@ -1,0 +1,4 @@
+replacements:
+  - source: ItemCost*
+    add_keys:
+    - converter: SpecialShopItems

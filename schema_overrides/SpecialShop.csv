@@ -1,0 +1,1214 @@
+﻿#,Name,currency_type
+1769473,Seasonal Event,item
+1769474,Currency Test,item
+1769482,Lightning Returns,item
+1769483,Moonfire Faire,item
+1769484,Relic Enhancement,item
+1769485,,item
+1769486,Bitter Heart Chocolate,item
+1769487,Pure Heart Chocolate,item
+1769500,Gerolt's Masterworks Repair (DoW),item
+1769501,Gerolt's Masterworks Repair (DoM),item
+1769502,Gimme an Elixir,item
+1769503,Master Crafting Tomes,item
+1769504,Forager Gear,item
+1769505,Decorative Egg: Exchange Bronze for Silver,item
+1769506,Decorative Egg: Exchange Silver for Gold,item
+1769510,Gerolt's Masterworks Repair (Weapons),item
+1769511,Uncanny Knickknacks,item
+1769512,Gender-specific Gear Exchange (â™€â†’â™‚) I,item
+1769513,Gender-specific Gear Exchange (â™‚â†’â™€) I,item
+1769514,Allied Seals (Maelstrom),item
+1769515,Allied Seals (Order of the Twin Adder),item
+1769516,Allied Seals (Immortal Flames),item
+1769517,Allied Seals (DoW),item
+1769518,Allied Seals (DoM),item
+1769519,Artifact Equipment (DoW),item
+1769520,Artifact Equipment (DoM),item
+1769521,Supra Tools (DoL),item
+1769522,Artisan Tools (DoH),item
+1769524,Items in Development,item
+1769525,Ixali Oaknot Exchange,item
+1769526,Demonic Cookies,item
+1769530,Vintage Equipment (DoW),item
+1769531,Vintage Equipment (DoM),item
+1769533,Allagan Tomestones of Poetics (DoW),tome
+1769534,Allagan Tomestones of Poetics (DoM),tome
+1769535,Ironworks Gear Augmentation (DoW),tome
+1769536,Ironworks Gear Augmentation (DoM),tome
+1769537,Ironworks Gear Augmentation (Weapons),tome
+1769539,Ironworks Gear Augmentation (Accessories),tome
+1769540,Starlight Sentinels,item
+1769541,Fallen Star Exchange,item
+1769542,Fallen Star Exchange,item
+1769543,,item
+1769544,Prize Exchange (Weapons),item
+1769545,Triple Triad Cards,item
+1769546,Race Items,item
+1769547,Chocobo Training Manuals I,item
+1769548,Chocobo Training Manuals II,item
+1769549,Lucky Egg Exchange,item
+1769550,Happy Smile Super Wish Bags,item
+1769551,Lucis Tools (DoL),item
+1769552,Artisan Gear (DoH),item
+1769553,Assorted Accoutrements,item
+1769554,Supra Tools (DoH),item
+1769555,Lucis Tools (DoH),item
+1769556,Miscellaneous Miscellany,item
+1769565,Allagan Tomestones of Poetics (Other),tome
+1769572,Doman Gear Reoutfitting (DoW) I,item
+1769573,Doman Gear Reoutfitting (DoM),item
+1769574,Artifact Gear Repair (PLD),item
+1769575,Artifact Gear Repair (MNK),item
+1769576,Artifact Gear Repair (WAR),item
+1769577,,item
+1769578,,item
+1769579,Gordian Part Exchange (DoW) I,item
+1769580,Gordian Part Exchange (DoM),item
+1769581,Gordian Manifesto Exchange (DoW) I,item
+1769582,Gordian Manifesto Exchange (DoM),item
+1769584,Amber Exchange,item
+1769590,Fieldcraft Items,item
+1769591,Tradecraft Items,item
+1769592,Doman Gear Reoutfitting (DoW) II,item
+1769593,Artifact Gear Repair (DRG),tome
+1769594,Artifact Gear Repair (BRD),tome
+1769595,Artifact Gear Repair (NIN),tome
+1769596,Artifact Gear Repair (WHM),tome
+1769597,Artifact Gear Repair (BLM),tome
+1769598,Artifact Gear Repair (SMN),tome
+1769599,Artifact Gear Repair (SCH),tome
+1769600,Artifact Gear Repair (DRK),tome
+1769601,Artifact Gear Repair (MCH),tome
+1769602,Artifact Gear Repair (AST),tome
+1769604,Seasonal Event Prizes,item
+1769605,Gordian Part Exchange (DoW) II,item
+1769606,Gordian Manifesto Exchange (DoW) II,item
+1769607,Gold Chocobo Feather Exchange,item
+1769610,Silver Chocobo Feather Exchange I ( â‰¤ Lv. 50 Gear),item
+1769612,Seasonal Event Prizes (â™‚),item
+1769613,Seasonal Event Prizes (â™€),item
+1769625,Seasonal Event Prizes,item
+1769626,Purchase Minions (MGP),item
+1769627,Steel Amalj'ok Exchange,item
+1769628,Sylphic Goldleaf Exchange,item
+1769629,Titan Cobaltpiece Exchange,item
+1769630,Rainbowtide Psashp Exchange,item
+1769631,Vanu Whitebone Exchange,item
+1769633,Prize Exchange (Gear),item
+1769635,Luminous Crystal Exchange,item
+1769636,Anima Weapon Materials,item
+1769637,Hair Catalogs,item
+1769639,Seasonal Event Prizes,item
+1769642,Precision Gordian Part Exchange,item
+1769643,Midan Part Exchange (DoW) I,item
+1769644,Midan Part Exchange (DoW) II,item
+1769645,Midan Part Exchange (DoM),item
+1769646,Midan Manifesto Exchange (DoW) I,item
+1769647,Midan Manifesto Exchange (DoW) II,item
+1769648,Midan Manifesto Exchange (DoM),item
+1769649,"Allagan Tomestones of Poetics (DoW, IL 240)",tome
+1769651,"Allagan Tomestones of Poetics (DoM, IL 240)",tome
+1769655,Eikonic Gear Reoutfitting (DoW) I,tome
+1769656,Eikonic Gear Reoutfitting (DoW) II,tome
+1769657,Eikonic Gear Reoutfitting (DoM),tome
+1769659,Amber Exchange (Other),item
+1769660,"Doman Gear Exchange (DoW, IL 180)",item
+1769661,"Doman Gear Exchange (DoM, IL 180)",item
+1769663,Seasonal Event Prizes,item
+1769664,Seasonal Event Prizes,item
+1769665,Black Copper Gil Exchange,item
+1769673,Mhachi Matter Exchange,item
+1769675,Gelmorran Potsherd Exchange,item
+1769676,Tradecraft Keep Tool Augmentation,item
+1769677,Tradecraft Keep Gear Augmentation,item
+1769678,Fieldcraft Keep Tool Augmentation,item
+1769679,Fieldcraft Keep Gear Augmentation,item
+1769681,Curious Crop Exchange,item
+1769684,Seasonal Event Prizes,item
+1769685,Carved Kupo Nut Exchange,item
+1769687,Gender-specific Gear Exchange (â™€â†’â™‚) II,item
+1769688,Gender-specific Gear Exchange (â™‚â†’â™€) II,item
+1769689,Alexandrian Part Exchange (DoW) I,item
+1769690,Alexandrian Part Exchange (DoW) II,item
+1769691,Alexandrian Part Exchange (DoM),item
+1769692,Alexandrian Manifesto Exchange (DoW) I,item
+1769693,Alexandrian Manifesto Exchange (DoW) II,item
+1769694,Alexandrian Manifesto Exchange (DoM),item
+1769713,Glamour Prism Collection,item
+1769714,Items of Interest,item
+1769715,"Artifact Gear Exchange (DoW, IL 210) I",item
+1769716,"Artifact Gear Exchange (DoW, IL 210) II",item
+1769717,"Artifact Gear Exchange (DoM, IL 210)",item
+1769719,Primal Gear,item
+1769720,Gerolt's Masterworks,tome
+1769721,Ironworks Gear,tome
+1769722,Single-handed Arm Exchange,item
+1769723,Two-handed Arm Exchange,item
+1769724,Rowena's Token Exchange,item
+1769725,Primal Gear I,item
+1769726,Primal Gear II,item
+1769727,Primal Gear III,item
+1769728,Uncanny Knickknacks,item
+1769729,Allagan Tomestones of Poetics (IL 240 Weapons),tome
+1769730,Allagan Tomestones of Poetics (Other),tome
+1769731,Ixali Oaknot Exchange (Materia),item
+1769732,"Allagan Tomestones of Poetics (DoW, IL 270)",tome
+1769733,"Allagan Tomestones of Poetics (DoM, IL 270)",tome
+1769734,Shire Gear Augmentation (DoW) I.,tome
+1769735,Shire Gear Augmentation (DoW) II.,tome
+1769736,Shire Gear Augmentation (DoM).,tome
+1769737,Allagan Tomestones of Poetics (IL 270 Weapons),tome
+1769738,Handmaster Accessory Augmentation,item
+1769739,Landmaster Accessory Augmentation,item
+1769740,Seasonal Event Prizes,item
+1769741,Collaboration Certificate Exchange,item
+1769743,,item
+1769744,,item
+1769745,Primal Gear IV,item
+1769746,,item
+1769747,,item
+1769748,Voyage Spoils,item
+1769749,DoH Materia Exchange,item
+1769750,DoL Materia Exchange,item
+1769751,Prize Exchange I,item
+1769752,Prize Exchange III,item
+1769753,Dream of the Fayth Exchange,item
+1769766,Fieldcraft Items,item
+1769781,Allagan Tomestones of Poetics (Special Arms),tome
+1769782,Centurio Seal Exchange I,item
+1769783,Centurio Seal Exchange II,item
+1769790,Totem Gear (Lakshmi),item
+1769791,Totem Gear (Susano),item
+1769793,Deltascape Part Exchange (DoW) I,item
+1769794,Deltascape Part Exchange (DoW) II,item
+1769795,Deltascape Part Exchange (DoM),item
+1769796,Deltascape Datalog Exchange (DoW) I,item
+1769797,Deltascape Datalog Exchange (DoW) II,item
+1769798,Deltascape Datalog Exchange (DoM),item
+1769799,Lost Allagan Gear Augmentation (DoW) I,tome
+1769800,Lost Allagan Gear Augmentation (DoW) II,tome
+1769801,Lost Allagan Gear Augmentation (DoM),tome
+1769802,Lost Allagan Gear Exchange,tome
+1769807,Wondrous Sundries,item
+1769808,Seasonal Event Prizes,item
+1769811,Allied Seals (Other),item
+1769812,,item
+1769813,,item
+1769814,Totem Gear (Bahamut),item
+1769815,Glamour Prism Collection,item
+1769816,,item
+1769817,,item
+1769818,Kojin Sango Exchange,item
+1769819,Totem Gear (Shinryu),item
+1769820,,item
+1769821,,item
+1769822,,item
+1769823,,item
+1769824,,item
+1769825,,item
+1769826,,item
+1769827,,item
+1769828,,item
+1769829,,item
+1769830,,item
+1769831,,item
+1769832,,item
+1769833,,item
+1769834,,item
+1769841,,item
+1769842,,item
+1769843,,item
+1769844,,item
+1769847,Ananta Dreamstaff Exchange,item
+1769850,"Allagan Tomestones of Poetics (DoW, IL 370)",tome
+1769851,"Allagan Tomestones of Poetics (DoM, IL 370)",tome
+1769852,Allagan Tomestones of Poetics (IL 370 Weapons),tome
+1769853,Allagan Tomestones of Poetics (Other),tome
+1769854,Auspice Gear (Byakko),item
+1769855,Sigmascape Part Exchange (DoW) I,item
+1769856,Sigmascape Part Exchange (DoW) II,item
+1769857,Sigmascape Part Exchange (DoM),item
+1769858,Sigmascape Datalog Exchange (DoW) I,item
+1769859,Sigmascape Datalog Exchange (DoW) II,item
+1769860,Sigmascape Datalog Exchange (DoM),item
+1769861,Ryumyaku Gear Augmentation (DoW) I,tome
+1769862,Ryumyaku Gear Augmentation (DoW) II,tome
+1769863,Ryumyaku Gear Augmentation (DoM),tome
+1769864,"Ala Mhigan Gear Exchange (DoW, IL 310)",item
+1769865,"Ala Mhigan Gear Exchange (DoM, IL 310)",item
+1769868,Namazu Koban Exchange,item
+1769869,,item
+1769870,,item
+1769871,,item
+1769872,,item
+1769873,Totem Gear (The Ultima Weapon),item
+1769874,,item
+1769875,Seasonal Event Prizes I,item
+1769876,Seasonal Event Prizes,item
+1769881,Seasonal Event Prizes II,item
+1769882,Seasonal Event Prizes III,item
+1769883,Totem Gear (Tsukuyomi),item
+1769885,Resistance Token Acquisition (NQ Weapons),item
+1769886,Resistance Token Acquisition (NQ Gear),item
+1769887,Resistance Token Acquisition (NQ Accessories),item
+1769888,Resistance Token Acquisition (HQ Weapons),item
+1769889,Resistance Token Acquisition (HQ Gear),item
+1769890,Resistance Token Acquisition (HQ Accessories),item
+1769891,Resistance Token Exchange (NQ Weapons),item
+1769892,Resistance Token Exchange (NQ Gear),item
+1769893,Resistance Token Exchange (NQ Accessories),item
+1769894,Resistance Token Exchange (HQ Weapons),item
+1769895,Resistance Token Exchange (HQ Gear),item
+1769896,Resistance Token Exchange (HQ Accessories),item
+1769897,Feathers Aplenty,item
+1769907,"Allagan Tomestones of Poetics (DoW, IL 400)",tome
+1769908,"Allagan Tomestones of Poetics (DoM, IL 400)",tome
+1769910,Allagan Tomestones of Poetics (IL 400 Weapons),tome
+1769911,Scaevan Gear Augmentation (DoW) I,tome
+1769912,Scaevan Gear Augmentation (DoW) II,tome
+1769913,Scaevan Gear Augmentation (DoM),tome
+1769914,"Lost Allagan Gear (DoW, IL 340)",item
+1769915,"Lost Allagan Gear (DoM, IL 340)",item
+1769916,Auspice Gear (Suzaku),item
+1769917,Alphascape Part Exchange (DoW) I,item
+1769918,Alphascape Part Exchange (DoW) II,item
+1769919,Alphascape Part Exchange (DoM),item
+1769920,Alphascape Datalog Exchange (DoW) I,item
+1769921,Alphascape Datalog Exchange (DoW) II,item
+1769922,Alphascape Datalog Exchange (DoM),item
+1769923,,item
+1769924,,item
+1769925,,item
+1769926,,item
+1769927,,item
+1769928,,item
+1769929,Newest Irregular Tomestone Exchange,item
+1769930,Previous Irregular Tomestone Exchange,item
+1769931,Past Irregular Tomestone Exchange,item
+1769933,,item
+1769934,,item
+1769935,,item
+1769936,Gear Exchange,item
+1769937,,item
+1769938,,item
+1769939,,item
+1769940,Auspice Gear (Seiryu),item
+1769941,Rakshasa Token Acquisition (NQ Weapons),item
+1769942,Rakshasa Token Acquisition (NQ Gear),item
+1769943,Rakshasa Token Acquisition (NQ Accessories),item
+1769944,Rakshasa Token Acquisition (HQ Weapons),item
+1769945,Rakshasa Token Acquisition (HQ Gear),item
+1769946,Rakshasa Token Acquisition (HQ Accessories),item
+1769947,Rakshasa Token Exchange (Weapons),item
+1769948,Rakshasa Token Exchange (Gear),item
+1769949,Rakshasa Token Exchange (Accessories),item
+1769950,,item
+1769951,,item
+1769952,Seasonal Event Prizes I,item
+1769953,Seasonal Event Prizes II,item
+1769954,Seasonal Event Prizes III,item
+1769955,Seasonal Event Prizes IV,item
+1769956,,item
+1769957,,item
+1769958,,item
+1769959,,item
+1769960,,item
+1769961,,item
+1769962,,item
+1769963,,item
+1769964,,item
+1769965,Journey's End Gear (Tank),item
+1769966,Journey's End Gear (Physical DPS),item
+1769967,Journey's End Gear (Magical Ranged DPS),item
+1769968,Journey's End Gear (Healer),item
+1769969,Totem Gear (Innocence),item
+1769970,Totem Gear (Titania),item
+1769977,Eden's Gate Antique Exchange (DoW) I,item
+1769978,Eden's Gate Antique Exchange (DoW) II,item
+1769979,Eden's Gate Antique Exchange (DoM),item
+1769980,Eden's Gate Apocrypha Exchange (DoW) I,item
+1769981,Eden's Gate Apocrypha Exchange (DoW) II,item
+1769982,Eden's Gate Apocrypha Exchange (DoM),item
+1769983,Deepshadow Gear Exchange,tome
+1769984,Deepshadow Gear Augmentation (DoW) I,tome
+1769985,Deepshadow Gear Augmentation (DoW) II,tome
+1769986,Deepshadow Gear Augmentation (DoM),tome
+1769987,Sacks of Nuts Exchange,item
+1769988,Silver Chocobo Feather Exchange II (Lv. 60 Gear),item
+1769989,Silver Chocobo Feather Exchange III (Lv. 70 Gear),item
+1769994,Submersible Frames,item
+1770010,,item
+1770011,,item
+1770012,,item
+1770013,,item
+1770014,Fieldcraft Items,item
+1770015,Glorious Gewgaws,item
+1770016,,item
+1770017,Totem Gear (Hades),item
+1770018,Totem Gear (Alexander),item
+1770019,Eulmoran Certificates of Import (NQ Weapons),item
+1770020,Eulmoran Certificates of Import (NQ Gear),item
+1770021,Eulmoran Certificates of Import (NQ Accessories),item
+1770022,Eulmoran Certificates of Import (HQ Weapons),item
+1770023,Eulmoran Certificates of Import (HQ Gear),item
+1770024,Eulmoran Certificates of Import (HQ Accessories),item
+1770025,Augmented Facet Equipment (Weapons),item
+1770026,Augmented Facet Equipment (Gear),item
+1770027,Augmented Facet Equipment (Accessories),item
+1770028,Rain Exchange,tome
+1770029,Delineation Collection,item
+1770032,Exchange Allied Seals,item
+1770033,,item
+1770034,,item
+1770035,,item
+1770036,,item
+1770037,,item
+1770038,Sky Pirate Spoils (Brass),item
+1770039,Sky Pirate Spoils (Steel),item
+1770040,Fae Fancies,item
+1770041,,item
+1770046,Qitari Compliment Exchange,item
+1770047,,item
+1770048,Ceremony Attire Exchange,item
+1770049,"Ronkan Gear Exchange (DoW, IL 440)",item
+1770050,"Ronkan Gear Exchange (DoM, IL 440)",item
+1770051,"Allagan Tomestones of Poetics (DoW, IL 500)",tome
+1770052,"Allagan Tomestones of Poetics (DoM, IL 500)",tome
+1770053,Allagan Tomestones of Poetics (Other),tome
+1770054,Allagan Tomestones of Poetics (IL 500 Weapons),tome
+1770055,Crystarium Gear Augmentation (DoW) I,tome
+1770056,Crystarium Gear Augmentation (DoW) II,tome
+1770057,Crystarium Gear Augmentation (DoM),tome
+1770058,Eden's Verse Antique Exchange (DoW) I,item
+1770059,Eden's Verse Antique Exchange (DoW) II,item
+1770060,Eden's Verse Antique Exchange (DoM),item
+1770061,Eden's Verse Apocrypha Exchange (DoW) I,item
+1770062,Eden's Verse Apocrypha Exchange (DoW) II,item
+1770063,Eden's Verse Apocrypha Exchange (DoM),item
+1770064,Totem Gear (The Ruby Weapon),item
+1770065,Idol Gear (Bozja Citadel),item
+1770066,Skysteel Prototype Augmentation,item
+1770067,Skysteel Prototype +1 Augmentation,item
+1770087,,item
+1770088,Primal Gear (IL 100-115),item
+1770089,Primal Gear (IL 100-115),item
+1770090,Primal Gear (IL 100-115),item
+1770091,Primal Gear (IL 100-115),item
+1770092,Primal Gear (IL 100-115),item
+1770093,Primal Gear (IL 100-115),item
+1770094,Primal Gear (IL 100-115),item
+1770095,Gerolt's Masterworks (IL 110),tome
+1770096,Gerolt's Masterworks (IL 110),tome
+1770097,Gerolt's Masterworks (IL 110),tome
+1770098,Gerolt's Masterworks (IL 110),tome
+1770099,Gerolt's Masterworks (IL 110),tome
+1770100,Gerolt's Masterworks (IL 110),tome
+1770101,Gerolt's Masterworks (IL 110),tome
+1770102,Ironworks Gear (IL 130),tome
+1770103,Ironworks Gear (IL 130),tome
+1770104,Ironworks Gear (IL 130),tome
+1770105,Ironworks Gear (IL 130),tome
+1770106,Ironworks Gear (IL 130),tome
+1770107,Ironworks Gear (IL 130),tome
+1770108,Ironworks Gear (IL 130),tome
+1770109,Special Arms Materials,tome
+1770110,Miscellany,tome
+1770111,Materia,item
+1770112,Crafter Gear (IL 55),scrip
+1770113,Master Recipes I,tome
+1770114,Gatherer Gear (IL 55),scrip
+1770115,Materia,tome
+1770116,Primal Gear (IL 175-265),item
+1770117,Primal Gear (IL 175-265),item
+1770118,Primal Gear (IL 175-265),item
+1770119,Primal Gear (IL 175-265),item
+1770120,Primal Gear (IL 175-265),item
+1770121,Primal Gear (IL 175-265),item
+1770122,Primal Gear (IL 175-265),item
+1770123,Prototype Gordian Gear (IL 190),item
+1770124,Prototype Gordian Gear (IL 190),item
+1770125,Prototype Gordian Gear (IL 190),item
+1770126,Prototype Gordian Gear (IL 190),item
+1770127,Prototype Gordian Gear (IL 190),item
+1770128,Prototype Gordian Gear (IL 190),item
+1770129,Prototype Gordian Gear (IL 190),item
+1770130,Gordian Gear (IL 210),item
+1770131,Gordian Gear (IL 210),item
+1770132,Gordian Gear (IL 210),item
+1770133,Gordian Gear (IL 210),item
+1770134,Gordian Gear (IL 210),item
+1770135,Gordian Gear (IL 210),item
+1770136,Gordian Gear (IL 210),item
+1770137,Prototype Midan Gear (IL 220),item
+1770138,Prototype Midan Gear (IL 220),item
+1770139,Prototype Midan Gear (IL 220),item
+1770140,Prototype Midan Gear (IL 220),item
+1770141,Prototype Midan Gear (IL 220),item
+1770142,Prototype Midan Gear (IL 220),item
+1770143,Prototype Midan Gear (IL 220),item
+1770144,Primal Gear (IL 240),tome
+1770145,Primal Gear (IL 240),tome
+1770146,Primal Gear (IL 240),tome
+1770147,Primal Gear (IL 240),tome
+1770148,Primal Gear (IL 240),tome
+1770149,Primal Gear (IL 240),tome
+1770150,Primal Gear (IL 240),tome
+1770151,Midan Gear (IL 240-245),item
+1770152,Midan Gear (IL 240-245),item
+1770153,Midan Gear (IL 240-245),item
+1770154,Midan Gear (IL 240-245),item
+1770155,Midan Gear (IL 240-245),item
+1770156,Midan Gear (IL 240-245),item
+1770157,Midan Gear (IL 240-245),item
+1770158,Prototype Alexandrian Gear (IL 250),item
+1770159,Prototype Alexandrian Gear (IL 250),item
+1770160,Prototype Alexandrian Gear (IL 250),item
+1770161,Prototype Alexandrian Gear (IL 250),item
+1770162,Prototype Alexandrian Gear (IL 250),item
+1770163,Prototype Alexandrian Gear (IL 250),item
+1770164,Prototype Alexandrian Gear (IL 250),item
+1770165,Shire Gear (IL 270),tome
+1770166,Shire Gear (IL 270),tome
+1770167,Shire Gear (IL 270),tome
+1770168,Shire Gear (IL 270),tome
+1770169,Shire Gear (IL 270),tome
+1770170,Shire Gear (IL 270),tome
+1770171,Shire Gear (IL 270),tome
+1770172,Alexandrian Gear (IL 270-275),item
+1770173,Alexandrian Gear (IL 270-275),item
+1770174,Alexandrian Gear (IL 270-275),item
+1770175,Alexandrian Gear (IL 270-275),item
+1770176,Alexandrian Gear (IL 270-275),item
+1770177,Alexandrian Gear (IL 270-275),item
+1770178,Alexandrian Gear (IL 270-275),item
+1770179,Special Arms Materials,tome
+1770180,Materials,tome
+1770181,Mounts/Miscellany,tome
+1770182,Materia,item
+1770183,Adept Gear (IL 130),scrip
+1770184,Tradecraft Keep Tools (IL 200),scrip
+1770185,Tradecraft Keep Gear (IL 200),scrip
+1770186,Miscellany,scrip
+1770187,Materials,scrip
+1770188,Master Recipes I,scrip
+1770189,Materia,scrip
+1770190,Trailblazer Gear (IL 130),scrip
+1770191,Fieldcraft Keep Tools (IL 200),scrip
+1770192,Fieldcraft Keep Gear (IL 200),scrip
+1770193,Bait/Miscellany,scrip
+1770194,Materials,scrip
+1770195,Folklore Items,scrip
+1770196,Materia,scrip
+1770197,Primal/Auspice Gear (IL 320-395),item
+1770198,Primal/Auspice Gear (IL 320-395),item
+1770199,Primal/Auspice Gear (IL 320-395),item
+1770200,Primal/Auspice Gear (IL 320-395),item
+1770201,Primal/Auspice Gear (IL 320-395),item
+1770202,Primal/Auspice Gear (IL 320-395),item
+1770203,Primal/Auspice Gear (IL 320-395),item
+1770204,Genta Gear (IL 320),item
+1770205,Genta Gear (IL 320),item
+1770206,Genta Gear (IL 320),item
+1770207,Genta Gear (IL 320),item
+1770208,Genta Gear (IL 320),item
+1770209,Genta Gear (IL 320),item
+1770210,Genta Gear (IL 320),item
+1770211,Genji Gear (IL 340-345),item
+1770212,Genji Gear (IL 340-345),item
+1770213,Genji Gear (IL 340-345),item
+1770214,Genji Gear (IL 340-345),item
+1770215,Genji Gear (IL 340-345),item
+1770216,Genji Gear (IL 340-345),item
+1770217,Genji Gear (IL 340-345),item
+1770218,Carborundum Gear (IL 350),item
+1770219,Carborundum Gear (IL 350),item
+1770220,Carborundum Gear (IL 350),item
+1770221,Carborundum Gear (IL 350),item
+1770222,Carborundum Gear (IL 350),item
+1770223,Carborundum Gear (IL 350),item
+1770224,Carborundum Gear (IL 350),item
+1770225,Ryumyaku Gear (IL 370),tome
+1770226,Ryumyaku Gear (IL 370),tome
+1770227,Ryumyaku Gear (IL 370),tome
+1770228,Ryumyaku Gear (IL 370),tome
+1770229,Ryumyaku Gear (IL 370),tome
+1770230,Ryumyaku Gear (IL 370),tome
+1770231,Ryumyaku Gear (IL 370),tome
+1770232,Diamond Gear (IL 370-375),item
+1770233,Diamond Gear (IL 370-375),item
+1770234,Diamond Gear (IL 370-375),item
+1770235,Diamond Gear (IL 370-375),item
+1770236,Diamond Gear (IL 370-375),item
+1770237,Diamond Gear (IL 370-375),item
+1770238,Diamond Gear (IL 370-375),item
+1770239,Omicron Gear (IL 380),item
+1770240,Omicron Gear (IL 380),item
+1770241,Omicron Gear (IL 380),item
+1770242,Omicron Gear (IL 380),item
+1770243,Omicron Gear (IL 380),item
+1770244,Omicron Gear (IL 380),item
+1770245,Omicron Gear (IL 380),item
+1770246,Scaevan Gear (IL 400),tome
+1770247,Scaevan Gear (IL 400),tome
+1770248,Scaevan Gear (IL 400),tome
+1770249,Scaevan Gear (IL 400),tome
+1770250,Scaevan Gear (IL 400),tome
+1770251,Scaevan Gear (IL 400),tome
+1770252,Scaevan Gear (IL 400),tome
+1770253,Omega Gear (IL 400-405),item
+1770254,Omega Gear (IL 400-405),item
+1770255,Omega Gear (IL 400-405),item
+1770256,Omega Gear (IL 400-405),item
+1770257,Omega Gear (IL 400-405),item
+1770258,Omega Gear (IL 400-405),item
+1770259,Omega Gear (IL 400-405),item
+1770260,Materials,tome
+1770261,Mounts/Miscellany,tome
+1770262,Materia,item
+1770263,Crafter Gear (IL 220-230),item
+1770264,Tradecraft King Tools (IL 330),scrip
+1770265,Tradecraft King Gear (IL 330),scrip
+1770266,Handking Gear (IL 330-350),scrip
+1770267,Miscellany,scrip
+1770268,Materials,scrip
+1770269,Master Recipes I,scrip
+1770270,Materia,scrip
+1770271,Gatherer Gear (IL 220-230),scrip
+1770272,Fieldcraft King Tools (IL 330),scrip
+1770273,Fieldcraft King Gear (IL 330),scrip
+1770274,Landking Gear (IL 330-350),scrip
+1770275,Bait/Miscellany,scrip
+1770276,Materials,scrip
+1770277,Folklore Items,scrip
+1770278,Materia,scrip
+1770279,Bozjan Gear Exchange,item
+1770280,Bozjan Gear Augmentation,item
+1770281,,item
+1770282,,item
+1770283,Seasonal Event Prizes I,item
+1770284,Seasonal Event Prizes II,item
+1770285,Hammered Frogments Exchange,item
+1770286,,item
+1770287,Totem Gear (Warrior of Light),item
+1770288,Eulmoran Certificates of Novelty (NQ Weapons),item
+1770289,Eulmoran Certificates of Novelty (NQ Gear),item
+1770290,Eulmoran Certificates of Novelty (NQ Accessories),item
+1770291,Eulmoran Certificates of Novelty (HQ Weapons),item
+1770292,Eulmoran Certificates of Novelty (HQ Gear),item
+1770293,Eulmoran Certificates of Novelty (HQ Accessories),item
+1770294,Augmented Neo-Ishgardian Equipment (Weapons),item
+1770295,Augmented Neo-Ishgardian Equipment (Gear),item
+1770296,Augmented Neo-Ishgardian Equipment (Accessories),item
+1770301,,item
+1770302,Materia,item
+1770303,Oddly Specific Materials Exchange (Gathering),item
+1770304,Shire Gear Augmentation (IL 270 DoW),tome
+1770305,Shire Gear Augmentation (IL 270 DoM),tome
+1770306,Scaevan Gear Augmentation (IL 400 DoW),tome
+1770307,Scaevan Gear Augmentation (IL 400 DoM),tome
+1770308,Law's Order Gear Exchange,item
+1770309,Law's Order Gear Augmentation,item
+1770310,White Crafters' Scrip Exchange (Lv. 80 Gear) III,scrip
+1770311,White Gatherers' Scrip Exchange (Lv. 80 Gear) III,scrip
+1770312,Bombastic Bric-a-brac,item
+1770313,Totem Gear (The Emerald Weapon),item
+1770314,,item
+1770315,,item
+1770316,,item
+1770317,"Deepshadow Gear Exchange (DoW, IL 470)",tome
+1770318,"Deepshadow Gear Exchange (DoM, IL 470)",tome
+1770319,"Allagan Tomestones of Poetics (DoW, IL 530)",tome
+1770320,"Allagan Tomestones of Poetics (DoM, IL 530)",tome
+1770322,Allagan Tomestones of Poetics (IL 530 Weapons),tome
+1770323,Cryptlurker Gear Augmentation (DoW) I,tome
+1770324,Cryptlurker Gear Augmentation (DoW) II,tome
+1770325,Cryptlurker Gear Augmentation (DoM),tome
+1770326,Eden's Promise Antique Exchange (DoW) I,item
+1770327,Eden's Promise Antique Exchange (DoW) II,item
+1770328,Eden's Promise Antique Exchange (DoM),item
+1770329,Eden's Promise Apocrypha Exchange (DoW) I,item
+1770330,Eden's Promise Apocrypha Exchange (DoW) II,item
+1770331,Eden's Promise Apocrypha Exchange (DoM),item
+1770332,Inconceivably Delicate Parts Exchange,item
+1770333,Resplendent Tool Exchange,item
+1770334,,item
+1770335,,item
+1770336,Seasonal Event Prizes I,item
+1770340,Irregular Tomestone Exchange (Seasonal),item
+1770341,Seasonal Event Prizes II,item
+1770342,Totem Gear (The Diamond Weapon),item
+1770343,,item
+1770344,Blade's Gear Exchange,item
+1770345,Eulmoran Certificates of Grandeur (NQ Weapons),item
+1770346,Eulmoran Certificates of Grandeur (NQ Gear),item
+1770347,Eulmoran Certificates of Grandeur (NQ Accessories),item
+1770348,Eulmoran Certificates of Grandeur (HQ Weapons),item
+1770349,Eulmoran Certificates of Grandeur (HQ Gear),item
+1770350,Eulmoran Certificates of Grandeur (HQ Accessories),item
+1770351,Augmented Exarchic Equipment (Weapons),item
+1770352,Augmented Exarchic Equipment (Gear),item
+1770353,Augmented Exarchic Equipment (Accessories),item
+1770354,Primal/Warden/Weapon Gear (IL 450-525),item
+1770355,Primal/Warden/Weapon Gear (IL 450-525),item
+1770356,Primal/Warden/Weapon Gear (IL 450-525),item
+1770357,Primal/Warden/Weapon Gear (IL 450-525),item
+1770358,Primal/Warden/Weapon Gear (IL 450-525),item
+1770359,Primal/Warden/Weapon Gear (IL 450-525),item
+1770360,Primal/Warden/Weapon Gear (IL 450-525),item
+1770361,Edengate Gear (IL 450),item
+1770362,Edengate Gear (IL 450),item
+1770363,Edengate Gear (IL 450),item
+1770364,Edengate Gear (IL 450),item
+1770365,Edengate Gear (IL 450),item
+1770366,Edengate Gear (IL 450),item
+1770367,Edengate Gear (IL 450),item
+1770368,Edengrace Gear (IL 470-475),item
+1770369,Edengrace Gear (IL 470-475),item
+1770370,Edengrace Gear (IL 470-475),item
+1770371,Edengrace Gear (IL 470-475),item
+1770372,Edengrace Gear (IL 470-475),item
+1770373,Edengrace Gear (IL 470-475),item
+1770374,Edengrace Gear (IL 470-475),item
+1770375,Edencall Gear (IL 480),item
+1770376,Edencall Gear (IL 480),item
+1770377,Edencall Gear (IL 480),item
+1770378,Edencall Gear (IL 480),item
+1770379,Edencall Gear (IL 480),item
+1770380,Edencall Gear (IL 480),item
+1770381,Edencall Gear (IL 480),item
+1770382,Crystarium Gear (IL 500),tome
+1770383,Crystarium Gear (IL 500),tome
+1770384,Crystarium Gear (IL 500),tome
+1770385,Crystarium Gear (IL 500),tome
+1770386,Crystarium Gear (IL 500),tome
+1770387,Crystarium Gear (IL 500),tome
+1770388,Crystarium Gear (IL 500),tome
+1770389,Edenchoir Gear (IL 500-505),item
+1770390,Edenchoir Gear (IL 500-505),item
+1770391,Edenchoir Gear (IL 500-505),item
+1770392,Edenchoir Gear (IL 500-505),item
+1770393,Edenchoir Gear (IL 500-505),item
+1770394,Edenchoir Gear (IL 500-505),item
+1770395,Edenchoir Gear (IL 500-505),item
+1770396,Edenmete Gear (IL 510),item
+1770397,Edenmete Gear (IL 510),item
+1770398,Edenmete Gear (IL 510),item
+1770399,Edenmete Gear (IL 510),item
+1770400,Edenmete Gear (IL 510),item
+1770401,Edenmete Gear (IL 510),item
+1770402,Edenmete Gear (IL 510),item
+1770403,Cryptlurker Gear (IL 530),tome
+1770404,Cryptlurker Gear (IL 530),tome
+1770405,Cryptlurker Gear (IL 530),tome
+1770406,Cryptlurker Gear (IL 530),tome
+1770407,Cryptlurker Gear (IL 530),tome
+1770408,Cryptlurker Gear (IL 530),tome
+1770409,Cryptlurker Gear (IL 530),tome
+1770410,Edenmorn Gear (IL 530-535),item
+1770411,Edenmorn Gear (IL 530-535),item
+1770412,Edenmorn Gear (IL 530-535),item
+1770413,Edenmorn Gear (IL 530-535),item
+1770414,Edenmorn Gear (IL 530-535),item
+1770415,Edenmorn Gear (IL 530-535),item
+1770416,Edenmorn Gear (IL 530-535),item
+1770417,Materials,tome
+1770418,Mounts/Miscellany,item
+1770419,Materia,item
+1770420,Tradecraft Fiend Gear (IL 440),scrip
+1770421,Professional Gear (IL 470),scrip
+1770422,Handsaint Gear (IL 500),scrip
+1770423,Miscellany,scrip
+1770424,Materials,scrip
+1770425,Master Recipes I,item
+1770426,Materia,item
+1770427,Fieldcraft Fiend Gear (IL 440),scrip
+1770428,Professional Gear (IL 470),scrip
+1770429,Landsaint Gear (IL 500),scrip
+1770430,Bait/Miscellany,scrip
+1770431,Materials,scrip
+1770432,Folklore Items,item
+1770433,Materia,item
+1770434,Allagan Tomestones of Aphorism (DoW),tome
+1770435,Allagan Tomestones of Aphorism (DoM),tome
+1770436,Allagan Tomestones of Poetics (Other),tome
+1770437,Allagan Tomestones of Astronomy (DoW),tome
+1770438,Allagan Tomestones of Astronomy (DoM),tome
+1770440,Unsung Relic of Asphodelos Exchange (DoW) I,item
+1770441,Unsung Relic of Asphodelos Exchange (DoW) II,item
+1770442,Unsung Relic of Asphodelos Exchange (DoM),item
+1770443,Asphodelos Mythos Exchange (DoW) I,item
+1770444,Asphodelos Mythos Exchange (DoW) II,item
+1770445,Asphodelos Mythos Exchange (DoM),item
+1770446,Allagan Tomestones of Astronomy Exchange (Weapons),tome
+1770447,Radiant's Gear Augmentation (DoW) I,tome
+1770448,Radiant's Gear Augmentation (DoW) II,tome
+1770449,Radiant's Gear Augmentation (DoM),tome
+1770450,Job Gear (Tank),item
+1770451,Job Gear (Physical DPS),item
+1770452,Job Gear (Magical Ranged DPS),item
+1770453,Job Gear (Healer),item
+1770454,Totem Gear (Zodiark),item
+1770455,Totem Gear (Hydaelyn),item
+1770456,Out-of-this-world Oddities,item
+1770457,,item
+1770458,,item
+1770459,,item
+1770460,,item
+1770461,,item
+1770462,,item
+1770463,,item
+1770464,,item
+1770465,,item
+1770466,,item
+1770467,,item
+1770468,,item
+1770469,,item
+1770470,,item
+1770471,,item
+1770472,Pumpkin Cookies,item
+1770473,Speed Belt Exchange,item
+1770474,Fieldcraft Items,item
+1770475,Silver Chocobo Feather Exchange IV (Lv. 80 Gear),item
+1770476,Sacks of Nuts Exchange,item
+1770477,Purple Scrip Exchange (Lv. 90 Materials),item
+1770478,Purple Scrip Exchange (Lv. 60/IL 200),scrip
+1770479,Purple Scrip Exchange (Lv. 70/IL 330),scrip
+1770480,Purple Scrip Exchange (Lv. 70/IL 350),scrip
+1770481,Purple Scrip Exchange (Lv. 80/IL 440),scrip
+1770482,Purple Scrip Exchange (Lv. 80/IL 470),scrip
+1770483,Purple Scrip Exchange (Lv. 90/IL 570),scrip
+1770484,Purple Scrip Exchange (Lv. 50 Materials),scrip
+1770485,Purple Scrip Exchange (Lv. 60 Materials/Tokens),scrip
+1770486,Purple Scrip Exchange (Lv. 70 Materials),scrip
+1770487,Purple Scrip Exchange (Lv. 80 Materials),scrip
+1770488,Purple Scrip Exchange (Lv. 90 Materials),scrip
+1770489,Purple Scrip Exchange (Lv. 90 Materials/Bait/Furnishings),scrip
+1770490,Purple Scrip Exchange (Lv. 60/IL 200),scrip
+1770491,Purple Scrip Exchange (Lv. 70/IL 330),scrip
+1770492,Purple Scrip Exchange (Lv. 70/IL 350),scrip
+1770493,Purple Scrip Exchange (Lv. 80/IL 440),scrip
+1770494,Purple Scrip Exchange (Lv. 80/IL 470),scrip
+1770495,Purple Scrip Exchange (Lv. 90/IL 570),scrip
+1770496,Purple Scrip Exchange (Lv. 50 Materials/Bait),scrip
+1770497,Purple Scrip Exchange (Lv. 60 Materials/Bait/Tokens),scrip
+1770498,Purple Scrip Exchange (Lv. 70 Materials/Bait/Tokens),scrip
+1770499,Purple Scrip Exchange (Lv. 80 Materials/Bait/Tokens),scrip
+1770500,Purple Scrip Exchange (Lv. 90 Bait/Tokens),scrip
+1770501,Bicolor Gemstone Vouchers,item
+1770502,Purple Scrip Exchange (Master Recipes I),scrip
+1770503,Purple Scrip Exchange (Lv. 80/IL 500),scrip
+1770504,Purple Scrip Exchange (Lv. 80/IL 500),scrip
+1770505,Purple Scrip Exchange (Music/Furnishings/Misc.),scrip
+1770506,Purple Scrip Exchange (Materia),scrip
+1770507,Orange Scrip Exchange (Materia),scrip
+1770508,Purple Scrip Exchange (Music/Furnishings/Misc.),scrip
+1770509,Purple Scrip Exchange (Materia),scrip
+1770510,Orange Scrip Exchange (Materia),scrip
+1770511,Idealized Gear (IL 480),item
+1770512,Idealized Gear (IL 480),item
+1770513,Idealized Gear (IL 480),item
+1770514,Idealized Gear (IL 480),item
+1770515,Idealized Gear (IL 480),item
+1770516,Idealized Gear (IL 480),item
+1770517,Idealized Gear (IL 480),item
+1770518,Purple Scrip Exchange (Lv. 58/IL 130),scrip
+1770519,Purple Scrip Exchange (Lv. 58/IL 130),scrip
+1770522,Purple Scrip Exchange (Lv. 70/IL 330),scrip
+1770523,Purple Scrip Exchange (Lv. 70/IL 350),scrip
+1770524,Purple Scrip Exchange (Lv. 80/IL 440),scrip
+1770525,Purple Scrip Exchange (Lv. 80/IL 470),scrip
+1770526,Purple Scrip Exchange (Lv. 80/IL 500),scrip
+1770527,Purple Scrip Exchange (Lv. 70 Materials),scrip
+1770528,Purple Scrip Exchange (Lv. 80 Materials),scrip
+1770529,Purple Scrip Exchange (Lv. 70/IL 330),scrip
+1770530,Purple Scrip Exchange (Lv. 70/IL 350),scrip
+1770531,Purple Scrip Exchange (Lv. 80/IL 440),scrip
+1770532,Purple Scrip Exchange (Lv. 80/IL 470),scrip
+1770533,Purple Scrip Exchange (Lv. 80/IL 500),scrip
+1770534,Purple Scrip Exchange (Lv. 70 Materials/Bait/Tokens),scrip
+1770535,Purple Scrip Exchange (Lv. 80 Materials/Bait/Tokens),scrip
+1770537,,item
+1770538,Prize Exchange II,item
+1770539,Hannish Certificates of Grade 1 Import (NQ Weapons),item
+1770540,Hannish Certificates of Grade 1 Import (NQ Gear),item
+1770541,Hannish Certificates of Grade 1 Import (NQ Accessories),item
+1770542,Hannish Certificates of Grade 1 Import (HQ Weapons),item
+1770543,Hannish Certificates of Grade 1 Import (HQ Gear),item
+1770544,Hannish Certificates of Grade 1 Import (HQ Accessories),item
+1770545,Augmented Classical Equipment (Weapons),item
+1770546,Augmented Classical Equipment (Gear),item
+1770547,Augmented Classical Equipment (Accessories),item
+1770548,Totem Gear (The Endsinger),item
+1770549,Totem Gear (Dragonsong),item
+1770550,Arkasodara Pana Exchange,item
+1770551,Wolf Gear,item
+1770552,Warwolf Gear,item
+1770553,Direwolf Gear,item
+1770554,Pack Gear,item
+1770555,Packliege Gear,item
+1770556,Beastlord Gear,item
+1770557,Twelve Gear,item
+1770558,Genyo Gear,item
+1770559,Wolf Gear,item
+1770560,Warwolf Gear,item
+1770561,Direwolf Gear,item
+1770562,Pack Gear,item
+1770563,Packliege Gear,item
+1770564,Beastlord Gear,item
+1770565,Twelve Gear,item
+1770566,Genyo Gear,item
+1770567,Wolf Gear,item
+1770568,Warwolf Gear,item
+1770569,Direwolf Gear,item
+1770570,Pack Gear,item
+1770571,Packliege Gear,item
+1770572,Beastlord Gear,item
+1770573,Twelve Gear,item
+1770574,Genyo Gear,item
+1770575,Republican Gear,item
+1770576,Late Allagan Gear,item
+1770577,Wolf Gear,item
+1770578,Warwolf Gear,item
+1770579,Direwolf Gear,item
+1770580,Pack Gear,item
+1770581,Packliege Gear,item
+1770582,Beastlord Gear,item
+1770583,Twelve Gear,item
+1770584,Genyo Gear,item
+1770585,Republican Gear,item
+1770586,Late Allagan Gear,item
+1770587,Miscellaneous,item
+1770588,Trophy Crystal Exchange (DoW Weapons),item
+1770589,Trophy Crystal Exchange (DoM Weapons),item
+1770590,Trophy Crystal Exchange (DoW Gear) I,item
+1770591,Trophy Crystal Exchange (DoM Gear) I,item
+1770592,Trophy Crystal Exchange (Accessories),item
+1770593,Trophy Crystal Exchange (Other),item
+1770594,Wolf Collar Exchange,item
+1770595,Seasonal Event Prizes I,item
+1770596,Seasonal Event Prizes II,item
+1770597,Rain Exchange,tome
+1770598,,item
+1770599,Prize Exchange (Registrable Miscellany),item
+1770600,Prize Exchange (Music/Furnishings),item
+1770601,,item
+1770602,,item
+1770603,,item
+1770604,,item
+1770605,Omicron Omnitoken Exchange,item
+1770606,"Allagan Tomestones of Poetics (DoW, IL 630)",tome
+1770607,"Allagan Tomestones of Poetics (DoM, IL 630)",tome
+1770608,Unsung Relic of Abyssos Exchange (DoW) I,item
+1770609,Unsung Relic of Abyssos Exchange (DoW) II,item
+1770610,Unsung Relic of Abyssos Exchange (DoM),item
+1770611,Abyssos Mythos Exchange (DoW) I,item
+1770612,Abyssos Mythos Exchange (DoW) II,item
+1770613,Abyssos Mythos Exchange (DoM),item
+1770614,Allagan Tomestones of Poetics (IL 630 Weapons),tome
+1770615,Lunar Envoy's Gear Augmentation (DoW) I,tome
+1770616,Lunar Envoy's Gear Augmentation (DoW) II,tome
+1770617,Lunar Envoy's Gear Augmentation (DoM),tome
+1770618,Totem Gear (Barbariccia),item
+1770619,"Moonward Gear Exchange (DoW, IL 570)",item
+1770620,"Moonward Gear Exchange (DoM, IL 570)",item
+1770621,Sil'dihn Potsherd Exchange,item
+1770622,Sil'dihn Silver Exchange,item
+1770623,Sil'dihn Manuscript Exchange,item
+1770624,Manderville Weapon Materials Exchange,tome
+1770625,Purple Scrip Exchange (Lv. 90/IL 590),scrip
+1770626,Purple Scrip Exchange (Lv. 90/IL 590),scrip
+1770627,Purple Scrip Exchange (Master Recipes II),scrip
+1770628,Master Recipes II,item
+1770629,Master Recipes II,item
+1770630,Master Recipes II,item
+1770631,Master Recipes II,item
+1770634,,item
+1770635,,item
+1770636,,item
+1770637,Crafters' Scrip Exchange,scrip
+1770638,Gatherers' Scrip Exchange,scrip
+1770641,Totem Gear (Rubicante),item
+1770642,Totem Gear (Omega),item
+1770643,,item
+1770644,,item
+1770645,Seasonal Event Prizes I,item
+1770646,Seasonal Event Prizes II,item
+1770647,Loporrit Carat Exchange,item
+1770648,Trophy Crystal Exchange (DoW Gear) II,item
+1770649,Trophy Crystal Exchange (DoM Gear) II,item
+1770650,Hannish Certificates of Grade 2 Import (NQ Weapons),item
+1770651,Hannish Certificates of Grade 2 Import (NQ Gear),item
+1770652,Hannish Certificates of Grade 2 Import (NQ Accessories),item
+1770653,Hannish Certificates of Grade 2 Import (HQ Weapons),item
+1770654,Hannish Certificates of Grade 2 Import (HQ Gear),item
+1770655,Hannish Certificates of Grade 2 Import (HQ Accessories),item
+1770656,Augmented Rinascita Equipment (Weapons),item
+1770657,Augmented Rinascita Equipment (Gear),item
+1770658,Augmented Rinascita Equipment (Accessories),item
+1770659,,item
+1770660,,item
+1770662,,item
+1770663,Rokkon Potsherd Exchange,item
+1770664,Shishu Coin Exchange,item
+1770665,Rokkon Manuscript Exchange,item
+1770684,ã‚³ãƒ¡ãƒ³ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒªã‚¹ã‚¿ãƒ«ã®å–å¼•,item
+1770691,"Allagan Tomestones of Poetics (DoW, IL 660)",tome
+1770692,"Allagan Tomestones of Poetics (DoM, IL 660)",tome
+1770693,Unsung Relic of Anabaseios Exchange (DoW) I,item
+1770694,Unsung Relic of Anabaseios Exchange (DoW) II,item
+1770695,Unsung Relic of Anabaseios Exchange (DoM),item
+1770696,Anabaseios Mythos Exchange (DoW) I,item
+1770697,Anabaseios Mythos Exchange (DoW) II,item
+1770698,Anabaseios Mythos Exchange (DoM),item
+1770699,Allagan Tomestones of Poetics (IL 660 Weapons),tome
+1770700,Credendum Gear Augmentation (DoW) I,tome
+1770701,Credendum Gear Augmentation (DoW) II,tome
+1770702,Credendum Gear Augmentation (DoM),tome
+1770703,Totem Gear (Golbez),item
+1770704,"Radiant's Gear (DoW, IL 600)",item
+1770705,"Radiant's Gear (DoM, IL 600)",item
+1770706,Purple Scrip Exchange (Lv. 90/IL 620),scrip
+1770707,Purple Scrip Exchange (Lv. 90/IL 620),scrip
+1770709,,item
+1770714,Hannish Certificates of Grade 3 Import (NQ Weapons),item
+1770715,Hannish Certificates of Grade 3 Import (NQ Gear),item
+1770716,Hannish Certificates of Grade 3 Import (NQ Accessories),item
+1770717,Hannish Certificates of Grade 3 Import (HQ Weapons),item
+1770718,Hannish Certificates of Grade 3 Import (HQ Gear),item
+1770719,Hannish Certificates of Grade 3 Import (HQ Accessories),item
+1770720,Augmented Diadochos Equipment (Weapons),item
+1770721,Augmented Diadochos Equipment (Gear),item
+1770722,Augmented Diadochos Equipment (Accessories),item
+1770723,,item
+1770724,,item
+1770725,Aloalo Potsherd Exchange,item
+1770726,Aloalo Coin Exchange,item
+1770727,Aloalo Manuscript Exchange,item
+1770728,Totem Gear (Zeromus),item
+1770729,Seasonal Event Prizes I,item
+1770730,Seasonal Event Prizes II,item
+1770732,Trophy Crystal Exchange (Universal Gear) I,item
+1770733,Elevated Ester Augmentation,item
+1770734,,item
+1770736,,item
+1770737,,item
+1770738,,item
+1770739,,item
+1770740,,item
+1770741,,item
+1770742,,item
+1770743,,item
+1770744,,item
+1770745,,item
+1770746,,item
+1770747,,item
+1770748,,item
+1770749,,item
+1770750,,item
+1770751,,item
+1770752,,item
+1770753,,item
+1770754,,item
+1770755,,item
+1770756,Silver Chocobo Feather Exchange V (Lv. 90 Gear),item
+1770757,Job Gear (Tank),item
+1770758,Job Gear (Physical DPS),item
+1770759,Job Gear (Magical Ranged DPS),item
+1770760,Job Gear (Healer),item
+1770761,Sacks of Nuts Exchange,item
+1770762,Totem Gear (Zoraal Ja),item
+1770763,Totem Gear (Valigarmanda),item
+1770764,"Allagan Tomestones of Aesthetics (DoW, IL 700)",tome
+1770765,"Allagan Tomestones of Aesthetics (DoM, IL 700)",tome
+1770766,Allagan Tomestones of Aesthetics (Other),tome
+1770767,"Allagan Tomestones of Heliometry (DoW, IL 720)",tome
+1770768,"Allagan Tomestones of Heliometry (DoM, IL 720)",tome
+1770769,Allagan Tomestones of Heliometry (IL 720 Weapons),tome
+1770770,Allagan Tomestones of Heliometry (Other),tome
+1770771,Quetzalli Gear Augmentation (DoW) I,tome
+1770772,Quetzalli Gear Augmentation (DoW) II,tome
+1770773,Quetzalli Gear Augmentation (DoM),tome
+1770774,Light-heavy Hologear Exchange (DoW) I,item
+1770775,Light-heavy Hologear Exchange (DoW) II,item
+1770776,Light-heavy Hologear Exchange (DoM),item
+1770777,AAC Illustrated: LHW Edition Exchange (DoW) I,item
+1770778,AAC Illustrated: LHW Edition Exchange (DoW) II,item
+1770779,AAC Illustrated: LHW Edition Exchange (DoM),item
+1770781,Orange Scrip Exchange (Lv. 100/IL 700),scrip
+1770782,Purple Scrip Exchange (Lv. 100 Materials),scrip
+1770783,Orange Scrip Exchange (Lv. 100 Materials/Furnishings),scrip
+1770784,Orange Scrip Exchange (Lv. 100/IL 700),scrip
+1770785,Purple Scrip Exchange (Lv. 100 Folklore Items),scrip
+1770786,Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens),scrip
+1770787,Purple Scrip Exchange (Lv. 90/IL 570),scrip
+1770788,Purple Scrip Exchange (Lv. 90/IL 590),scrip
+1770789,Purple Scrip Exchange (Lv. 90/IL 620),scrip
+1770790,Purple Scrip Exchange (Lv. 90 Materials),scrip
+1770791,Purple Scrip Exchange (Lv. 90/IL 570),scrip
+1770792,Purple Scrip Exchange (Lv. 90/IL 590),scrip
+1770793,Purple Scrip Exchange (Lv. 90/IL 620),scrip
+1770794,Purple Scrip Exchange (Lv. 90 Materials/Bait/Tokens),scrip
+1770795,Extreme & Ultimate Gear (IL 580-635),item
+1770796,Limbo Gear (IL 580),item
+1770797,Asphodelos Gear (IL 600-605),item
+1770798,Purgatory Gear (IL 610),item
+1770799,The Thirteenth Gear (IL 615-655),item
+1770800,Lunar Envoy Gear (IL 630),tome
+1770801,Abyssos Gear (IL 630-635),item
+1770802,Anabaseios Gear (IL 640),item
+1770803,Credendum Gear (IL 660),tome
+1770804,Ascension Gear (IL 660-665),item
+1770805,Extreme & Ultimate Gear (IL 580-635),item
+1770806,Limbo Gear (IL 580),item
+1770807,Asphodelos Gear (IL 600-605),item
+1770808,Purgatory Gear (IL 610),item
+1770809,The Thirteenth Gear (IL 615-655),item
+1770810,Lunar Envoy Gear (IL 630),tome
+1770811,Abyssos Gear (IL 630-635),item
+1770812,Anabaseios Gear (IL 640),item
+1770813,Credendum Gear (IL 660),tome
+1770814,Ascension Gear (IL 660-665),item
+1770815,Extreme & Ultimate Gear (IL 580-635),item
+1770816,Limbo Gear (IL 580),item
+1770817,Asphodelos Gear (IL 600-605),item
+1770818,Purgatory Gear (IL 610),item
+1770819,The Thirteenth Gear (IL 615-655),item
+1770820,Lunar Envoy Gear (IL 630),tome
+1770821,Abyssos Gear (IL 630-635),item
+1770822,Anabaseios Gear (IL 640),item
+1770823,Credendum Gear (IL 660),tome
+1770824,Ascension Gear (IL 660-665),item
+1770825,Extreme & Ultimate Gear (IL 580-635),item
+1770826,Limbo Gear (IL 580),item
+1770827,Asphodelos Gear (IL 600-605),item
+1770828,Purgatory Gear (IL 610),item
+1770829,The Thirteenth Gear (IL 615-655),item
+1770830,Lunar Envoy Gear (IL 630),tome
+1770831,Abyssos Gear (IL 630-635),time
+1770832,Anabaseios Gear (IL 640),item
+1770833,Credendum Gear (IL 660),tome
+1770834,Ascension Gear (IL 660-665),item
+1770835,Extreme & Ultimate Gear (IL 580-635),item
+1770836,Limbo Gear (IL 580),item
+1770837,Asphodelos Gear (IL 600-605),item
+1770838,Purgatory Gear (IL 610),item
+1770839,The Thirteenth Gear (IL 615-655),item
+1770840,Lunar Envoy Gear (IL 630),tome
+1770841,Abyssos Gear (IL 630-635),item
+1770842,Anabaseios Gear (IL 640),item
+1770843,Credendum Gear (IL 660),tome
+1770844,Ascension Gear (IL 660-665),item
+1770845,Extreme & Ultimate Gear (IL 580-635),item
+1770846,Limbo Gear (IL 580),item
+1770847,Asphodelos Gear (IL 600-605),item
+1770848,Purgatory Gear (IL 610),item
+1770849,The Thirteenth Gear (IL 615-655),item
+1770850,Lunar Envoy Gear (IL 630),tome
+1770851,Abyssos Gear (IL 630-635),time
+1770852,Anabaseios Gear (IL 640),item
+1770853,Credendum Gear (IL 660),tome
+1770854,Ascension Gear (IL 660-665),item
+1770855,Extreme & Ultimate Gear (IL 580-635),item
+1770856,Limbo Gear (IL 580),item
+1770857,Asphodelos Gear (IL 600-605),item
+1770858,Purgatory Gear (IL 610),item
+1770859,The Thirteenth Gear (IL 615-655),item
+1770860,Lunar Envoy Gear (IL 630),tome
+1770861,Abyssos Gear (IL 630-635),item
+1770862,Anabaseios Gear (IL 640),item
+1770863,Credendum Gear (IL 660),tome
+1770864,Ascension Gear (IL 660-665),item
+1770865,Materials,tome
+1770866,Mounts/Miscellany,item
+1770867,Materia I,tome
+1770868,Soph Gear (IL 570),scrip
+1770869,Perfectionist Gear (IL 590),scrip
+1770870,Afflatus Gear (IL 620),scrip
+1770871,Miscellany,scrip
+1770872,Materials,scrip
+1770873,Master Recipes I,scrip
+1770874,Master Recipes II,scrip
+1770875,Materia,scrip
+1770876,Soph Gear (IL 570),scrip
+1770877,Perfectionist Gear (IL 590),scrip
+1770878,Afflatus Gear (IL 620),scrip
+1770879,Bait/Miscellany,scrip
+1770880,Materials,scrip
+1770881,Folklore Items,scrip
+1770882,Materia,scrip
+1770883,Materia II,item
+1770884,,item
+1770885,Sublime Curiosities,item
+1770886,Fieldcraft Items,item
+1770887,Rain Exchange,tome
+1770888,Furnishings,item
+1770889,Materia,item
+1770890,Pelu Pelplume Exchange,item
+1770891,Everkeep Certificates of Grade 1 Import (NQ Weapons),item
+1770892,Everkeep Certificates of Grade 1 Import (NQ Gear),item
+1770893,Everkeep Certificates of Grade 1 Import (NQ Accessories),item
+1770894,Everkeep Certificates of Grade 1 Import (HQ Weapons),item
+1770895,Everkeep Certificates of Grade 1 Import (HQ Gear),item
+1770896,Everkeep Certificates of Grade 1 Import (HQ Accessories),item
+1770897,Augmented Archeo Kingdom Equipment (Weapons),item
+1770898,Augmented Archeo Kingdom Equipment (Gear),item
+1770899,Augmented Archeo Kingdom Equipment (Accessories),item
+1770900,Rain Exchange,tome
+1770901,Totem Gear (Queen Eternal),item
+1770902,Totem Gear (Futures Rewritten),item
+1770903,Totem Gear (Cloud of Darkness),item
+1770904,,item
+1770907,Purple Scrip Exchange (Lv. 80 Materials/Skysteel Prototype Augmentation),scrip
+1770908,Tattered Score Exchange (First Movement),item
+1770909,"Neo Kingdom Gear (DoW, IL 700)",item
+1770910,"Neo Kingdom Gear (DoM, IL 700)",item
+1770911,"Allagan Tomestones of Mathematics (DoW, IL 750)",tome
+1770912,"Allagan Tomestones of Mathematics (DoM, IL 750)",tome
+1770913,Allagan Tomestones of Mathematics (IL 750 Weapons),tome
+1770914,Historia Gear Augmentation (DoW) I,item
+1770915,Historia Gear Augmentation (DoW) II,item
+1770916,Historia Gear Augmentation (DoM),item
+1770917,Cruiserweight Hologear Exchange (DoW) I,item
+1770918,Cruiserweight Hologear Exchange (DoW) II,item
+1770919,Cruiserweight Hologear Exchange (DoM),item
+1770920,AAC Illustrated: CW Edition Exchange (DoW) I,item
+1770921,AAC Illustrated: CW Edition Exchange (DoW) II,item
+1770922,AAC Illustrated: CW Edition Exchange (DoM),item
+1770923,Totem Gear (Zelenia),item
+1770924,Mamool Ja Nanook Exchange,item
+1770925,Phantom Weapon Materials Exchange,tome
+1770926,Phantom Weapons Penumbrae,item
+1770927,Enlightenment Silver Piece Exchange (IL 745),item
+1770928,Enlightenment Silver Piece Exchange (Battlecraft Items),item
+1770929,Enlightenment Silver Piece Exchange (Other),item
+1770930,Enlightenment Gold Piece Exchange (Battlecraft Items),item
+1770931,Enlightenment Gold Piece Exchange (Other),item
+1770932,Sanguinite Exchange,item
+1770933,Arcanaut's Gear Augmentation I,item
+1770934,Arcanaut's Gear Augmentation II,item
+1770943,Orange Scrip Exchange (Lv. 100/IL 720),scrip
+1770944,Orange Scrip Exchange (Lv. 100/IL 720),scrip
+1770945,Cosmocredit Exchange,item
+1770946,Enlightenment Silver Piece Exchange (Ciphers),item
+1770947,Enlightenment Gold Piece Exchange (Ciphers),item
+1770949,Seasonal Event Prizes (Weapons),item
+1770950,Seasonal Event Prizes (Gear),item
+1770951,Seasonal Event Prizes (Other),item
+1770955,Everkeep Certificates of Grade 2 Import (NQ Weapons),item
+1770956,Everkeep Certificates of Grade 2 Import (NQ Gear),item
+1770957,Everkeep Certificates of Grade 2 Import (NQ Accessories),item
+1770958,Everkeep Certificates of Grade 2 Import (HQ Weapons),item
+1770959,Everkeep Certificates of Grade 2 Import (HQ Gear),item
+1770960,Everkeep Certificates of Grade 2 Import (HQ Accessories),item
+1770961,Augmented Ceremonial Equipment (Weapons),item
+1770962,Augmented Ceremonial Equipment (Gear),item
+1770963,Augmented Ceremonial Equipment (Accessories),item
+1770964,Tattered Score Exchange (Second Movement),item
+1770965,Totem Gear (Necron),item
+1770967,Phantom Weapons Umbrae,item
+1770972,Trophy Crystal Exchange (Universal Gear) II,item
+1770974,Cosmic Exploration Token Exchange,item
+1770975,,item
+1770976,â—ãƒ•ã‚¡ãƒ³ãƒˆãƒ ã‚¦ã‚§ãƒãƒ³ãƒ»ãƒ¬ãƒ—ãƒªã‚«ã®å—å–,item
+1770977,Cosmocredit Exchange (Materials/Materia/Items),item
