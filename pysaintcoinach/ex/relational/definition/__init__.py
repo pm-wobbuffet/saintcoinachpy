@@ -426,10 +426,14 @@ class SingleDataDefinition(IDataDefinition):
             MultiReferenceConverter,
             SheetLinkConverter,
             ComplexLinkConverter,
+            SpecialShopItemReferenceConverter,
         )
 
-        converter = None
-        if obj.type == "icon":
+        converter = obj.converter
+        if converter is not None:
+            if converter == "SpecialShopItems":
+                converter = SpecialShopItemReferenceConverter()
+        elif obj.type == "icon":
             converter = IconConverter()
             pass
         elif obj.type == "modelId":
