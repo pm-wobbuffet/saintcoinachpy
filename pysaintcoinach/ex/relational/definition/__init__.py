@@ -426,6 +426,8 @@ class SingleDataDefinition(IDataDefinition):
             MultiReferenceConverter,
             SheetLinkConverter,
             ComplexLinkConverter,
+        )
+        from ..value_converters.specialshopconverter import (
             SpecialShopItemReferenceConverter,
         )
 
