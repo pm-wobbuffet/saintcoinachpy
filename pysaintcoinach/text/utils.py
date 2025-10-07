@@ -46,19 +46,19 @@ class NodeFlags(Enum):
 
 
 class StringTokens(object):
-    TAG_OPEN = '<'
-    TAG_CLOSE = '>'
-    ELEMENT_CLOSE = '/'
-    ARGUMENTS_OPEN = '('
-    ARGUMENTS_CLOSE = ')'
-    ARGUMENTS_SEPARATOR = ','
+    TAG_OPEN = "<"
+    TAG_CLOSE = ">"
+    ELEMENT_CLOSE = "/"
+    ARGUMENTS_OPEN = "("
+    ARGUMENTS_CLOSE = ")"
+    ARGUMENTS_SEPARATOR = ","
 
-    ELSE_TAG = TAG_OPEN + 'Else' + ELEMENT_CLOSE + TAG_CLOSE
-    CASE_TAG_NAME = 'Case'
+    ELSE_TAG = TAG_OPEN + "Else" + ELEMENT_CLOSE + TAG_CLOSE
+    CASE_TAG_NAME = "Case"
 
-    INVERT_NAME = 'Not'
+    INVERT_NAME = "Not"
 
-    TOP_LEVEL_PARAMETER_NAME = 'TopLevelParameter'
+    TOP_LEVEL_PARAMETER_NAME = "TopLevelParameter"
 
 
 class TagType(Enum):
@@ -100,8 +100,10 @@ class TagType(Enum):
     SheetDe = 0x32
     SheetFr = 0x33
     InstanceContent = 0x40
+    Unknown73 = 0x42
     UIForeground = 0x48  # Lookup into UIColor[n]/UIForeground
     UIGlow = 0x49  # Lookup into UIColor[n]/UIGlow
     ZeroPaddedValue = 0x50
     OrdinalNumber = 0x51
     Sfx = 0x60  # Usually for log messages, causes SE[n] to play when printed
+    Unknown74 = 0x61
