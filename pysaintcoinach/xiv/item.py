@@ -29,6 +29,9 @@ def unique_everseen(iterable, key=None):
 
 
 class ItemBase(XivRow):
+
+    NUMBER_OF_STAT_COLUMNS = 6
+
     @property
     def name(self):
         return self.get_raw("Name")
@@ -36,6 +39,14 @@ class ItemBase(XivRow):
     @property
     def description(self):
         return self.get_raw("Description")
+
+    @property
+    def stats(self):
+        stats_array = []
+        for i in range(self.NUMBER_OF_STAT_COLUMNS):
+            if self.as_T("BaseParam", "BaseParam", i).key != 0:
+                print(self.as_T("BaseParam", "BaseParam", i))
+        return []
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(ItemBase, self).__init__(sheet, source_row)
