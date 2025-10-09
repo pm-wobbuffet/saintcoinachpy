@@ -7,8 +7,20 @@ from .gathering_item_base import GatheringItemBase
 class GatheringItem(GatheringItemBase):
 
     @property
+    def gathering_item_level(self) -> "GatheringItemLevelConvertTable":
+        return self.as_T("GatheringItemLevelConvertTable", "GatheringItemLevel")
+
+    @property
     def is_hidden(self) -> bool:
-        return self.as_boolean('IsHidden')
+        return self.as_boolean("IsHidden")
+
+    @property
+    def item(self) -> "Item":
+        return self.as_T("Item", "Item")
+
+    @property
+    def required_perception(self) -> int:
+        return self.as_int32("PerceptionReq")
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(GatheringItem, self).__init__(sheet, source_row)

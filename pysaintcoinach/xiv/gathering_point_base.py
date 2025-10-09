@@ -10,21 +10,25 @@ class GatheringPointBase(XivRow, IItemSource):
     @property
     def type(self) -> "GatheringType":
         from .gathering_type import GatheringType
+
         return self.as_T(GatheringType)
 
     @property
     def gathering_level(self) -> int:
-        return self.as_int32('GatheringLevel')
+        return self.as_int32("GatheringLevel")
 
     @property
     def _items(self):
+        """The list of all item slots on this node, possibly containing None values
+        for blank rows"""
         if self.__items is None:
             self.__items = self.__build_items()
         return self.__items
 
-    @property
-    def is_limited(self) -> bool:
-        return self.as_boolean('IsLimited')
+    # @property
+    # def is_limited(self) -> bool:
+    #     return self.as_boolean("IsLimited")
+    # This no longer seems to exist on that sheet
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(GatheringPointBase, self).__init__(sheet, source_row)
@@ -33,13 +37,18 @@ class GatheringPointBase(XivRow, IItemSource):
 
     def __build_items(self):
         from .gathering_item_base import GatheringItemBase
+
         COUNT = 8
 
         items = []
         for i in range(COUNT):
-            gib: GatheringItemBase = self[('Item', i)]
-            if gib is not None and gib.key != 0 and \
-                gib.item is not None and gib.item.key != 0:
+            gib: GatheringItemBase = self[("Item", i)]
+            if (
+                gib is not None
+                and gib.key != 0
+                and gib.item is not None
+                and gib.item.key != 0
+            ):
                 items.append(gib)
             else:
                 items.append(None)
@@ -47,7 +56,9 @@ class GatheringPointBase(XivRow, IItemSource):
 
     @property
     def items(self) -> Iterable["Item"]:
+        """The list of all items obtainable from this gathering point base"""
         if self.__item_source_items is None:
-            self.__item_source_items = list(map(lambda i: i.item,
-                                                filter(None, self._items)))
+            self.__item_source_items = list(
+                map(lambda i: i.item, filter(None, self._items))
+            )
         return self.__item_source_items

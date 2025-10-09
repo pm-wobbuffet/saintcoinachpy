@@ -9,16 +9,24 @@ class GatheringPoint(XivRow):
     @property
     def base(self) -> "GatheringPointBase":
         from .gathering_point_base import GatheringPointBase
+
         return self.as_T(GatheringPointBase)
+
+    @property
+    def count(self) -> int:
+        """The default integrity of a node, prior to bonuses"""
+        return self.as_int32("Count")
 
     @property
     def territory_type(self) -> "TerritoryType":
         from .territory_type import TerritoryType
+
         return self.as_T(TerritoryType)
 
     @property
     def place_name(self) -> "PlaceName":
         from .placename import PlaceName
+
         return self.as_T(PlaceName)
 
     @property
@@ -30,6 +38,7 @@ class GatheringPoint(XivRow):
     @property
     def gathering_sub_category(self) -> "GatheringSubCategory":
         from .gathering_sub_category import GatheringSubCategory
+
         return self.as_T(GatheringSubCategory)
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
@@ -38,6 +47,7 @@ class GatheringPoint(XivRow):
 
     def __build_gathering_point_bonus(self):
         from .gathering_point_bonus import GatheringPointBonus
+
         COUNT = 2
 
         bonuses = []

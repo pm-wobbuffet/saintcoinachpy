@@ -209,6 +209,12 @@ class Recipe(XivRow):
         """Whether the crafting animation uses the secondary (offhand tool)"""
         return self.__uses_secondary_tool
 
+    def contains_ingredient(self, item_to_test: Item) -> bool:
+        for i in self.ingredients:
+            if i.item == item_to_test:
+                return True
+        return False
+
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super().__init__(sheet, source_row)
         self.__received_item = RecipeResultItem(

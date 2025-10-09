@@ -1,4 +1,5 @@
 from itertools import filterfalse, chain
+from typing import cast
 from ..ex.relational import IRelationalRow
 from . import xivrow, XivRow, IXivSheet
 
@@ -33,20 +34,55 @@ class ItemBase(XivRow):
     NUMBER_OF_STAT_COLUMNS = 6
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.get_raw("Name")
 
     @property
-    def description(self):
+    def description(self) -> str:
         return self.get_raw("Description")
 
     @property
+    def equip_level(self) -> int:
+        return self.as_int32("LevelEquip")
+
+    @property
+    def item_level(self) -> int:
+        return self.as_T("ItemLevel", "LevelItem").key
+
+    @property
     def stats(self):
-        stats_array = []
+        stats = {"HQ": {}, "NQ": {}}
         for i in range(self.NUMBER_OF_STAT_COLUMNS):
             if self.as_T("BaseParam", "BaseParam", i).key != 0:
-                print(self.as_T("BaseParam", "BaseParam", i))
-        return []
+                bp = self.as_T("BaseParam", "BaseParam", i)["Name"]
+                if bp not in stats["NQ"]:
+                    stats["NQ"][bp] = 0
+                if bp not in stats["HQ"]:
+                    stats["HQ"][bp] = 0
+                stats["NQ"][bp] += self.as_int32("BaseParamValue", i)
+                stats["HQ"][bp] += self.as_int32("BaseParamValue", i)
+
+            if self.as_T("BaseParam", "BaseParamSpecial", i).key != 0:
+                bonus = self.as_T("BaseParam", "BaseParamSpecial", i)
+                if bonus.key != 0:
+                    if bonus["Name"] not in stats["HQ"]:
+                        stats["HQ"][bonus["Name"]] = 0
+                    stats["HQ"][bonus["Name"]] += self.as_int32(
+                        "BaseParamValueSpecial", i
+                    )
+        return stats
+
+    @property
+    def unique(self) -> bool:
+        return self.as_boolean("IsUnique")
+
+    @property
+    def untradable(self) -> bool:
+        return self.as_boolean("IsUntradable")
+
+    @property
+    def indisposable(self) -> bool:
+        return self.as_boolean("IsIndisposable")
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(ItemBase, self).__init__(sheet, source_row)
@@ -56,16 +92,24 @@ class ItemBase(XivRow):
 class Item(ItemBase):
 
     @property
-    def is_collectable(self):
-        return self.as_boolean("IsCollectable")
-
-    @property
     def bid(self):
         return self.get_raw("PriceLow")
 
     @property
     def ask(self):
         return self.get_raw("PriceMid")
+
+    @property
+    def can_be_hq(self) -> bool:
+        return self.as_boolean("CanBeHq")
+
+    @property
+    def icon(self):
+        return self.as_T("Icon", "Icon")
+
+    @property
+    def is_collectable(self):
+        return self.as_boolean("IsCollectable")
 
     @property
     def recipes_as_material(self):
@@ -103,7 +147,17 @@ class Item(ItemBase):
         self.__as_shop_payment = None
 
     def __build_recipes_as_material(self):
-        raise NotImplementedError
+
+        if self.key < 20:
+            # elemental shards, crystals, clusters would be in a bazillion things
+            return []
+        recipes = self.sheet.collection.get_sheet("Recipe")
+        ret = []
+        for r in recipes:
+            if r.contains_ingredient(self):
+                ret.append(r)
+
+        return ret
 
     def __build_as_shop_payment(self):
         if self.key == 1:
