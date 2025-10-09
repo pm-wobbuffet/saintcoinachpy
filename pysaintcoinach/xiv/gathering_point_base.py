@@ -2,15 +2,14 @@ from typing import Iterable, List
 from ..ex.relational import IRelationalRow
 from . import xivrow, XivRow, IXivSheet
 from .interfaces import IItemSource
+from .gathering_type import GatheringType
 
 
 @xivrow
 class GatheringPointBase(XivRow, IItemSource):
 
     @property
-    def type(self) -> "GatheringType":
-        from .gathering_type import GatheringType
-
+    def type(self) -> GatheringType:
         return self.as_T(GatheringType)
 
     @property
@@ -33,7 +32,7 @@ class GatheringPointBase(XivRow, IItemSource):
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(GatheringPointBase, self).__init__(sheet, source_row)
         self.__items = None
-        self.__item_source_items = None  # type: List["Item"]
+        self.__item_source_items = None  # type: None|List["Item"]
 
     def __build_items(self):
         from .gathering_item_base import GatheringItemBase
@@ -55,7 +54,7 @@ class GatheringPointBase(XivRow, IItemSource):
         return items
 
     @property
-    def items(self) -> Iterable["Item"]:
+    def items(self) -> Iterable["Item"]:  # type: ignore
         """The list of all items obtainable from this gathering point base"""
         if self.__item_source_items is None:
             self.__item_source_items = list(
