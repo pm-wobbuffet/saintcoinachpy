@@ -253,22 +253,7 @@ class _ImageConverter(object):
 
     @classmethod
     def process_A8R8G8B8(cls, src: bytes, width: int, height: int):
-        # dst += struct.pack('<4sLLLL56xLL4xLLLLLL16x',
-        #                    b'DDS ', 124, 0x1007, height, width,
-        #                    32, 0x41, 32, 0xFF0000, 0xFF00, 0xFF, 0xFF000000, 0x1000)
-        # dst += src
-        dst = bytearray()
-        for (v,) in struct.iter_unpack("L", src):
-            dst += bytes(
-                [
-                    ((v >> 16) & 0xFF),
-                    ((v >> 8) & 0xFF),
-                    ((v) & 0xFF),
-                    ((v >> 24) & 0xFF),
-                ]
-            )
-        image = Image.frombytes("RGBA", (width, height), bytes(dst))
-        return image
+        return Image.frombytes("RGBA", (width, height), src, "raw", "BGRA")
 
     @classmethod
     def process_Dxt1(cls, src: bytes, width: int, height: int):

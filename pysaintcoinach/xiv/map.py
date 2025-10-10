@@ -1,3 +1,4 @@
+from typing import cast
 import weakref
 
 from ..ex.relational import IRelationalRow
@@ -6,6 +7,8 @@ from ..text import XivString
 from ..imaging import ImageFile, ImageConverter
 
 from PIL import Image, ImageChops
+
+from pysaintcoinach import imaging
 
 
 @xivrow
@@ -93,6 +96,24 @@ class Map(XivRow):
         from .territory_type import TerritoryType
 
         return self.as_T(TerritoryType)
+
+    @property
+    def aetheryte_image(self) -> Image.Image:
+        m = self.medium_image
+        aetherytes = list(
+            filter(
+                lambda x: x.parent_row.key == self.map_marker_range
+                and x["DataType"] == 3,
+                self.sheet.collection.get_sheet("MapMarker"),
+            )
+        )
+        for a in aetherytes:
+            ae_icon = cast(imaging.ImageFile, a.as_image("Icon")).get_image()
+            m.paste(ae_icon, box=(0, 0, ae_icon.width, ae_icon.height))
+            # ae_icon.save("output/{self.key}.aetheryte.png")
+        print(aetherytes, self.key)
+
+        return m
 
     @property
     def medium_image(self) -> Image.Image:
