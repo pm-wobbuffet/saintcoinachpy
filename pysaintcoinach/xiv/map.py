@@ -1,4 +1,4 @@
-from typing import cast
+from typing import Iterable, cast
 import weakref
 
 from ..ex.relational import IRelationalRow
@@ -19,6 +19,8 @@ class Map(XivRow):
 
     __medium_image = None  # type: weakref.ReferenceType
     __small_image = None  # type: weakref.ReferenceType
+    __aetheryte_image = None
+    __aetherytes = None
 
     @property
     def index(self) -> int:
@@ -31,6 +33,19 @@ class Map(XivRow):
         :return: The identifier string of the current map.
         """
         return self.as_string("Id")
+
+    @property
+    def aetherytes(self) -> Iterable["MapMarker"]:
+        if self.__aetherytes is not None:
+            return self.__aetherytes
+        self.__aetherytes = list(
+            filter(
+                lambda x: x.parent_row.key == self.map_marker_range
+                and x["DataType"] == 3,
+                self.sheet.collection.get_sheet("MapMarker"),
+            )
+        )
+        return self.__aetherytes
 
     @property
     def hierarchy(self) -> int:
@@ -99,20 +114,28 @@ class Map(XivRow):
 
     @property
     def aetheryte_image(self) -> Image.Image:
-        m = self.medium_image
-        aetherytes = list(
-            filter(
-                lambda x: x.parent_row.key == self.map_marker_range
-                and x["DataType"] == 3,
-                self.sheet.collection.get_sheet("MapMarker"),
+        image = self.__aetheryte_image if self.__aetheryte_image is not None else None
+        if image is not None:
+            return image
+        IMAGE_SCALE_FACTOR = 3  # Scale for aetheryte images
+        m = self.medium_image.copy()
+        for a in self.aetherytes:
+            ae_icon = cast(imaging.ImageFile, a.as_image("Icon")).get_image().copy()
+            ae_enlarged = ae_icon.resize(
+                (
+                    ae_icon.size[0] * IMAGE_SCALE_FACTOR,
+                    ae_icon.size[1] * IMAGE_SCALE_FACTOR,
+                )
             )
-        )
-        for a in aetherytes:
-            ae_icon = cast(imaging.ImageFile, a.as_image("Icon")).get_image()
-            m.paste(ae_icon, box=(0, 0, ae_icon.width, ae_icon.height))
-            # ae_icon.save("output/{self.key}.aetheryte.png")
-        print(aetherytes, self.key)
-
+            m.paste(
+                ae_enlarged,
+                box=(
+                    int(a.as_int32("X") - ae_enlarged.size[0] / 2),
+                    int(a.as_int32("Y") - ae_enlarged.size[1] / 2),
+                ),
+                mask=ae_enlarged,
+            )
+        self.__aetheryte_image = m
         return m
 
     @property
