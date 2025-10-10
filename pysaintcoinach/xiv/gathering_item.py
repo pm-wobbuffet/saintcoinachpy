@@ -1,3 +1,4 @@
+from typing import cast
 from ..ex.relational import IRelationalRow
 from . import xivrow, IXivSheet
 from .gathering_item_base import GatheringItemBase
@@ -19,8 +20,22 @@ class GatheringItem(GatheringItemBase):
         return self.as_T("Item", "Item")
 
     @property
+    def points(self):
+        if self.__points is None:
+            self._generate_points()
+        return self.__points
+
+    @property
     def required_perception(self) -> int:
         return self.as_int32("PerceptionReq")
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super(GatheringItem, self).__init__(sheet, source_row)
+        self.__points = None
+
+    def _generate_points(self):
+        s = self.sheet.collection.get_sheet("GatheringItemPoint")
+        ret = []
+        for row in filter(lambda x: x.parent_row.key == self.key, s):
+            ret.append(row["GatheringPoint"])
+        self.__points = ret

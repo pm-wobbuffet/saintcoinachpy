@@ -13,8 +13,22 @@ class GatheringPointBase(XivRow, IItemSource):
         return self.as_T(GatheringType)
 
     @property
+    def exported_point(self):
+        if self.__exported_point is None:
+            s = self.sheet.collection.get_sheet("ExportedGatheringPoint")
+            if self.key in s:
+                self.__exported_point = s[self.key]
+        return self.__exported_point
+
+    @property
     def gathering_level(self) -> int:
         return self.as_int32("GatheringLevel")
+
+    @property
+    def points(self):
+        if self.__points is None:
+            self.__build_points()
+        return self.__points
 
     @property
     def _items(self):
@@ -33,6 +47,18 @@ class GatheringPointBase(XivRow, IItemSource):
         super(GatheringPointBase, self).__init__(sheet, source_row)
         self.__items = None
         self.__item_source_items = None  # type: None|List["Item"]
+        self.__points = None  # type: None|Iterable["GatheringPoint"]
+        self.__exported_point = None
+
+    def __build_points(self):
+        from .gathering_point import GatheringPoint
+
+        self.__points = list(
+            filter(
+                lambda x: x["GatheringPointBase"] == self,
+                self.sheet.collection.get_sheet(GatheringPoint),
+            )
+        )
 
     def __build_items(self):
         from .gathering_item_base import GatheringItemBase
