@@ -147,6 +147,8 @@ class Item(ItemBase):
         self.__as_shop_payment = None
 
     def __build_recipes_as_material(self):
+        """Generates the list of all recipes that contain this Item as an ingredient"""
+        from .recipe import Recipe
 
         if self.key < 20:
             # elemental shards, crystals, clusters would be in a bazillion things
@@ -154,6 +156,7 @@ class Item(ItemBase):
         recipes = self.sheet.collection.get_sheet("Recipe")
         ret = []
         for r in recipes:
+            r = cast(Recipe, r)
             if r.contains_ingredient(self):
                 ret.append(r)
 

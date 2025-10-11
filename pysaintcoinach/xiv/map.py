@@ -34,6 +34,10 @@ class Map(XivRow):
 
     @property
     def aetherytes(self) -> Iterable["MapMarker"]:
+        """
+        Get all the MapMarkers for this Map that are aetherytes.
+        Used for generating the aetheryte minimap image
+        """
         if self.__aetherytes is not None:
             return self.__aetherytes
         self.__aetherytes = list(

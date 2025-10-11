@@ -30,6 +30,13 @@ class FishingSpot(XivRow, IItemSource, ILocatable, ILocation):
         return self.as_string("BigFishOnEnd")
 
     @property
+    def on_refresh_big_fish(self) -> text.XivString:
+        """
+        Gets the text indicating that the special condition timer has reset
+        """
+        return self.as_string("BigFishOnRefresh")
+
+    @property
     def fishing_spot_category(self):
         # return self.as_T(int, 'FishingSpotCategory')
         try:
