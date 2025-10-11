@@ -8,8 +8,6 @@ from ..imaging import ImageFile, ImageConverter
 
 from PIL import Image, ImageChops
 
-from pysaintcoinach import imaging
-
 
 @xivrow
 class Map(XivRow):
@@ -120,7 +118,7 @@ class Map(XivRow):
         IMAGE_SCALE_FACTOR = 3  # Scale for aetheryte images
         m = self.medium_image.copy()
         for a in self.aetherytes:
-            ae_icon = cast(imaging.ImageFile, a.as_image("Icon")).get_image().copy()
+            ae_icon = cast(ImageFile, a.as_image("Icon")).get_image().copy()
             ae_enlarged = ae_icon.resize(
                 (
                     ae_icon.size[0] * IMAGE_SCALE_FACTOR,
