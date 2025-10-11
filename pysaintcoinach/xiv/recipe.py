@@ -113,7 +113,7 @@ class Recipe(XivRow):
     @property
     def conditions_list(self) -> Iterable[RecipeCondition] | None:
         """The listing of possible conditions based on ConditionsFlag"""
-        s = f"{self.conditions_flag:b}"[::-1]
+        s = f"{self.conditions_flag:b}"[::-1]  # Convert to reverse binary string
         return [RecipeCondition(i) for i, char in enumerate(s) if char == "1"]
 
     @property
@@ -193,6 +193,11 @@ class Recipe(XivRow):
         return self.__required_item
 
     @property
+    def required_quality(self) -> int:
+        """The amount of quality that must be generated before a craft can finish"""
+        return self.__required_quality
+
+    @property
     def required_status(self) -> "Status":  # type: ignore
         """The required status(buff) that the player must have before crafting can begin
         (think Ixal allied society daily quests)"""
@@ -237,6 +242,7 @@ class Recipe(XivRow):
         self.__quality_factor = self.as_int32("QualityFactor")
         self.__durability_factor = self.as_int32("DurabilityFactor")
         self.__material_quality_factor = self.as_int32("MaterialQualityFactor")
+        self.__required_quality = self.as_int32("RequiredQuality")
         self.__master_recipe_book = self.as_T(
             "SecretRecipeBook", "SecretRecipeBook"  # type: ignore
         )
