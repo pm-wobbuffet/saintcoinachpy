@@ -100,6 +100,10 @@ class Item(ItemBase):
         return self.get_raw("PriceMid")
 
     @property
+    def action(self):
+        return self.as_T("ItemAction", "ItemAction")
+
+    @property
     def can_be_hq(self) -> bool:
         return self.as_boolean("CanBeHq")
 
