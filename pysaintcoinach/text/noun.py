@@ -14,6 +14,16 @@ Placeholders:
 
 """
 
+from enum import Enum
+from .article_types import (
+    EnglishArticleType,
+    FrenchArticleType,
+    GermanArticleType,
+    JapaneseArticleType,
+)
+from ..xiv.sheet import XivRow
+from ..ex.language import Language
+
 
 class NounParameters:
 
@@ -36,18 +46,214 @@ class NounParameters:
             return 15
         return 0
 
-    def __init__(self) -> None:
-        self._language = None
-        self._sheet_name = None
-        self._row_id = None
-        self._quantity = 1
-        self._article_type = None
-        self._grammatical_case = None
-        self._is_action_sheet = False
-        pass
+    @property
+    def grammatical_case(self):
+        return self._grammatical_case
+
+    @property
+    def article_type(self):
+        return self._article_type
+
+    @property
+    def is_action_sheet(self) -> bool:
+        return self._is_action_sheet
+
+    @property
+    def language(self) -> Language:
+        return self._language
+
+    @property
+    def quantity(self) -> int:
+        return self._quantity
+
+    def __init__(
+        self,
+        language: Language,
+        sheet_name: str,
+        row_id: int,
+        quantity: int,
+        article_type: Enum,
+        grammatical_case,
+        is_action_sheet: bool,
+    ) -> None:
+        self._language = language
+        self._sheet_name = sheet_name
+        self._row_id = row_id
+        self._quantity = quantity
+        self._article_type = article_type
+        self._grammatical_case = grammatical_case
+        self._is_action_sheet = is_action_sheet
+
+
+"""
+Attributive sheet:
+  Japanese:
+    Unknown0 = Singular Demonstrative
+    Unknown1 = Plural Demonstrative
+  English:
+    Unknown2 = Article before a singular noun beginning with a consonant sound
+    Unknown3 = Article before a generic noun beginning with a consonant sound
+    Unknown4 = N/A
+    Unknown5 = Article before a singular noun beginning with a vowel sound
+    Unknown6 = Article before a generic noun beginning with a vowel sound
+    Unknown7 = N/A
+  German:
+    Unknown8 = Nominative Masculine
+    Unknown9 = Nominative Feminine
+    Unknown10 = Nominative Neutral
+    Unknown11 = Nominative Plural
+    Unknown12 = Genitive Masculine
+    Unknown13 = Genitive Feminine
+    Unknown14 = Genitive Neutral
+    Unknown15 = Genitive Plural
+    Unknown16 = Dative Masculine
+    Unknown17 = Dative Feminine
+    Unknown18 = Dative Neutral
+    Unknown19 = Dative Plural
+    Unknown20 = Accusative Masculine
+    Unknown21 = Accusative Feminine
+    Unknown22 = Accusative Neutral
+    Unknown23 = Accusative Plural
+  French (unsure):
+    Unknown24 = Singular Article
+    Unknown25 = Singular Masculine Article
+    Unknown26 = Plural Masculine Article
+    Unknown27 = ?
+    Unknown28 = ?
+    Unknown29 = Singular Masculine/Feminine Article, before a noun beginning in a vowel or an h
+    Unknown30 = Plural Masculine/Feminine Article, before a noun beginning in a vowel or an h
+    Unknown31 = ?
+    Unknown32 = ?
+    Unknown33 = Singular Feminine Article
+    Unknown34 = Plural Feminine Article
+    Unknown35 = ?
+    Unknown36 = ?
+    Unknown37 = Singular Masculine/Feminine Article, before a noun beginning in a vowel or an h
+    Unknown38 = Plural Masculine/Feminine Article, before a noun beginning in a vowel or an h
+    Unknown39 = ?
+    Unknown40 = ?
+"""
 
 
 class Noun:
+    SINGULAR_COLUMN_IDX = 0
+    ADJECTIVE_COLUMN_IDX = 1
+    PLURAL_COLUMN_IDX = 2
+    POSS_PRONOUN_COLUMN_IDX = 3
+    STARTS_WITH_VOWEL_COLUMN_IDX = 4
+    UNKNOWN5_COL_IDX = 5
+    PRONOUN_COLUMN_IDX = 6
+    ARTICLE_COLUMN_IDX = 7
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, parameters: NounParameters, row: XivRow) -> None:
+        self._parameters = parameters
+        self._row = row
+
+    def process(self):
+        if (
+            self._parameters.grammatical_case < 0
+            or self._parameters.grammatical_case > 5
+        ):
+            return ""
+        match self._parameters.language:
+            case Language.english:
+                pass
+            case Language.german:
+                self.resolve_noun_de()
+                pass
+            case _:
+                pass
+
+    def resolve_noun_de(self):
+        """
+        a1->Offsets[0] = SingularColumnIdx
+        a1->Offsets[1] = PluralColumnIdx
+        a1->Offsets[2] = PronounColumnIdx
+        a1->Offsets[3] = AdjectiveColumnIdx
+        a1->Offsets[4] = PossessivePronounColumnIdx
+        a1->Offsets[5] = Unknown5ColumnIdx
+        a1->Offsets[6] = ArticleColumnIdx
+        """
+        sheet = self._row.sheet
+        coll = sheet.collection
+        attrib_sheet = coll.get_sheet("Attributive")
+
+        if self._parameters.is_action_sheet:
+            pass
+
+        gender_idx_col = self._parameters.column_offset + self.PRONOUN_COLUMN_IDX
+        # print("Gender idx col", gender_idx_col)
+        gender_idx = self._row.get_raw(gender_idx_col)
+
+        article_idx_col = self._parameters.column_offset + self.ARTICLE_COLUMN_IDX
+        article_idx = self._row.get_raw(article_idx_col)
+
+        case_column_offset = (4 * self._parameters.grammatical_case) + 8
+        case_row_offset_column = self._parameters.column_offset + (
+            self.ADJECTIVE_COLUMN_IDX
+            if self._parameters.quantity == 1
+            else self.POSS_PRONOUN_COLUMN_IDX
+        )
+        case_row_offset = (
+            self._row.get_raw(case_row_offset_column)
+            if case_row_offset_column >= 0
+            else 0
+        )
+        if self._parameters.quantity != 1:
+            gender_idx = 3
+
+        text = self._row.get_raw(
+            self._parameters.column_offset
+            + (
+                self.SINGULAR_COLUMN_IDX
+                if self._parameters.quantity == 1
+                else self.PLURAL_COLUMN_IDX
+            )
+        )
+        output = ""
+        if "[t]" not in text and article_idx == 0:
+            grammatical_gender = attrib_sheet[
+                self._parameters.article_type.value
+            ].get_raw(case_column_offset + gender_idx)
+            if str(grammatical_gender) != "":
+                output += str(grammatical_gender)
+        output += text
+        if "[t]" in output:
+            article = attrib_sheet[39].get_raw(case_column_offset + gender_idx)
+            output = output.replace("[t]", str(article))
+
+        pa = attrib_sheet[24].get_raw(case_column_offset + gender_idx) or ""
+        output = output.replace("[pa]", pa)
+
+        # Determine declension row
+        decl = None
+        match self._parameters.article_type:
+            case GermanArticleType.Possessive:
+                decl = attrib_sheet[25]
+            case GermanArticleType.Demonstrative:
+                decl = attrib_sheet[25]
+            case GermanArticleType.ZeroArticle:
+                decl = attrib_sheet[38]
+            case GermanArticleType.Definite:
+                decl = attrib_sheet[37]
+            case _:
+                decl = attrib_sheet[26]
+        declension = decl.get_raw(case_column_offset + gender_idx)
+        output = output.replace("[a]", str(declension))
+
+        output = output.replace("[n]", str(self._parameters.quantity))
+
+        return output
+
+    @staticmethod
+    def process_row(row: XivRow, count: int = 1):
+        settings = NounParameters(
+            row.sheet.collection.active_language,
+            row.sheet.name,
+            row.key,
+            count,
+            GermanArticleType.Demonstrative,
+            0,
+            False,
+        )
+        return Noun(settings, row)
