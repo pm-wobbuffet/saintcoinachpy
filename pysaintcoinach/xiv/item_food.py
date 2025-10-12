@@ -61,7 +61,7 @@ class ItemFood(XivRow):
 
     @property
     def exp(self) -> str:
-        return f"{self.as_int32("EXPBonusPercent")}%"
+        return f"{self.as_int32('EXPBonusPercent')}%"
 
     @property
     def params(self) -> Iterable[ItemFoodParameter]:

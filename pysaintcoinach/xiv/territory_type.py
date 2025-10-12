@@ -1,3 +1,4 @@
+from typing import cast
 from ..ex.relational import IRelationalRow
 from . import xivrow, XivRow, IXivSheet
 
@@ -38,6 +39,16 @@ class TerritoryType(XivRow):
         from .placename import PlaceName
 
         return self.as_T(PlaceName, "PlaceNameZone")
+
+    @property
+    def notorious_monsters(self):
+        from .notorious_monster_territory import NotoriousMonsterTerritory
+
+        nm_key = self.get_raw("NotoriousMonsterTerritory")
+        if int(nm_key) == 0:
+            return []
+        nm_terr = self.as_T(NotoriousMonsterTerritory, "NotoriousMonsterTerritory")
+        return nm_terr.non_ss_mobs
 
     @property
     def weather_rate(self):

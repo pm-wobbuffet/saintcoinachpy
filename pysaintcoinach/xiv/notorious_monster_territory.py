@@ -15,11 +15,17 @@ class NotoriousMonsterTerritory(XivRow):
     MOB_COUNT = 10  # Number of mob columns in the sheet
 
     @property
-    def mobs(self) -> Iterable[NotoriousMonster]:
+    def mobs(self) -> List[NotoriousMonster]:
         if not self.__mobs_processed:
             self.__collect_mobs()
 
         return self.__mobs
+
+    @property
+    def non_ss_mobs(self) -> List[NotoriousMonster]:
+        if len(self.mobs) < 6:
+            return self.mobs
+        return self.mobs[0:5]
 
     @property
     def has_double_s(self) -> bool:
@@ -31,6 +37,16 @@ class NotoriousMonsterTerritory(XivRow):
         Would need to re-evaluate this logic if their layout changes
         """
         return self["NotoriousMonsters[9]"].key > 0
+
+    @property
+    def double_s(self) -> NotoriousMonster | None:
+        """
+        Return the double S rank for this zone if one exists.
+        At least as of Dawntrail, it appears to always show in NotoriousMonsters[9]
+        """
+        if self.has_double_s:
+            return self.as_T(NotoriousMonster, "NotoriousMonsters", 9)
+        return None
 
     @property
     def territory(self) -> TerritoryType:
