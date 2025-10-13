@@ -17,6 +17,7 @@ Placeholders:
 """
 
 from enum import Enum
+from typing import Union
 from .article_types import (
     EnglishArticleType,
     FrenchArticleType,
@@ -179,18 +180,20 @@ class Noun:
         a1->Offsets[5] = Unknown5ColumnIdx
         a1->Offsets[6] = ArticleColumnIdx
         """
-        sheet = self._row.sheet
+        sheet = self._row.source_row.sheet.get_localised_sheet(Language.german)
         coll = sheet.collection
+        row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
         if self._parameters.is_action_sheet:
+            # TODO: implement me
             pass
 
         gender_idx_col = self._parameters.column_offset + self.PRONOUN_COLUMN_IDX
-        gender_idx = self._row.get_raw(gender_idx_col)
+        gender_idx = row.get_raw(gender_idx_col)
 
         article_idx_col = self._parameters.column_offset + self.ARTICLE_COLUMN_IDX
-        article_idx = self._row.get_raw(article_idx_col)
+        article_idx = row.get_raw(article_idx_col)
 
         case_column_offset = (4 * self._parameters.grammatical_case) + 8
         case_row_offset_column = self._parameters.column_offset + (
@@ -199,15 +202,13 @@ class Noun:
             else self.POSS_PRONOUN_COLUMN_IDX
         )
         case_row_offset = (
-            self._row.get_raw(case_row_offset_column)
-            if case_row_offset_column >= 0
-            else 0
+            row.get_raw(case_row_offset_column) if case_row_offset_column >= 0 else 0
         )
 
         if self._parameters.quantity != 1:
             gender_idx = 3
 
-        text = self._row.get_raw(
+        text = row.get_raw(
             self._parameters.column_offset
             + (
                 self.SINGULAR_COLUMN_IDX
@@ -265,21 +266,22 @@ class Noun:
         a1->Offsets[3] = PossessivePronounColumnIdx
         a1->Offsets[4] = ArticleColumnIdx
         """
-        sheet = self._row.sheet
+        sheet = self._row.source_row.sheet.get_localised_sheet(Language.english)
         coll = sheet.collection
+        row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
         output = ""
 
         is_proper_noun = bool(
-            self._row.get_raw(self._parameters.column_offset + self.ARTICLE_COLUMN_IDX)
+            row.get_raw(self._parameters.column_offset + self.ARTICLE_COLUMN_IDX)
         )
         if not is_proper_noun:
             starts_with_vowel_col = (
                 self._parameters.column_offset + self.STARTS_WITH_VOWEL_COLUMN_IDX
             )
             starts_with_vowel = (
-                int(self._row.get_raw(starts_with_vowel_col))
+                int(row.get_raw(starts_with_vowel_col))
                 if starts_with_vowel_col >= 0
                 else ~starts_with_vowel_col
             )
@@ -296,7 +298,7 @@ class Noun:
             if str(article) != "":
                 output += str(article)
 
-        text = self._row.get_raw(
+        text = row.get_raw(
             self._parameters.column_offset
             + (
                 self.SINGULAR_COLUMN_IDX
@@ -320,28 +322,25 @@ class Noun:
         a1->Offsets[4] = Unknown5ColumnIdx
         a1->Offsets[5] = ArticleColumnIdx
         """
-        sheet = self._row.sheet
+        sheet = self._row.source_row.sheet.get_localised_sheet(Language.french)
         coll = sheet.collection
+        row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
         starts_with_vowel_col = (
             self._parameters.column_offset + self.STARTS_WITH_VOWEL_COLUMN_IDX
         )
         starts_with_vowel = (
-            self._row.get_raw(starts_with_vowel_col)
+            row.get_raw(starts_with_vowel_col)
             if starts_with_vowel_col >= 0
             else ~starts_with_vowel_col
         )
 
         pronoun_col = self._parameters.column_offset + self.PRONOUN_COLUMN_IDX
-        pronoun = (
-            int(self._row.get_raw(pronoun_col)) if pronoun_col >= 0 else ~pronoun_col
-        )
+        pronoun = int(row.get_raw(pronoun_col)) if pronoun_col >= 0 else ~pronoun_col
 
         article_col = self._parameters.column_offset + self.ARTICLE_COLUMN_IDX
-        article = (
-            int(self._row.get_raw(article_col)) if article_col >= 0 else ~article_col
-        )
+        article = int(row.get_raw(article_col)) if article_col >= 0 else ~article_col
 
         v20 = 4 * (starts_with_vowel + 6 + (2 * pronoun))
         output = ""
@@ -349,7 +348,7 @@ class Noun:
             v21 = attrib_sheet[self._parameters.article_type.value].get_raw(v20)
             if str(v21) != "":
                 output += str(v21)
-            text = self.get_default_text()
+            text = self.get_default_text(row)
             if str(text) != "":
                 output += str(text)
 
@@ -358,9 +357,7 @@ class Noun:
 
             return output
 
-        v17 = int(
-            self._row.get_raw(self._parameters.column_offset + self.UNKNOWN5_COL_IDX)
-        )
+        v17 = int(row.get_raw(self._parameters.column_offset + self.UNKNOWN5_COL_IDX))
         if v17 != 0 and (self._parameters.quantity > 1 or v17 == 2):
             v29 = str(
                 attrib_sheet[self._parameters.article_type.value].get_raw(v20 + 2)
@@ -368,9 +365,7 @@ class Noun:
             if v29 != "":
                 output += v29
                 text = str(
-                    self._row.get_raw(
-                        self._parameters.column_offset + self.PLURAL_COLUMN_IDX
-                    )
+                    row.get_raw(self._parameters.column_offset + self.PLURAL_COLUMN_IDX)
                 )
                 output += text
         else:
@@ -381,9 +376,7 @@ class Noun:
                 output += str(v27)
 
             text = str(
-                self._row.get_raw(
-                    self._parameters.column_offset + self.SINGULAR_COLUMN_IDX
-                )
+                row.get_raw(self._parameters.column_offset + self.SINGULAR_COLUMN_IDX)
             )
             output += text
 
@@ -392,8 +385,9 @@ class Noun:
 
     def resolve_noun_ja(self):
         """Resolve a japanese noun to its reference, given parameters"""
-        sheet = self._row.sheet
+        sheet = self._row.source_row.sheet.get_localised_sheet(Language.japanese)
         coll = sheet.collection
+        row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
         output = ""
@@ -404,13 +398,13 @@ class Noun:
             output += ksad
             if self._parameters.quantity > 1:
                 output = output.replace("[n]", str(self._parameters.quantity))
-        text = str(self._row.get_raw(self._parameters.column_offset))
+        text = str(row.get_raw(self._parameters.column_offset))
         if text != "":
             output += text
         return output
 
-    def get_default_text(self):
-        return self._row.get_raw(
+    def get_default_text(self, row):
+        return row.get_raw(
             self._parameters.column_offset
             + (
                 self.SINGULAR_COLUMN_IDX
@@ -421,10 +415,22 @@ class Noun:
 
     @staticmethod
     def process_row(
-        row: XivRow, count: int = 1, article_type=EnglishArticleType.Definite
+        row: XivRow,
+        count: int = 1,
+        article_type: Union[
+            GermanArticleType,
+            EnglishArticleType,
+            FrenchArticleType,
+            JapaneseArticleType,
+        ] = EnglishArticleType.Definite,
+        override_lang: Language = Language.english,
     ):
+        lang = (
+            row.sheet.collection.active_language
+            if override_lang is None
+            else override_lang
+        )
         if article_type is None:
-            lang = row.sheet.collection.active_language
             match lang:
                 case Language.french:
                     article_type = FrenchArticleType.Indefinite
@@ -437,7 +443,7 @@ class Noun:
                 case _:
                     article_type = EnglishArticleType.Indefinite
         settings = NounParameters(
-            row.sheet.collection.active_language,
+            lang,
             row.sheet.name,
             row.key,
             count,
