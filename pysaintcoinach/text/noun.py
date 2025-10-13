@@ -157,12 +157,15 @@ class Noun:
             return ""
         match self._parameters.language:
             case Language.english:
-                pass
+                return self.resolve_noun_en()
+            case Language.french:
+                return self.resolve_noun_fr()
             case Language.german:
-                self.resolve_noun_de()
-                pass
+                return self.resolve_noun_de()
+            case Language.japanese:
+                return self.resolve_noun_ja()
             case _:
-                pass
+                return self._row["Singular"]
 
     def resolve_noun_de(self):
         """
@@ -199,6 +202,7 @@ class Noun:
             if case_row_offset_column >= 0
             else 0
         )
+
         if self._parameters.quantity != 1:
             gender_idx = 3
 
@@ -221,6 +225,14 @@ class Noun:
         if "[t]" in output:
             article = attrib_sheet[39].get_raw(case_column_offset + gender_idx)
             output = output.replace("[t]", str(article))
+
+        plural = str(
+            attrib_sheet[case_row_offset + 26].get_raw(
+                case_row_offset_column + gender_idx
+            )
+        )
+        if "[p]" in output:
+            output = output.replace("[p]", plural)
 
         pa = attrib_sheet[24].get_raw(case_column_offset + gender_idx) or ""
         output = output.replace("[pa]", pa)
@@ -245,6 +257,92 @@ class Noun:
 
         return output
 
+    def resolve_noun_en(self):
+        """
+        a1->Offsets[0] = SingularColumnIdx
+        a1->Offsets[1] = PluralColumnIdx
+        a1->Offsets[2] = StartsWithVowelColumnIdx
+        a1->Offsets[3] = PossessivePronounColumnIdx
+        a1->Offsets[4] = ArticleColumnIdx
+        """
+        sheet = self._row.sheet
+        coll = sheet.collection
+        attrib_sheet = coll.get_sheet("Attributive")
+
+        output = ""
+
+        is_proper_noun = bool(
+            self._row.get_raw(self._parameters.column_offset + self.ARTICLE_COLUMN_IDX)
+        )
+        if not is_proper_noun:
+            starts_with_vowel_col = (
+                self._parameters.column_offset + self.STARTS_WITH_VOWEL_COLUMN_IDX
+            )
+            starts_with_vowel = (
+                self._row.get_raw(starts_with_vowel_col)
+                if starts_with_vowel_col >= 0
+                else ~starts_with_vowel_col
+            )
+
+            article_column = starts_with_vowel + (2 * (starts_with_vowel + 1))
+            grammatical_num_col_offset = (
+                self.SINGULAR_COLUMN_IDX
+                if self._parameters.quantity == 1
+                else self.PLURAL_COLUMN_IDX
+            )
+            article = attrib_sheet[self._parameters.article_type.value].get_raw(
+                article_column + grammatical_num_col_offset
+            )
+            if str(article) != "":
+                output += str(article)
+
+        text = self._row.get_raw(
+            self._parameters.column_offset
+            + (
+                self.SINGULAR_COLUMN_IDX
+                if self._parameters.quantity == 1
+                else self.PLURAL_COLUMN_IDX
+            )
+        )
+        if str(text) != "":
+            output += text
+
+        output = output.replace("[n]", str(self._parameters.quantity))
+
+        return output
+
+    def resolve_noun_fr(self):
+        """
+        a1->Offsets[0] = SingularColumnIdx
+        a1->Offsets[1] = PluralColumnIdx
+        a1->Offsets[2] = StartsWithVowelColumnIdx
+        a1->Offsets[3] = PronounColumnIdx
+        a1->Offsets[4] = Unknown5ColumnIdx
+        a1->Offsets[5] = ArticleColumnIdx
+        """
+        sheet = self._row.sheet
+        coll = sheet.collection
+        attrib_sheet = coll.get_sheet("Attributive")
+
+    def resolve_noun_ja(self):
+        """Resolve a japanese noun to its reference, given parameters"""
+        sheet = self._row.sheet
+        coll = sheet.collection
+        attrib_sheet = coll.get_sheet("Attributive")
+
+        output = ""
+        ksad = attrib_sheet[self._parameters.article_type.value].get_raw(
+            1 if self._parameters.quantity > 1 else 0
+        )
+        if str(ksad) != "":
+            output += ksad
+            if self._parameters.quantity > 1:
+                output = output.replace("[n]", str(self._parameters.quantity))
+        text = str(self._row.get_raw(self._parameters.column_offset))
+        if text != "":
+            output += text
+        return output
+
     @staticmethod
     def process_row(row: XivRow, count: int = 1):
         settings = NounParameters(
@@ -252,7 +350,7 @@ class Noun:
             row.sheet.name,
             row.key,
             count,
-            GermanArticleType.Demonstrative,
+            GermanArticleType.ZeroArticle,
             0,
             False,
         )
