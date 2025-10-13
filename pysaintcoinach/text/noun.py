@@ -4,6 +4,8 @@ Handles the processing and generation of Noun elements in varying languages
 The Attributive sheet is used to map properties of a string onto language-specific replacements
 for placeholders like [a], [t], etc. in an XivString
 https://github.com/goatcorp/Dalamud/blob/master/Dalamud/Game/Text/Noun/NounProcessor.cs
+Mostly based off this code. Note that, especially in French, many of the variables
+do not have descriptive names
 
 Placeholders:
     [t] = article or grammatical gender (EN: the, DE: der, die, das)
@@ -154,7 +156,7 @@ class Noun:
             self._parameters.grammatical_case < 0
             or self._parameters.grammatical_case > 5
         ):
-            return ""
+            return self._row["Singular"]
         match self._parameters.language:
             case Language.english:
                 return self.resolve_noun_en()
@@ -185,7 +187,6 @@ class Noun:
             pass
 
         gender_idx_col = self._parameters.column_offset + self.PRONOUN_COLUMN_IDX
-        # print("Gender idx col", gender_idx_col)
         gender_idx = self._row.get_raw(gender_idx_col)
 
         article_idx_col = self._parameters.column_offset + self.ARTICLE_COLUMN_IDX
@@ -252,7 +253,6 @@ class Noun:
                 decl = attrib_sheet[26]
         declension = decl.get_raw(case_column_offset + gender_idx)
         output = output.replace("[a]", str(declension))
-
         output = output.replace("[n]", str(self._parameters.quantity))
 
         return output
@@ -279,7 +279,7 @@ class Noun:
                 self._parameters.column_offset + self.STARTS_WITH_VOWEL_COLUMN_IDX
             )
             starts_with_vowel = (
-                self._row.get_raw(starts_with_vowel_col)
+                int(self._row.get_raw(starts_with_vowel_col))
                 if starts_with_vowel_col >= 0
                 else ~starts_with_vowel_col
             )
@@ -324,6 +324,72 @@ class Noun:
         coll = sheet.collection
         attrib_sheet = coll.get_sheet("Attributive")
 
+        starts_with_vowel_col = (
+            self._parameters.column_offset + self.STARTS_WITH_VOWEL_COLUMN_IDX
+        )
+        starts_with_vowel = (
+            self._row.get_raw(starts_with_vowel_col)
+            if starts_with_vowel_col >= 0
+            else ~starts_with_vowel_col
+        )
+
+        pronoun_col = self._parameters.column_offset + self.PRONOUN_COLUMN_IDX
+        pronoun = (
+            int(self._row.get_raw(pronoun_col)) if pronoun_col >= 0 else ~pronoun_col
+        )
+
+        article_col = self._parameters.column_offset + self.ARTICLE_COLUMN_IDX
+        article = (
+            int(self._row.get_raw(article_col)) if article_col >= 0 else ~article_col
+        )
+
+        v20 = 4 * (starts_with_vowel + 6 + (2 * pronoun))
+        output = ""
+        if article != 0:
+            v21 = attrib_sheet[self._parameters.article_type.value].get_raw(v20)
+            if str(v21) != "":
+                output += str(v21)
+            text = self.get_default_text()
+            if str(text) != "":
+                output += str(text)
+
+            if self._parameters.quantity <= 1:
+                output = output.replace("[n]", str(self._parameters.quantity))
+
+            return output
+
+        v17 = int(
+            self._row.get_raw(self._parameters.column_offset + self.UNKNOWN5_COL_IDX)
+        )
+        if v17 != 0 and (self._parameters.quantity > 1 or v17 == 2):
+            v29 = str(
+                attrib_sheet[self._parameters.article_type.value].get_raw(v20 + 2)
+            )
+            if v29 != "":
+                output += v29
+                text = str(
+                    self._row.get_raw(
+                        self._parameters.column_offset + self.PLURAL_COLUMN_IDX
+                    )
+                )
+                output += text
+        else:
+            v27 = attrib_sheet[self._parameters.article_type.value].get_raw(
+                v20 + (1 if v17 != 0 else 3)
+            )
+            if str(v27) != "":
+                output += str(v27)
+
+            text = str(
+                self._row.get_raw(
+                    self._parameters.column_offset + self.SINGULAR_COLUMN_IDX
+                )
+            )
+            output += text
+
+        output = output.replace("[n]", str(self._parameters.quantity))
+        return output
+
     def resolve_noun_ja(self):
         """Resolve a japanese noun to its reference, given parameters"""
         sheet = self._row.sheet
@@ -343,14 +409,39 @@ class Noun:
             output += text
         return output
 
+    def get_default_text(self):
+        return self._row.get_raw(
+            self._parameters.column_offset
+            + (
+                self.SINGULAR_COLUMN_IDX
+                if self._parameters.quantity == 1
+                else self.PLURAL_COLUMN_IDX
+            )
+        )
+
     @staticmethod
-    def process_row(row: XivRow, count: int = 1):
+    def process_row(
+        row: XivRow, count: int = 1, article_type=EnglishArticleType.Definite
+    ):
+        if article_type is None:
+            lang = row.sheet.collection.active_language
+            match lang:
+                case Language.french:
+                    article_type = FrenchArticleType.Indefinite
+                case Language.english:
+                    article_type = EnglishArticleType.Indefinite
+                case Language.german:
+                    article_type = GermanArticleType.ZeroArticle
+                case Language.japanese:
+                    article_type = JapaneseArticleType.Distant
+                case _:
+                    article_type = EnglishArticleType.Indefinite
         settings = NounParameters(
             row.sheet.collection.active_language,
             row.sheet.name,
             row.key,
             count,
-            GermanArticleType.ZeroArticle,
+            article_type,
             0,
             False,
         )
