@@ -182,6 +182,7 @@ class Noun:
         """
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.german)
         coll = sheet.collection
+        coll.active_language = Language.german
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
@@ -268,6 +269,7 @@ class Noun:
         """
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.english)
         coll = sheet.collection
+        coll.active_language = Language.english
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
@@ -324,6 +326,7 @@ class Noun:
         """
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.french)
         coll = sheet.collection
+        coll.active_language = Language.french
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
@@ -387,6 +390,7 @@ class Noun:
         """Resolve a japanese noun to its reference, given parameters"""
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.japanese)
         coll = sheet.collection
+        coll.active_language = Language.german
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
