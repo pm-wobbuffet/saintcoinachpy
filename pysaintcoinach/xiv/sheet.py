@@ -13,6 +13,7 @@ from typing import (
 )
 import sys
 
+from ..ex.language import Language
 from ..ex.relational.sheet import IRelationalRow, IRelationalSheet
 from .. import xiv
 from .. import text
@@ -94,6 +95,14 @@ class XivRow(IXivRow):
         return self.__source_row.column_values()
 
     def get_raw(self, column_name: Union[int, str], **kwargs) -> Any:
+        from ..ex.relational.multisheet import IMultiRow
+
+        if (
+            ("language" in kwargs)
+            and isinstance(kwargs["language"], Language)
+            and isinstance(self.__source_row, IMultiRow)
+        ):
+            return self.__source_row.get_raw(column_name, **kwargs)
         return self.__source_row.get_raw(column_name)
 
     @property

@@ -3,6 +3,12 @@ from typing import Iterable
 from .. import text
 
 
+class INameable:
+    """Interface for objects which are 'Named', having Singular, Plural, etc"""
+
+    pass
+
+
 class IItemSource(object):
     """
     Interface for objects from which `Item`s can be obtained.
@@ -35,7 +41,7 @@ class ILocation(object):
 
     @property
     @abstractmethod
-    def place_name(self) -> 'PlaceName':
+    def place_name(self) -> "PlaceName":
         pass
 
 
@@ -79,7 +85,7 @@ class IShop(IItemSource):
 
     @property
     @abstractmethod
-    def enpcs(self) -> 'Iterable[ENpc]':
+    def enpcs(self) -> "Iterable[ENpc]":
         """
         Gets the ENpcs offering the current shop.
         :return: The ENpcs offering the current shop.
@@ -88,7 +94,7 @@ class IShop(IItemSource):
 
     @property
     @abstractmethod
-    def shop_listings(self) -> 'Iterable[IShopListing]':
+    def shop_listings(self) -> "Iterable[IShopListing]":
         """
         Gets the listings of the current shop.
         :return: The listings of the current shop.
@@ -103,7 +109,7 @@ class IShopListing(object):
 
     @property
     @abstractmethod
-    def rewards(self) -> 'Iterable[IShopListingItem]':
+    def rewards(self) -> "Iterable[IShopListingItem]":
         """
         Gets the rewards of the current listing.
         :return: The rewards of the current listing.
@@ -112,7 +118,7 @@ class IShopListing(object):
 
     @property
     @abstractmethod
-    def costs(self) -> 'Iterable[IShopListingItem]':
+    def costs(self) -> "Iterable[IShopListingItem]":
         """
         Gets the costs of the current listing.
         :return: The costs of the current listing.
@@ -121,7 +127,7 @@ class IShopListing(object):
 
     @property
     @abstractmethod
-    def shops(self) -> 'Iterable[IShop]':
+    def shops(self) -> "Iterable[IShop]":
         """
         Gets the shops offering the current listing.
         :return: The shops offering the current listing.
@@ -136,7 +142,7 @@ class IShopListingItem(object):
 
     @property
     @abstractmethod
-    def item(self) -> 'Item':
+    def item(self) -> "Item":
         """
         Gets the item of the current listing entry.
         :return: The item of the current listing entry.
@@ -171,7 +177,7 @@ class IShopListingItem(object):
 
     @property
     @abstractmethod
-    def shop_item(self) -> 'IShopListing':
+    def shop_item(self) -> "IShopListing":
         """
         Gets the IShopListing the current entry is for.
         :return: The IShopListing the current entry is for.
