@@ -182,7 +182,6 @@ class Noun:
         """
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.german)
         coll = sheet.collection
-        coll.active_language = Language.german
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
@@ -221,23 +220,30 @@ class Noun:
         if "[t]" not in text and article_idx == 0:
             grammatical_gender = attrib_sheet[
                 self._parameters.article_type.value
-            ].get_raw(case_column_offset + gender_idx)
+            ].source_row.get_raw(case_column_offset + gender_idx, Language.german)
             if str(grammatical_gender) != "":
                 output += str(grammatical_gender)
         output += text
         if "[t]" in output:
-            article = attrib_sheet[39].get_raw(case_column_offset + gender_idx)
+            article = attrib_sheet[39].source_row.get_raw(
+                case_column_offset + gender_idx, Language.german
+            )
             output = output.replace("[t]", str(article))
 
         plural = str(
-            attrib_sheet[case_row_offset + 26].get_raw(
-                case_row_offset_column + gender_idx
+            attrib_sheet[case_row_offset + 26].source_row.get_raw(
+                case_row_offset_column + gender_idx, Language.german
             )
         )
         if "[p]" in output:
             output = output.replace("[p]", plural)
 
-        pa = attrib_sheet[24].get_raw(case_column_offset + gender_idx) or ""
+        pa = (
+            attrib_sheet[24].source_row.get_raw(
+                case_column_offset + gender_idx, Language.german
+            )
+            or ""
+        )
         output = output.replace("[pa]", pa)
 
         # Determine declension row
@@ -253,7 +259,9 @@ class Noun:
                 decl = attrib_sheet[37]
             case _:
                 decl = attrib_sheet[26]
-        declension = decl.get_raw(case_column_offset + gender_idx)
+        declension = decl.source_row.get_raw(
+            case_column_offset + gender_idx, Language.german
+        )
         output = output.replace("[a]", str(declension))
         output = output.replace("[n]", str(self._parameters.quantity))
 
@@ -269,7 +277,6 @@ class Noun:
         """
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.english)
         coll = sheet.collection
-        coll.active_language = Language.english
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
@@ -294,8 +301,10 @@ class Noun:
                 if self._parameters.quantity == 1
                 else self.PLURAL_COLUMN_IDX
             )
-            article = attrib_sheet[self._parameters.article_type.value].get_raw(
-                article_column + grammatical_num_col_offset
+            article = attrib_sheet[
+                self._parameters.article_type.value
+            ].source_row.get_raw(
+                article_column + grammatical_num_col_offset, Language.english
             )
             if str(article) != "":
                 output += str(article)
@@ -326,7 +335,6 @@ class Noun:
         """
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.french)
         coll = sheet.collection
-        coll.active_language = Language.french
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
@@ -348,7 +356,9 @@ class Noun:
         v20 = 4 * (starts_with_vowel + 6 + (2 * pronoun))
         output = ""
         if article != 0:
-            v21 = attrib_sheet[self._parameters.article_type.value].get_raw(v20)
+            v21 = attrib_sheet[self._parameters.article_type.value].source_row.get_raw(
+                v20, Language.french
+            )
             if str(v21) != "":
                 output += str(v21)
             text = self.get_default_text(row)
@@ -363,7 +373,9 @@ class Noun:
         v17 = int(row.get_raw(self._parameters.column_offset + self.UNKNOWN5_COL_IDX))
         if v17 != 0 and (self._parameters.quantity > 1 or v17 == 2):
             v29 = str(
-                attrib_sheet[self._parameters.article_type.value].get_raw(v20 + 2)
+                attrib_sheet[self._parameters.article_type.value].source_row.get_raw(
+                    v20 + 2, Language.french
+                )
             )
             if v29 != "":
                 output += v29
@@ -372,8 +384,8 @@ class Noun:
                 )
                 output += text
         else:
-            v27 = attrib_sheet[self._parameters.article_type.value].get_raw(
-                v20 + (1 if v17 != 0 else 3)
+            v27 = attrib_sheet[self._parameters.article_type.value].source_row.get_raw(
+                v20 + (1 if v17 != 0 else 3), Language.french
             )
             if str(v27) != "":
                 output += str(v27)
@@ -390,13 +402,12 @@ class Noun:
         """Resolve a japanese noun to its reference, given parameters"""
         sheet = self._row.source_row.sheet.get_localised_sheet(Language.japanese)
         coll = sheet.collection
-        coll.active_language = Language.german
         row = sheet[self._row.key]
         attrib_sheet = coll.get_sheet("Attributive")
 
         output = ""
-        ksad = attrib_sheet[self._parameters.article_type.value].get_raw(
-            1 if self._parameters.quantity > 1 else 0
+        ksad = attrib_sheet[self._parameters.article_type.value].source_row.get_raw(
+            1 if self._parameters.quantity > 1 else 0, Language.japanese
         )
         if str(ksad) != "":
             output += ksad
