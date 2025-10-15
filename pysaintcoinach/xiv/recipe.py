@@ -1,34 +1,15 @@
 from ..ex.relational import IRelationalRow
 from . import xivrow, XivRow, IXivSheet
 from .item import Item
+from .recipe_level_table import RecipeCondition
 
 from typing import Iterable
 from enum import Enum
 import math
 
 
-class RecipeCondition(Enum):
-    """Enumeration of possible recipe step conditions"""
-
-    NORMAL = 0
-    GOOD = 1
-    EXCELLENT = 2
-    POOR = 3
-    CENTERED = 4
-    STURDY = 5
-    PLIANT = 6
-    MALLEABLE = 7
-    PRIMED = 8
-    GOOD_OMEN = 9
-
-    def __str__(self) -> str:
-        return f"{self.name.capitalize()}"
-
-    def __repr__(self) -> str:
-        return f"{self.name.capitalize()}"
-
-
 class RecipeResultItem:
+    """The final item produced by a given recipe"""
 
     def __init__(self, item: "Item", count: int) -> None:
         self.__item = item
@@ -85,16 +66,14 @@ class RecipeIngredient:
             + f"ContributesQuality={self.__contributes_quality},"
             + f"ItemLevel={self.__item_level},QualityContributed={self.__quality_contributed})"
         )
-        # output = ""
-        # if self.__count > 1:
-        #     output += f"{self.__count}x "
-        # output += str(self.__item.as_string("Name"))
-        # output += str(self.__item.)
-        # return output
 
 
 @xivrow
 class Recipe(XivRow):
+    """
+    A Crafting Recipe in the Recipe Sheet, consisting of ingredients that
+    produce a final output
+    """
 
     INGREDIENT_COUNT = 8
 
@@ -108,13 +87,12 @@ class Recipe(XivRow):
         """The raw conditions flag integer. Mostly useless as is.
         Requires converting into a binary string and reversing the order
         to determine Conditions (see conditions_list)"""
-        return int(self.__recipe_level["ConditionsFlag"])
+        return self.recipe_level.conditions_flag
 
     @property
     def conditions_list(self) -> Iterable[RecipeCondition] | None:
         """The listing of possible conditions based on ConditionsFlag"""
-        s = f"{self.conditions_flag:b}"[::-1]  # Convert to reverse binary string
-        return [RecipeCondition(i) for i, char in enumerate(s) if char == "1"]
+        return self.recipe_level.conditions_list
 
     @property
     def craft_type(self) -> "CraftType":  # type: ignore
@@ -124,9 +102,7 @@ class Recipe(XivRow):
     @property
     def durability(self) -> int:
         """The total max durability for a craft"""
-        return math.floor(
-            self.__recipe_level["Durability"] * self.__durability_factor / 100
-        )
+        return math.floor(self.recipe_level.durability * self.__durability_factor / 100)
 
     @property
     def ingredients(self) -> Iterable[RecipeIngredient] | None:
@@ -158,14 +134,12 @@ class Recipe(XivRow):
     @property
     def progress(self) -> int:
         """Total required progress for fully finishing craft"""
-        return math.floor(
-            self.__recipe_level["Difficulty"] * self.__difficulty_factor / 100
-        )
+        return math.floor(self.recipe_level.difficulty * self.__difficulty_factor / 100)
 
     @property
     def quality(self) -> int:
         """Total quality possible for the craft"""
-        return math.floor(self.__recipe_level["Quality"] * self.__quality_factor / 100)
+        return math.floor(self.recipe_level.quality * self.__quality_factor / 100)
 
     @property
     def received_item(self):
@@ -214,11 +188,14 @@ class Recipe(XivRow):
         """Whether the crafting animation uses the secondary (offhand tool)"""
         return self.__uses_secondary_tool
 
+    @property
+    def recipe_level(self) -> "RecipeLevelTable":
+        """Return the recipe level table row for this recipe"""
+        return self.__recipe_level
+
     def contains_ingredient(self, item_to_test: Item) -> bool:
-        for i in self.ingredients:
-            if i.item == item_to_test:
-                return True
-        return False
+        """Returns true if any ingredient in the recipe matches the given Item"""
+        return any(ing.item == item_to_test for ing in self.ingredients)
 
     def __init__(self, sheet: IXivSheet, source_row: IRelationalRow):
         super().__init__(sheet, source_row)
