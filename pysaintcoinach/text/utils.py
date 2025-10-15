@@ -100,6 +100,7 @@ class TagType(Enum):
     SheetDe = 0x32
     SheetFr = 0x33
     InstanceContent = 0x40
+    Unknown75 = 0x41
     Unknown73 = 0x42
     UIForeground = 0x48  # Lookup into UIColor[n]/UIForeground
     UIGlow = 0x49  # Lookup into UIColor[n]/UIGlow
