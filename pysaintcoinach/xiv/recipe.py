@@ -132,6 +132,11 @@ class Recipe(XivRow):
         return math.floor(self.quality * self.__material_quality_factor / 100)
 
     @property
+    def patch(self):
+        """The internal patch number associated with a recipe"""
+        return self.as_int32("PatchNumber") / 10
+
+    @property
     def progress(self) -> int:
         """Total required progress for fully finishing craft"""
         return math.floor(self.recipe_level.difficulty * self.__difficulty_factor / 100)

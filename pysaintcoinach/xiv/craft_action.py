@@ -7,6 +7,7 @@ from typing import cast
 
 @xivrow
 class CraftAction(XivRow):
+    """Represents an action performable by a crafter"""
 
     @property
     def name(self) -> str:
