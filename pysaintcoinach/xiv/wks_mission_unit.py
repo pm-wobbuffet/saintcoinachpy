@@ -1,6 +1,6 @@
 from typing import Iterable, List
 
-from pysaintcoinach.text import XivString
+from ..text import XivString
 from ..ex.relational import IRelationalRow
 from . import xivrow, XivRow, IXivSheet
 from .interfaces import IItemSource
