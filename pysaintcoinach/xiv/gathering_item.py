@@ -15,8 +15,8 @@ class GatheringItem(GatheringItemBase):
     def gathering_level_string(self) -> str:
         """A string representation of an item's Level (i.e. 100**)"""
         return (
-            f"{self.gathering_item_level["GatheringItemLevel"]}"
-            + f"{'*' * int(self.gathering_item_level["Stars"])}"
+            f"{self.gathering_item_level['GatheringItemLevel']}"
+            + f"{'*' * int(self.gathering_item_level['Stars'])}"
         )
 
     @property
