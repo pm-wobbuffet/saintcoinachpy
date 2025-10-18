@@ -30,7 +30,8 @@ class ItemFoodParameter:
         return self.__is_relative
 
     @property
-    def hq(self):
+    def hq(self) -> str:
+        """Return a string representing the values given by the food in HQ form"""
         ret = ""
         ret += f"{self.base_param} +{self.value_hq}{'%' if self.is_relative else ''}"
         if self.is_relative:
@@ -38,7 +39,8 @@ class ItemFoodParameter:
         return ret
 
     @property
-    def nq(self):
+    def nq(self) -> str:
+        """Return a string representing the values given by the food in HQ form"""
         ret = ""
         ret += f"{self.base_param} +{self.value}{'%' if self.is_relative else ''}"
         if self.is_relative:
@@ -53,18 +55,27 @@ class ItemFoodParameter:
         self.__value_hq = value_hq
         self.__max_hq = max_hq
 
+    def __repr__(self) -> str:
+        return f"NQ:{self.nq}, HQ:{self.hq}"
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
 
 @xivrow
 class ItemFood(XivRow):
+    """A Row representing the stat augments or buffs applied by a given Food item"""
 
     NUM_PARAMS = 3
 
     @property
     def exp(self) -> str:
+        """The experience point percentage gain supplied by consuming this food"""
         return f"{self.as_int32('EXPBonusPercent')}%"
 
     @property
     def params(self) -> Iterable[ItemFoodParameter]:
+        """The List of stats affected by this buff"""
         if self.__params is None or len(self.__params) < 1:
             self._build_params()
         return self.__params
