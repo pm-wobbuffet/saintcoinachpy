@@ -47,13 +47,14 @@ class RecipeLevelTable(XivRow):
     @property
     def difficulty(self) -> int:
         """The base progress for this Level, before any recipe modifiers"""
-        return self.as_int32("DIfficulty")
+        return self.as_int32("Difficulty")
 
     @property
     def display_level(self) -> str:
         """The level of the recipe as shown in game, i.e. 90** for master recipes"""
         return f"{str(self.level)}{'*' * self.stars }"
 
+    @property
     def durability(self) -> int:
         """Base Durability (needs to be multiplied by a recipe-specific multiplier for final durability)"""
         return self.as_int32("Durability")
