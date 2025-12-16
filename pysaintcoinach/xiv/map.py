@@ -127,7 +127,8 @@ class Map(XivRow):
                 (
                     ae_icon.size[0] * IMAGE_SCALE_FACTOR,
                     ae_icon.size[1] * IMAGE_SCALE_FACTOR,
-                )
+                ),
+                resample=Image.Resampling.BICUBIC,
             )
             m.paste(
                 ae_enlarged,
