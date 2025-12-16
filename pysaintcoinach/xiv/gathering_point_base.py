@@ -7,13 +7,21 @@ from .gathering_type import GatheringType
 
 @xivrow
 class GatheringPointBase(XivRow, IItemSource):
+    """The base gathering point data from which a GatheringPoint instance derives
+    The GatheringPointBase contains all the items on this particular node type, along with
+    the GatheringType of the node, indicating which job and tool is required to access it
+    """
 
     @property
     def type(self) -> GatheringType:
+        """The gathering type of this point (Harvesting, Logging, Mining, Quarrying)
+        indicating which job and tool type is used for accessing the point"""
         return self.as_T(GatheringType)
 
     @property
     def exported_point(self):
+        """The coordinate mapping for this gathering point, stored
+        in the ExportedGatheringPoint sheet"""
         if self.__exported_point is None:
             s = self.sheet.collection.get_sheet("ExportedGatheringPoint")
             if self.key in s:
@@ -21,11 +29,25 @@ class GatheringPointBase(XivRow, IItemSource):
         return self.__exported_point
 
     @property
+    def job(self):
+        """
+        The shorthand abbreviation for what job this gathering point base
+        corresponds to
+        """
+        if self.key == 0 or self.key == 1:
+            return "MIN"
+        elif self.key == 2 or self.key == 3:
+            return "BTN"
+        return "FSH"
+
+    @property
     def gathering_level(self) -> int:
+        """The level of the node as seen in the overworld (i.e. Level 50 Mining Node)"""
         return self.as_int32("GatheringLevel")
 
     @property
     def points(self):
+        """A collection of GatheringPoints that are derived from this base"""
         if self.__points is None:
             self.__build_points()
         return self.__points
@@ -51,6 +73,7 @@ class GatheringPointBase(XivRow, IItemSource):
         self.__exported_point = None
 
     def __build_points(self):
+        """Generate a list of all gathering points that are derived from this base"""
         from .gathering_point import GatheringPoint
 
         self.__points = list(
@@ -61,6 +84,7 @@ class GatheringPointBase(XivRow, IItemSource):
         )
 
     def __build_items(self):
+        """Build the collection of items obtainable from this node"""
         from .gathering_item_base import GatheringItemBase
 
         COUNT = 8
