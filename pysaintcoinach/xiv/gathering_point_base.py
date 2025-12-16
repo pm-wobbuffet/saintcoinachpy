@@ -34,9 +34,9 @@ class GatheringPointBase(XivRow, IItemSource):
         The shorthand abbreviation for what job this gathering point base
         corresponds to
         """
-        if self.key == 0 or self.key == 1:
+        if self.type.key in [0, 1]:
             return "MIN"
-        elif self.key == 2 or self.key == 3:
+        elif self.type.key in [2, 3]:
             return "BTN"
         return "FSH"
 
